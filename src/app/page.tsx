@@ -147,7 +147,7 @@ export default function Home() {
       <ServicesSection />
       <ManifestoSection />
       <SlimCta />
-      <AgentsSection />
+      <AgentsSection workSide="fan" />
       <ProcessSection />
       <WhySection />
       <TestimonialSection />

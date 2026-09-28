@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 const libraryLinks = [
   { href: "/design-system", label: "Design system", description: "Color, type, radius, shadow" },
   { href: "/components", label: "Components", description: "Buttons, fields, tabs, cards" },
+  { href: "/lab", label: "Lab", description: "Section variants and retired blocks" },
 ] as const;
 
 export function LibrarySubnav() {
