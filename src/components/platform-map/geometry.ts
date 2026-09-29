@@ -133,6 +133,28 @@ export const COMET = {
   workStagger: 90,
 } as const;
 
+/**
+ * Milliseconds after a comet starts until its head reaches `fraction` of its path.
+ * Mirrors the `platform-comet` keyframes in globals.css: the head runs 1.2 path lengths
+ * under cubic-bezier(0.45, 0, 0.25, 1).
+ */
+export function cometReach(fraction: number) {
+  const progress = Math.min(Math.max(fraction, 0), 1) / 1.2;
+  let low = 0;
+  let high = 1;
+
+  for (let step = 0; step < 20; step += 1) {
+    const mid = (low + high) / 2;
+    if (3 * mid * mid - 2 * mid ** 3 < progress) low = mid;
+    else high = mid;
+  }
+
+  const t = (low + high) / 2;
+  const time = 3 * (1 - t) ** 2 * t * 0.45 + 3 * (1 - t) * t * t * 0.25 + t ** 3;
+
+  return time * COMET.travel;
+}
+
 /** Offsets a cycle-synced CSS animation (comet, pulse, landing glow) within the comet cycle. */
 export function cycleDelay(delay: number) {
   return { "--cycle-delay": `${Math.round(delay)}ms` } as CSSProperties;

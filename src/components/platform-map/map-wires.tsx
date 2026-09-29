@@ -19,7 +19,7 @@ import {
 export type WorkSide = "panel" | "fan";
 
 const drawEase = [0.16, 1, 0.3, 1] as const;
-const FAN_WIRE = "rgba(214, 186, 120, 0.3)";
+export const FAN_WIRE = "rgba(214, 186, 120, 0.3)";
 
 export function MapWires({
   activeIndex,
@@ -177,7 +177,7 @@ export function MapWires({
   );
 }
 
-function Comet({ d, delay }: { d: string; delay: number }) {
+export function Comet({ d, delay }: { d: string; delay: number }) {
   return (
     <g style={cycleDelay(delay)}>
       <path className="platform-comet platform-comet-halo" d={d} pathLength={1} />
