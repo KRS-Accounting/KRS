@@ -1,9 +1,9 @@
 export const legalEntity = {
   name: "KRS AI Services",
   email: "krs@krs.gr",
-  phone: "+30 210 123 4567",
-  phoneHref: "tel:+302101234567",
-  address: ["Leoforos Kifisias 44", "151 25 Marousi", "Greece"],
+  phone: "+30 21 0934 1211",
+  phoneHref: "tel:+302109341211",
+  address: ["Leof. Andrea Siggrou 120", "Athina 117 42", "Greece"],
 };
 
 export const legalNav = [
@@ -307,7 +307,7 @@ export const privacyPolicy: LegalDocument = {
         p("The controller for personal data described in this policy is:"),
         p(legalEntity.name),
         p("Email: ", { text: legalEntity.email, href: `mailto:${legalEntity.email}` }),
-        p("Leoforos Kifisias 44, 151 25 Marousi, Greece"),
+        p("Leof. Andrea Siggrou 120, Athina 117 42, Greece"),
         p(
           "Where a licensed tax or accounting partner performs reserved professional work, that partner may be an independent controller for the file they sign. They process that data under their professional duties and this policy.",
         ),

@@ -21,10 +21,11 @@ import { ContactCta } from "@/components/contact-cta";
 import { FieldNotesSection } from "@/components/field-notes-section";
 import { StatsSection } from "@/components/stats-section";
 import { HeroVideoSection } from "@/components/hero-video-section";
+import { ManifestoSection } from "@/components/manifesto-section";
 import { Reveal, RevealFade } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { ProcessTimeline } from "@/components/process-timeline";
-import { ServicesBento } from "@/components/services-bento";
+import { ServicesScroll } from "@/components/services-scroll";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SlimCta } from "@/components/slim-cta";
@@ -144,7 +145,7 @@ export default function Home() {
         <MediaSection />
       </div>
       <StatsSection />
-      <ServicesSection />
+      <ServicesScroll />
       <ManifestoSection />
       <SlimCta />
       <AgentsSection workSide="fan" />
@@ -208,44 +209,6 @@ function MediaSection() {
   );
 }
 
-function ManifestoSection() {
-  return (
-    <section className="relative overflow-hidden bg-primary py-24 text-primary-foreground lg:py-36" id="about">
-      <div className="font-heading absolute -right-8 top-0 select-none text-[360px] font-light leading-[0.75] text-secondary/8 sm:text-[520px]">
-        04
-      </div>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-[max(1rem,calc((100%-1400px)/2+1rem))] w-[min(22rem,40%)] bg-left-bottom bg-no-repeat sm:left-[max(1.5rem,calc((100%-1400px)/2+1.5rem))] lg:left-[max(3rem,calc((100%-1400px)/2+3rem))]"
-        style={{
-          backgroundImage: "url('/images/FounderKRS.webp')",
-          backgroundSize: "min(22rem, 100%) auto",
-        }}
-      />
-      <div className="relative z-10 mx-auto grid max-w-[1400px] grid-cols-12 gap-8 px-4 sm:px-6 lg:px-12">
-        <div className="relative col-span-12 min-h-[420px] lg:col-span-3 lg:min-h-[520px]">
-          <p className="mono-label text-secondary">Manifesto / 01</p>
-          <p className="mt-5 max-w-xs text-sm leading-7 text-primary-foreground/56">
-            Accounting should feel like an operating discipline, not a periodic scramble through portals, folders, and
-            inboxes.
-          </p>
-        </div>
-        <div className="col-span-12 lg:col-span-9">
-          <p className="font-heading text-balance text-4xl font-light leading-[1.04] sm:text-5xl md:text-6xl lg:text-7xl">
-            <Reveal>
-              We believe trust is built through evidence, cadence, and accountable review.
-            </Reveal>
-            <Reveal delay={0.1}>
-              <span className="italic text-secondary"> AI should not obscure the work.</span> It should make the work
-              inspectable.
-            </Reveal>
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function SectionIntro({
   eyebrow,
   title,
@@ -281,22 +244,6 @@ function SectionIntro({
         </RevealFade>
       ) : null}
     </div>
-  );
-}
-
-function ServicesSection() {
-  return (
-    <section className="bg-background px-4 py-24 sm:px-6 lg:px-12" id="services">
-      <div className="mx-auto max-w-[1400px]">
-        <SectionIntro
-          className="lg:grid-cols-[0.65fr_0.35fr]"
-          eyebrow="What we handle"
-          text="Five service lines, one operating file: advisory, accounting, payroll, consulting, and funding move through the same controlled system."
-          title="Accounting, tax, payroll, and advice."
-        />
-        <ServicesBento />
-      </div>
-    </section>
   );
 }
 

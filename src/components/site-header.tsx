@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, Languages } from "lucide-react";
+import { ArrowRight, ChevronDown, Languages, Menu, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -28,6 +32,8 @@ type MegaNavItem = {
   ctaHref: string;
   hidden?: boolean;
 };
+
+const easeOut = [0.16, 1, 0.3, 1] as const;
 
 const navItems: MegaNavItem[] = [
   {
@@ -293,66 +299,195 @@ const languageOptions = [
   { value: "zh", label: "Chinese" },
 ] as const;
 
+const clientLogin = "https://krs-platform-staging-6xbnf.ondigitalocean.app/portal/login";
+
+const mobileLinks = [
+  { label: "Accounting", href: "/services/accounting" },
+  { label: "Tax Advisory", href: "/services/tax-advisory" },
+  { label: "Payroll", href: "/services/payroll" },
+  { label: "Consulting", href: "/services/consulting" },
+  { label: "Funding & Grants", href: "/services/funding-grants" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Why KRS AI", href: "/why" },
+  { label: "About", href: "/about" },
+  { label: "Careers", href: "/careers" },
+  { label: "Blog", href: "/#field-notes" },
+] as const;
+
 export function SiteHeader() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-primary/12 bg-background/88 px-4 backdrop-blur-xl sm:px-6 lg:px-12">
-      <nav className="relative mx-auto flex h-18 max-w-[1400px] items-center justify-between">
-        <Link aria-label="KRS AI home" className="flex items-center" href="/">
-          <Image
-            alt="KRS AI"
-            className="h-14 w-auto"
-            height={416}
-            priority
-            src="/logos/Full%20logo%20Dark.png"
-            unoptimized
-            width={1008}
-          />
-        </Link>
-        <div className="hidden h-full items-center gap-2 lg:flex">
-          {navItems
-            .filter((item) => !item.hidden)
-            .map((item) => (
-              <HeaderMegaNavItem item={item} key={item.label} />
-            ))}
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-2 border-l border-primary/12 pl-4 sm:flex">
-            <label className="sr-only" htmlFor="site-language">
-              Select language
-            </label>
-            <Languages className="size-3.5 text-secondary" strokeWidth={1.75} />
-            <div className="relative">
-              <select
-                aria-label="Language selector"
-                className="h-9 w-[118px] appearance-none rounded-full border border-primary/12 bg-background py-0 pl-3 pr-8 text-xs font-semibold text-foreground outline-none transition hover:border-primary/25 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-                defaultValue="en"
-                id="site-language"
-              >
-                {languageOptions.map((language) => (
-                  <option key={language.value} value={language.value}>
-                    {language.label}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                aria-hidden="true"
-                className="pointer-events-none absolute right-2.5 top-1/2 size-3 -translate-y-1/2 text-muted-foreground"
-                strokeWidth={1.75}
-              />
-            </div>
+    <>
+      <header
+        className={cn(
+          "sticky top-0 z-50 px-4 transition-[background-color,border-color,backdrop-filter] duration-300 sm:px-6 lg:px-12",
+          menuOpen
+            ? "border-b border-transparent bg-transparent"
+            : "border-b border-primary/12 bg-background/88 backdrop-blur-xl",
+        )}
+      >
+        <nav className="relative mx-auto flex h-18 max-w-[1400px] items-center justify-between">
+          <Link aria-label="KRS AI home" className="flex items-center" href="/">
+            <Image
+              alt="KRS AI"
+              className="h-14 w-auto"
+              height={416}
+              priority
+              src={menuOpen ? "/logos/Full%20logo.svg" : "/logos/Full%20logo%20Dark.png"}
+              unoptimized
+              width={1008}
+            />
+          </Link>
+          <div className="hidden h-full items-center gap-2 lg:flex">
+            {navItems
+              .filter((item) => !item.hidden)
+              .map((item) => (
+                <HeaderMegaNavItem item={item} key={item.label} />
+              ))}
           </div>
-          <Button asChild className="hidden h-10 rounded-full px-5 sm:inline-flex" variant="ghost">
-            <a href="https://krs-platform-staging-6xbnf.ondigitalocean.app/portal/login">Client login</a>
-          </Button>
-          <Button asChild className="h-10 rounded-full px-5 shadow-sm">
-            <a href="/onboarding">
-              Contact
-              <ArrowRight className="size-4" strokeWidth={1.75} />
+          <div className="flex items-center gap-2">
+            <div
+              className={cn(
+                "hidden items-center gap-2 border-l border-primary/12 pl-4 sm:flex",
+                menuOpen && "sm:hidden",
+              )}
+            >
+              <LanguageSelect id="site-language" />
+            </div>
+            <Button
+              asChild
+              className={cn("hidden h-10 rounded-full px-5 sm:inline-flex", menuOpen && "sm:hidden")}
+              variant="ghost"
+            >
+              <a href={clientLogin}>Client login</a>
+            </Button>
+            <Button asChild className={cn("hidden h-10 rounded-full px-5 shadow-sm sm:inline-flex", menuOpen && "sm:hidden")}>
+              <a href="/onboarding">
+                Contact
+                <ArrowRight className="size-4" strokeWidth={1.75} />
+              </a>
+            </Button>
+            <button
+              aria-expanded={menuOpen}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              className={cn(
+                "flex size-11 items-center justify-center rounded-full transition-colors duration-300 lg:hidden",
+                menuOpen
+                  ? "bg-primary-foreground text-primary"
+                  : "bg-primary text-primary-foreground",
+              )}
+              onClick={() => setMenuOpen((open) => !open)}
+              type="button"
+            >
+              {menuOpen ? <X className="size-5" strokeWidth={1.75} /> : <Menu className="size-5" strokeWidth={1.75} />}
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      <MobileMenu onClose={() => setMenuOpen(false)} open={menuOpen} />
+    </>
+  );
+}
+
+function LanguageSelect({ id, tone = "light" }: { id: string; tone?: "light" | "dark" }) {
+  return (
+    <>
+      <label className="sr-only" htmlFor={id}>
+        Select language
+      </label>
+      <Languages
+        className={cn("size-3.5 shrink-0", tone === "dark" ? "text-secondary" : "text-secondary")}
+        strokeWidth={1.75}
+      />
+      <div className="relative">
+        <select
+          aria-label="Language selector"
+          className={cn(
+            "h-9 appearance-none rounded-full border py-0 pl-3 pr-8 text-xs font-semibold outline-none transition focus-visible:ring-3",
+            tone === "dark"
+              ? "w-full border-primary-foreground/16 bg-primary-foreground/8 text-primary-foreground hover:border-primary-foreground/28 focus-visible:border-secondary focus-visible:ring-secondary/30"
+              : "w-[118px] border-primary/12 bg-background text-foreground hover:border-primary/25 focus-visible:border-ring focus-visible:ring-ring/50",
+          )}
+          defaultValue="en"
+          id={id}
+        >
+          {languageOptions.map((language) => (
+            <option key={language.value} value={language.value}>
+              {language.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDown
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute right-2.5 top-1/2 size-3 -translate-y-1/2",
+            tone === "dark" ? "text-primary-foreground/55" : "text-muted-foreground",
+          )}
+          strokeWidth={1.75}
+        />
+      </div>
+    </>
+  );
+}
+
+function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const reduce = useReducedMotion();
+
+  return (
+    <AnimatePresence>
+      {open ? (
+        <motion.div
+          animate={{ clipPath: "inset(0% 0% 0% 0% round 0px)" }}
+          className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-primary px-6 pb-10 pt-28 text-primary-foreground lg:hidden"
+          exit={{ clipPath: "inset(0% 0% 100% 0% round 0px)" }}
+          initial={reduce ? false : { clipPath: "inset(0% 0% 100% 0% round 0px)" }}
+          transition={{ duration: reduce ? 0 : 0.6, ease: easeOut }}
+        >
+          <nav aria-label="Mobile" className="flex flex-col">
+            {mobileLinks.map((item, index) => (
+              <motion.div
+                animate={{ opacity: 1, y: 0 }}
+                initial={reduce ? false : { opacity: 0, y: 24 }}
+                key={item.href + item.label}
+                transition={{ duration: reduce ? 0 : 0.6, delay: reduce ? 0 : 0.15 + index * 0.04, ease: easeOut }}
+              >
+                <Link
+                  className="block border-b border-primary-foreground/10 py-4 font-heading text-3xl font-normal tracking-[-0.03em]"
+                  href={item.href}
+                  onClick={onClose}
+                >
+                  {item.label}
+                </Link>
+              </motion.div>
+            ))}
+          </nav>
+
+          <div className="mt-auto flex flex-col gap-4 pt-10">
+            <div className="flex items-center gap-3">
+              <LanguageSelect id="mobile-language" tone="dark" />
+            </div>
+            <Button asChild className="h-12 w-full rounded-full bg-primary-foreground px-6 text-primary hover:bg-primary-foreground/90">
+              <a href="/onboarding" onClick={onClose}>
+                Contact
+                <ArrowRight className="size-4" strokeWidth={1.75} />
+              </a>
+            </Button>
+            <a className="py-2 text-center text-sm text-primary-foreground/68 transition hover:text-primary-foreground" href={clientLogin}>
+              Client login
             </a>
-          </Button>
-        </div>
-      </nav>
-    </header>
+          </div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   );
 }
 
@@ -389,13 +524,13 @@ function HeaderMegaNavItem({ item }: { item: MegaNavItem }) {
       <div
         className={cn(
           "mega-menu-panel absolute left-1/2 top-full z-50 pt-3 transition duration-200 ease-out",
-          megaMenuPanelWidth(item, hasFeaturePanel)
+          megaMenuPanelWidth(item, hasFeaturePanel),
         )}
       >
         <div
           className={cn(
             "grid overflow-hidden border border-primary/15 bg-white shadow-[var(--shadow-xl)]",
-            hasFeaturePanel && "lg:grid-cols-[1fr_320px]"
+            hasFeaturePanel && "lg:grid-cols-[1fr_320px]",
           )}
         >
           <div className="bg-white p-5 sm:p-6">
@@ -406,7 +541,7 @@ function HeaderMegaNavItem({ item }: { item: MegaNavItem }) {
                   ? "lg:grid-cols-3"
                   : item.columns.length > 1
                     ? "md:grid-cols-2"
-                    : "grid-cols-1"
+                    : "grid-cols-1",
               )}
             >
               {item.columns.map((column, columnIndex) => (

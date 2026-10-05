@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+import { NewsletterSignup } from "@/components/newsletter-signup";
+import { SocialLinks } from "@/components/social-links";
 import { Button } from "@/components/ui/button";
 
 type FooterLinkGroup = {
@@ -46,76 +48,35 @@ const footerLinkGroups: FooterLinkGroup[] = [
     links: [
       { label: "Tax Advisory", href: "/services/tax-advisory" },
       { label: "Bookkeeping", href: "/services/accounting" },
+      { label: "Payroll", href: "/services/payroll" },
       { label: "Consulting Services", href: "/services/consulting" },
       { label: "Funding & Grants", href: "/services/funding-grants" },
-      { label: "Payroll", href: "/services/payroll" },
     ],
   },
   {
-    title: "Tax advice",
-    links: [
-      { label: "Tax Advisor for Startups", href: "#" },
-      { label: "Tax Advisor for IKE", href: "#" },
-      { label: "Tax Advisor for EPE", href: "#" },
-      { label: "Tax Advisor for Holding", href: "#" },
-      { label: "Tax Advisor for Entrepreneurs", href: "#" },
-      { label: "Tax Advisor for Companies", href: "#" },
-      { label: "Digital Tax Advisory", href: "#" },
-      { label: "Tax Advisor Costs", href: "#" },
-      { label: "Tax Advisor Cost Calculator", href: "#" },
-      { label: "Find a Tax Advisor", href: "#" },
-      { label: "Tax Advisor Switch", href: "#" },
-      { label: "Terminate Tax Advisor", href: "#" },
-      { label: "Tax Advisor Duty", href: "#" },
-      { label: "Tax Advisor Questions", href: "#" },
-    ],
-  },
-  {
-    title: "Bookkeeping",
-    links: [
-      { label: "Outsource bookkeeping", href: "/services/accounting" },
-      { label: "Bookkeeping for IKE", href: "/services/accounting" },
-      { label: "Bookkeeping for EPE", href: "/services/accounting" },
-      { label: "Bookkeeping for Start-Ups", href: "/services/accounting" },
-      { label: "Find a Bookkeeping Service", href: "/services/accounting" },
-      { label: "Bookkeeping Costs", href: "/services/accounting" },
-      { label: "Digital bookkeeping", href: "/services/accounting" },
-      { label: "Do Bookkeeping with a Tax Advisor", href: "/services/accounting" },
-      { label: "Automated bookkeeping", href: "/services/accounting" },
-    ],
-  },
-  {
-    title: "KRS AI platform",
-    links: [
-      { label: "Understanding Deadlines & Processes", href: "#process" },
-      { label: "Managing Documents", href: "#" },
-      { label: "Get Expertise Quickly", href: "#" },
-      { label: "Automate bookkeeping", href: "#agents" },
-    ],
-  },
-  {
-    title: "About KRS AI",
+    title: "Company",
     links: [
       { label: "About KRS AI", href: "/about" },
-      { label: "Guides", href: "#field-notes" },
-      { label: "Careers", href: "/careers" },
       { label: "Why KRS AI", href: "/why" },
-      { label: "FAQs", href: "#faq" },
-      { label: "Press", href: "#media" },
-      { label: "Structure", href: "#" },
+      { label: "Careers", href: "/careers" },
       { label: "Contact us", href: "/onboarding" },
-      { label: "Design system", href: "/design-system" },
-      { label: "Component index", href: "/components" },
     ],
   },
   {
-    title: "Legal",
+    title: "Pricing",
     links: [
-      { label: "Imprint", href: "#" },
-      { label: "Privacy Policy", href: "/legal/privacy-policy" },
-      { label: "Terms and Conditions", href: "/legal/terms-of-service" },
-      { label: "Cookie Policy", href: "/legal/cookies" },
-      { label: "Trust Center", href: "#" },
+      { label: "Pricing plans", href: "/pricing" },
+      { label: "Pricing calculator", href: "/pricing#calculator" },
+    ],
+  },
+  {
+    title: "Blog",
+    links: [
+      { label: "All articles", href: "/#field-notes" },
+      { label: "Accounting", href: "/#field-notes" },
+      { label: "Payroll", href: "/#field-notes" },
+      { label: "Tax filings", href: "/#field-notes" },
+      { label: "Tax tips", href: "/#field-notes" },
     ],
   },
 ];
@@ -186,8 +147,8 @@ export function SiteFooter() {
   return (
     <footer className="relative isolate overflow-hidden bg-primary px-4 text-primary-foreground sm:px-6 lg:px-12">
       <div className="relative z-10 mx-auto max-w-[1400px] pb-[calc(min(42vw,520px)+100px)] pt-16">
-        <div className="grid gap-12 border-b border-primary-foreground/12 pb-14 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-4">
+        <div className="grid gap-14 border-b border-primary-foreground/12 pb-14 lg:grid-cols-12 lg:items-center lg:gap-10">
+          <div className="lg:col-span-5">
             <Link aria-label="KRS AI home" className="inline-flex items-center" href="/">
               <Image
                 alt="KRS AI"
@@ -199,25 +160,32 @@ export function SiteFooter() {
               />
             </Link>
 
-            <p className="type-h5 mt-8 max-w-sm">
-              Accounting, tax advisory, payroll, and compliance operations for Greek businesses that need precision.
+            <p className="mt-8 max-w-sm text-sm leading-7 text-primary-foreground/68">
+              Accounting, tax, payroll and advisory for Greek businesses. Prepared by AI, signed by people.
             </p>
 
-            <div className="mt-8 grid gap-5 text-sm leading-7 text-primary-foreground/68 sm:grid-cols-2 lg:grid-cols-1">
-              <p>
+            <SocialLinks className="mt-6" />
+
+            <div className="mt-8 grid gap-5 text-sm leading-7 text-primary-foreground/68 sm:grid-cols-2">
+              <address className="not-italic">
                 <strong className="font-semibold text-primary-foreground">KRS AI Services</strong>
                 <br />
-                Leoforos Kifisias 44
-                <br />
-                151 25 Marousi
-                <br />
-                Greece
-              </p>
+                <a
+                  className="transition-colors hover:text-primary-foreground"
+                  href="https://www.google.com/maps/search/?api=1&query=KRS+Group+Leof.+Andrea+Siggrou+120+Athina+117+42"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Leof. Andrea Siggrou 120
+                  <br />
+                  Athina 117 42
+                </a>
+              </address>
               <p>
                 <strong className="font-semibold text-primary-foreground">Contact</strong>
                 <br />
-                <a className="transition-colors hover:text-primary-foreground" href="tel:+302101234567">
-                  +30 210 123 4567
+                <a className="transition-colors hover:text-primary-foreground" href="tel:+302109341211">
+                  +30 21 0934 1211
                 </a>
                 <br />
                 <a className="transition-colors hover:text-primary-foreground" href="mailto:krs@krs.gr">
@@ -238,14 +206,14 @@ export function SiteFooter() {
             </Button>
           </div>
 
-          <div className="lg:col-span-8">
-            <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              {footerLinkGroups.map((group) => (
-                <FooterLinkColumn group={group} key={group.title} />
-              ))}
-            </div>
-          </div>
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:col-span-6 lg:col-start-7">
+            {footerLinkGroups.map((group) => (
+              <FooterLinkColumn group={group} key={group.title} />
+            ))}
+          </nav>
         </div>
+
+        <NewsletterSignup />
 
         <div className="pt-10">
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
