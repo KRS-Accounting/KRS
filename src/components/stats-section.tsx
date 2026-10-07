@@ -5,6 +5,7 @@ import { useRef } from "react";
 
 import { Reveal, RevealFade } from "@/components/reveal";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/provider";
 
 const stats: Array<{
   label: string;
@@ -93,19 +94,22 @@ function MetricValue({
 }
 
 export function StatsSection() {
+  const { tx } = useI18n();
+
   return (
     <section className="border-y border-primary/12 bg-card px-4 py-24 sm:px-6 lg:px-12" id="stat">
       <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-6 lg:grid-cols-[0.65fr_0.35fr] lg:items-end">
           <div>
-            <p className="mono-label text-secondary">The practice</p>
+            <p className="mono-label text-secondary">{tx("The practice")}</p>
             <h2 className="type-h3 mt-5 max-w-4xl text-balance text-foreground">
-              <Reveal>The practice, in numbers.</Reveal>
+              <Reveal>{tx("The practice, in numbers.")}</Reveal>
             </h2>
           </div>
           <RevealFade className="max-w-xl text-lg leading-8 text-muted-foreground" delay={0.1}>
-            Greek founders and finance teams keep accounting, payroll, tax, and filings in one reviewed system. This is
-            how that practice is scoped.
+            {tx(
+              "Greek founders and finance teams keep accounting, payroll, tax, and filings in one reviewed system. This is how that practice is scoped.",
+            )}
           </RevealFade>
         </div>
 
@@ -118,15 +122,15 @@ export function StatsSection() {
               )}
               key={stat.label}
             >
-              <p className="mono-label text-muted-foreground">{stat.label}</p>
+              <p className="mono-label text-muted-foreground">{tx(stat.label)}</p>
               <p className="sr-only">
                 {stat.value}
-                {stat.unit ?? ""} {stat.label}
+                {stat.unit ?? ""} {tx(stat.label)}
               </p>
               <p aria-hidden="true" className="mt-6">
-                <MetricValue delay={index * 0.08} unit={stat.unit} value={stat.value} />
+                <MetricValue delay={index * 0.08} unit={stat.unit ? tx(stat.unit) : undefined} value={stat.value} />
               </p>
-              <p className="mt-6 max-w-xs text-sm leading-7 text-muted-foreground">{stat.text}</p>
+              <p className="mt-6 max-w-xs text-sm leading-7 text-muted-foreground">{tx(stat.text)}</p>
             </article>
           ))}
         </div>

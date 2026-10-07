@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { SocialLinks } from "@/components/social-links";
 import { Button } from "@/components/ui/button";
+import { getI18n } from "@/i18n/request";
 
 type FooterLinkGroup = {
   title: string;
@@ -104,7 +105,13 @@ function FooterLinkColumn({ group }: { group: FooterLinkGroup }) {
 function ComplianceBadge({
   badge,
 }: {
-  badge: (typeof complianceBadges)[number];
+  badge: {
+    alt: string;
+    href?: string | null;
+    src: string;
+    subtitle: string;
+    title: string;
+  };
 }) {
   const content = (
     <>
@@ -143,13 +150,15 @@ function ComplianceBadge({
   );
 }
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const { tx, href } = await getI18n();
+
   return (
     <footer className="relative isolate overflow-hidden bg-primary px-4 text-primary-foreground sm:px-6 lg:px-12">
       <div className="relative z-10 mx-auto max-w-[1400px] pb-[calc(min(42vw,520px)+100px)] pt-16">
         <div className="grid gap-14 border-b border-primary-foreground/12 pb-14 lg:grid-cols-12 lg:items-center lg:gap-10">
           <div className="lg:col-span-5">
-            <Link aria-label="KRS AI home" className="inline-flex items-center" href="/">
+            <Link aria-label={tx("KRS AI home")} className="inline-flex items-center" href={href("/")}>
               <Image
                 alt="KRS AI"
                 className="h-[88px] w-auto"
@@ -161,7 +170,7 @@ export function SiteFooter() {
             </Link>
 
             <p className="mt-8 max-w-sm text-sm leading-7 text-primary-foreground/68">
-              Accounting, tax, payroll and advisory for Greek businesses. Prepared by AI, signed by people.
+              {tx("Accounting, tax, payroll and advisory for Greek businesses. Prepared by AI, signed by people.")}
             </p>
 
             <SocialLinks className="mt-6" />
@@ -182,7 +191,7 @@ export function SiteFooter() {
                 </a>
               </address>
               <p>
-                <strong className="font-semibold text-primary-foreground">Contact</strong>
+                <strong className="font-semibold text-primary-foreground">{tx("Contact")}</strong>
                 <br />
                 <a className="transition-colors hover:text-primary-foreground" href="tel:+302109341211">
                   +30 21 0934 1211
@@ -199,16 +208,16 @@ export function SiteFooter() {
               className="mt-8 h-11 rounded-full bg-primary-foreground px-5 text-primary hover:bg-primary-foreground/90"
               variant="secondary"
             >
-              <a href="/onboarding">
-                Talk to KRS
+              <a href={href("/onboarding")}>
+                {tx("Talk to KRS")}
                 <ArrowRight className="size-4" />
               </a>
             </Button>
           </div>
 
-          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:col-span-6 lg:col-start-7">
+          <nav aria-label={tx("Footer")} className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:col-span-6 lg:col-start-7">
             {footerLinkGroups.map((group) => (
-              <FooterLinkColumn group={group} key={group.title} />
+              <FooterLinkColumn group={{ ...group, title: tx(group.title), links: group.links.map((link) => ({ ...link, label: tx(link.label), href: href(link.href) })) }} key={group.title} />
             ))}
           </nav>
         </div>
@@ -218,31 +227,33 @@ export function SiteFooter() {
         <div className="pt-10">
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <p className="max-w-4xl text-xs leading-6 text-primary-foreground/52">
-              Your digital tax service with its own platform. The technical platform is operated by KRS AI Services.
-              Reserved tasks are performed by licensed tax and accounting professionals. KRS AI Services and its
-              licensed tax partners are separate legal entities cooperating as part of a network. Each entity is
-              responsible only for its own acts and omissions to the extent permitted by law.
+              {tx(
+                "Your digital tax service with its own platform. The technical platform is operated by KRS AI Services. Reserved tasks are performed by licensed tax and accounting professionals. KRS AI Services and its licensed tax partners are separate legal entities cooperating as part of a network. Each entity is responsible only for its own acts and omissions to the extent permitted by law.",
+              )}
             </p>
-            <div aria-label="Compliance certifications" className="flex shrink-0 gap-2">
+            <div aria-label={tx("Compliance certifications")} className="flex shrink-0 gap-2">
               {complianceBadges.map((badge) => (
-                <ComplianceBadge badge={badge} key={badge.title} />
+                <ComplianceBadge
+                  badge={{ ...badge, alt: tx(badge.alt), subtitle: tx(badge.subtitle), title: tx(badge.title) }}
+                  key={badge.title}
+                />
               ))}
             </div>
           </div>
 
           <div className="mt-8 flex flex-col justify-between gap-3 border-t border-primary-foreground/12 pt-4 lg:flex-row lg:items-center">
-            <nav aria-label="Legal" className="flex flex-wrap gap-x-4 gap-y-2">
+            <nav aria-label={tx("Legal")} className="flex flex-wrap gap-x-4 gap-y-2">
               {legalStripLinks.map((link) => (
                 <a
                   className="text-xs text-primary-foreground/52 transition-colors hover:text-primary-foreground"
-                  href={link.href}
+                  href={link.href === "#" ? link.href : href(link.href)}
                   key={link.label}
                 >
-                  {link.label}
+                  {tx(link.label)}
                 </a>
               ))}
             </nav>
-            <p className="text-xs text-primary-foreground/36">© 2026 KRS.ai | All rights reserved.</p>
+            <p className="text-xs text-primary-foreground/36">{tx("© 2026 KRS.ai | All rights reserved.")}</p>
           </div>
         </div>
       </div>

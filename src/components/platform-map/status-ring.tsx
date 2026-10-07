@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/provider";
 
 import type { PlatformService } from "./data";
 import { cycleDelay } from "./geometry";
@@ -134,6 +137,8 @@ const chipClassNames: Record<ReviewStatus, string> = {
 };
 
 export function StatusChip({ className, status }: { className?: string; status: ReviewStatus }) {
+  const { tx } = useI18n();
+
   return (
     <span
       className={cn(
@@ -142,19 +147,21 @@ export function StatusChip({ className, status }: { className?: string; status: 
         className
       )}
     >
-      {statusMeta[status].short}
+      {tx(statusMeta[status].short)}
     </span>
   );
 }
 
 export function ReviewerBadge({ className, service, size = 46 }: { className?: string; service: PlatformService; size?: number }) {
+  const { tx } = useI18n();
   const avatar = size - 10;
+  const percent = reviewedPercent(service.work);
 
   return (
     <div className={cn("flex items-center gap-3", className)}>
       <StatusRing items={service.work} size={size} stroke={2.5}>
         <Image
-          alt={service.reviewer.imageAlt}
+          alt={tx(service.reviewer.imageAlt)}
           className="rounded-full object-cover object-top"
           height={avatar * 2}
           src={service.reviewer.image}
@@ -163,9 +170,11 @@ export function ReviewerBadge({ className, service, size = 46 }: { className?: s
         />
       </StatusRing>
       <div className="text-left">
-        <p className="text-sm font-semibold leading-tight tabular-nums">{reviewedPercent(service.work)}% reviewed</p>
+        <p className="text-sm font-semibold leading-tight tabular-nums">
+          {percent}% {tx("reviewed")}
+        </p>
         <p className="mt-0.5 text-xs leading-tight text-primary-foreground/58">
-          by a {service.reviewer.role.toLowerCase()}
+          {tx("by a")} {tx(service.reviewer.role)}
         </p>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/provider";
 
 import type { PlatformService } from "./data";
 import { AUTO_ADVANCE_MS, CARD, COMET, cardTop, cycleDelay } from "./geometry";
@@ -14,8 +15,8 @@ import type { RadioItemProps } from "./use-active-service";
 
 const spring = { damping: 26, stiffness: 420, type: "spring" } as const;
 
-export function serviceRadioLabel(service: PlatformService) {
-  return `${service.name}, ${service.inputs.length} client inputs, ${reviewedPercent(service.inputs)}% reviewed`;
+export function serviceRadioLabel(service: PlatformService, tx: (value: string) => string) {
+  return `${tx(service.name)}, ${service.inputs.length} ${tx("client inputs")}, ${reviewedPercent(service.inputs)}% ${tx("reviewed")}`;
 }
 
 export function ServiceCard({
@@ -35,11 +36,12 @@ export function ServiceCard({
 }) {
   const Icon = serviceIcons[service.id];
   const transition = reducedMotion ? { duration: 0 } : spring;
+  const { tx } = useI18n();
 
   return (
     <button
       {...radioProps}
-      aria-label={serviceRadioLabel(service)}
+      aria-label={serviceRadioLabel(service, tx)}
       className={cn(
         "pointer-events-auto absolute flex items-stretch justify-between gap-3 overflow-hidden rounded-[var(--radius-xl)] border p-3.5 text-left text-primary-foreground outline-none transition-[background-color,border-color,box-shadow] duration-300 focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-primary",
         active

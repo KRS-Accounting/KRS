@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Clock3, MessageSquareText, ShieldCheck } from "lucide-react";
 
 import { OnboardingFlow } from "@/components/onboarding-flow";
+import { pageMetadata } from "@/i18n/metadata";
 
-export const metadata: Metadata = {
-  title: "Book a consultation | KRS AI",
-  description: "Tell us a little about your business and request a consultation with a KRS advisor.",
-};
+export function generateMetadata() {
+  return pageMetadata({
+    title: "Book a consultation | KRS AI",
+    description: "Tell us a little about your business and request a consultation with a KRS advisor.",
+  });
+}
 
 const advisorImages = [
   "/images/krs-expert-tax-advisor.webp",

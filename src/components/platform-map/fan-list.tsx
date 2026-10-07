@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/provider";
 
 import { STAGE_WIDTH, type StagePoint } from "./geometry";
 import { statusMeta, type ReviewStatus } from "./status";
@@ -37,10 +38,11 @@ export function FanList({
   reducedMotion: boolean;
   side: "left" | "right";
 }) {
+  const { tx } = useI18n();
   const source = side === "right" ? -1 : 1;
 
   return (
-    <ul aria-label={label} className="pointer-events-none absolute inset-0 m-0 list-none p-0">
+    <ul aria-label={tx(label)} className="pointer-events-none absolute inset-0 m-0 list-none p-0">
       <AnimatePresence initial={false}>
         {items.map((item, index) => {
           const point = points[index];
@@ -71,7 +73,7 @@ export function FanList({
               <StatusDot pulseDelay={pulseDelays?.[index]} status={item.status} />
               <span className="min-w-0">
                 <span className="block truncate text-[13.5px] font-medium leading-[18px] text-primary-foreground/92">
-                  {item.label}
+                  {tx(item.label)}
                 </span>
                 <span className={cn("mt-1 flex items-center gap-2", side === "left" && "flex-row-reverse")}>
                   <span
@@ -82,11 +84,11 @@ export function FanList({
                         : "text-xs text-primary-foreground/55"
                     )}
                   >
-                    {item.meta}
+                    {tx(item.meta)}
                   </span>
                   <StatusBars status={item.status} />
                 </span>
-                <span className="sr-only">{`, ${statusMeta[item.status].label}`}</span>
+                <span className="sr-only">{`, ${tx(statusMeta[item.status].label)}`}</span>
               </span>
             </motion.li>
           );

@@ -1,0 +1,11 @@
+import elDraft from "@/content/el-draft.json";
+
+import type { Locale } from "@/i18n/locale";
+
+const greek = elDraft as Record<string, string>;
+
+export function translate(locale: Locale, value: string) {
+  if (locale !== "el") return value;
+
+  return greek[value] ?? value;
+}

@@ -21,6 +21,7 @@ import type { ServiceSceneProps } from "@/components/services-bento/scene-motion
 import { TaxAdvisoryScene } from "@/components/services-bento/tax-advisory-scene";
 import { Reveal, RevealFade } from "@/components/reveal";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/provider";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 const desktopQuery = "(min-width: 1024px)";
@@ -194,6 +195,8 @@ export function ServicesScroll() {
 }
 
 function ServiceTabs({ active, onSelect }: { active: number; onSelect: (index: number) => void }) {
+  const { tx } = useI18n();
+
   return (
     <div className="flex shrink-0 items-center gap-1 rounded-full bg-background p-1 ring-1 ring-primary/8" role="tablist">
       {services.map((service, index) => (
@@ -215,7 +218,7 @@ function ServiceTabs({ active, onSelect }: { active: number; onSelect: (index: n
               transition={{ type: "spring", stiffness: 380, damping: 34 }}
             />
           ) : null}
-          <span className="relative">{service.name}</span>
+          <span className="relative">{tx(service.name)}</span>
         </button>
       ))}
     </div>
@@ -239,6 +242,7 @@ function ServicePanel({
   const dimmed = pinned && !reduce && !isActive;
   const tone = tones[service.tone];
   const Scene = scenes[service.id];
+  const { tx, href } = useI18n();
 
   return (
     <motion.article
@@ -254,12 +258,12 @@ function ServicePanel({
       transition={{ duration: 0.7, ease: easeOut }}
     >
       <div className="flex flex-col p-7 sm:p-10">
-        <p className={cn("mono-label", tone.dark ? "text-secondary" : "text-secondary")}>{service.name}</p>
+        <p className={cn("mono-label", tone.dark ? "text-secondary" : "text-secondary")}>{tx(service.name)}</p>
         <h3 className="font-heading mt-4 max-w-sm text-balance text-[clamp(1.85rem,3vw,2.75rem)] font-normal leading-[1.08]">
-          {service.title}
+          {tx(service.title)}
         </h3>
         <p className={cn("mt-5 max-w-md text-base leading-7", tone.dark ? "text-primary-foreground/68" : "text-muted-foreground")}>
-          {service.text}
+          {tx(service.text)}
         </p>
         <ul className="mt-7 flex flex-wrap gap-2">
           {service.points.map((point) => (
@@ -272,7 +276,7 @@ function ServicePanel({
               )}
               key={point}
             >
-              {point}
+              {tx(point)}
             </li>
           ))}
         </ul>
@@ -282,9 +286,9 @@ function ServicePanel({
               "inline-flex items-center gap-2 text-sm font-semibold transition hover:gap-3",
               tone.dark ? "text-primary-foreground hover:text-secondary" : "text-foreground hover:text-secondary",
             )}
-            href={service.href}
+            href={href(service.href)}
           >
-            Explore {service.name}
+            {tx(`Explore ${service.name}`)}
             <ArrowRight className="size-4" />
           </Link>
         </div>

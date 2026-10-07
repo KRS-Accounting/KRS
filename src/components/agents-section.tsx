@@ -1,8 +1,11 @@
 import { PlatformMap, type WorkSide } from "@/components/platform-map";
 import { platformServices } from "@/components/platform-map/data";
 import { Reveal, RevealFade } from "@/components/reveal";
+import { getI18n } from "@/i18n/request";
 
-export function AgentsSection({ id = "agents", workSide = "panel" }: { id?: string; workSide?: WorkSide } = {}) {
+export async function AgentsSection({ id = "agents", workSide = "panel" }: { id?: string; workSide?: WorkSide } = {}) {
+  const { tx } = await getI18n();
+
   return (
     <section className="relative overflow-hidden bg-primary px-4 py-24 text-primary-foreground sm:px-6 lg:px-12" id={id}>
       <div
@@ -17,14 +20,15 @@ export function AgentsSection({ id = "agents", workSide = "panel" }: { id?: stri
       <div className="relative mx-auto flex max-w-[1400px] flex-col gap-14 xl:gap-16">
         <div className="grid gap-6 lg:grid-cols-[0.65fr_0.35fr] lg:items-end">
           <div>
-            <p className="mono-label text-secondary">KRS AI Agents</p>
+            <p className="mono-label text-secondary">{tx("KRS AI Agents")}</p>
             <h2 className="type-h3 mt-5 max-w-4xl text-balance">
-              <Reveal>People decide. AI keeps it moving.</Reveal>
+              <Reveal>{tx("People decide. AI keeps it moving.")}</Reveal>
             </h2>
           </div>
           <RevealFade className="max-w-xl text-lg leading-8 text-primary-foreground/68" delay={0.1}>
-            Licensed advisors and operators stay in charge. KRS AI prepares context, routes evidence, and keeps every
-            compliance workflow visible before a person makes the next call.
+            {tx(
+              "Licensed advisors and operators stay in charge. KRS AI prepares context, routes evidence, and keeps every compliance workflow visible before a person makes the next call.",
+            )}
           </RevealFade>
         </div>
 

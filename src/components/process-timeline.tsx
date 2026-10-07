@@ -12,6 +12,7 @@ import {
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 
 import { Badge } from "@/components/ui/badge";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 export type ProcessStep = {
@@ -121,6 +122,8 @@ function TimelineCard({
   active: boolean;
   index: number;
 }) {
+  const { tx, href } = useI18n();
+
   return (
     <motion.div
       animate={{ opacity: active ? 1 : 0.74, y: active ? 0 : 10 }}
@@ -142,17 +145,17 @@ function TimelineCard({
             )}
             variant="secondary"
           >
-            {step.time}
+            {tx(step.time)}
           </Badge>
           <span className="font-mono text-xs text-muted-foreground">T+0{index}</span>
         </div>
-        <h3 className="mt-6 text-2xl font-semibold leading-tight">{step.title}</h3>
-        <p className="mt-4 leading-7 text-muted-foreground">{step.text}</p>
+        <h3 className="mt-6 text-2xl font-semibold leading-tight">{tx(step.title)}</h3>
+        <p className="mt-4 leading-7 text-muted-foreground">{tx(step.text)}</p>
         <a
           className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-secondary lg:justify-end"
-          href="/onboarding"
+          href={href("/onboarding")}
         >
-          {step.cta}
+          {tx(step.cta)}
           <ArrowRight className="size-4" />
         </a>
       </div>
@@ -180,6 +183,7 @@ function TimelineProofPanel({
   const isMonthly = index === 1;
   const isAnnual = index === 2;
   const isExperts = index === 3;
+  const { tx } = useI18n();
 
   return (
     <motion.div
@@ -203,9 +207,9 @@ function TimelineProofPanel({
           {isOnboarding || isMonthly || isAnnual || isExperts ? null : (
             <div className="relative flex items-start justify-between">
               <div>
-                <p className="mono-label text-muted-foreground">Workflow evidence</p>
+                <p className="mono-label text-muted-foreground">{tx("Workflow evidence")}</p>
                 <p className="font-heading mt-3 max-w-52 text-balance text-2xl font-medium leading-tight">
-                  {step.title}
+                  {tx(step.title)}
                 </p>
               </div>
               <span className="flex size-12 items-center justify-center border border-primary/12 bg-muted">
@@ -257,14 +261,16 @@ function TimelineProofPanel({
 }
 
 function PersonalExpertsPanel() {
+  const { tx } = useI18n();
+
   return (
     <div className="relative overflow-hidden bg-[radial-gradient(circle_at_8%_8%,rgba(244,239,230,0.92),rgba(174,136,47,0.28)_34%,rgba(1,25,54,0.32)_100%)] p-4 shadow-[var(--shadow-md)] sm:p-5">
       <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(90deg,rgba(244,239,230,0.16)_1px,transparent_1px),linear-gradient(0deg,rgba(244,239,230,0.14)_1px,transparent_1px)] [background-size:12px_12px]" />
       <div className="relative bg-background px-5 py-5 shadow-[0_18px_50px_-36px_rgba(1,25,54,0.58)] sm:px-6">
-        <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">Personal experts</p>
-        <p className="font-heading mt-1 text-xl font-medium leading-tight text-foreground sm:text-2xl">Your KRS team is here</p>
+        <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">{tx("Personal experts")}</p>
+        <p className="font-heading mt-1 text-xl font-medium leading-tight text-foreground sm:text-2xl">{tx("Your KRS team is here")}</p>
         <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-          Ask anything and get quick help from real advisors who know your file.
+          {tx("Ask anything and get quick help from real advisors who know your file.")}
         </p>
 
         <div className="mt-6 grid gap-6 text-center sm:grid-cols-3 sm:gap-4">
@@ -272,7 +278,7 @@ function PersonalExpertsPanel() {
             <div className="min-w-0 text-center" key={expert.name}>
               <div className="relative mx-auto size-24 sm:size-28">
                 <Image
-                  alt={`${expert.name}, ${expert.role}`}
+                  alt={`${expert.name}, ${tx(expert.role)}`}
                   className="size-full rounded-full border border-primary/10 object-cover shadow-[var(--shadow-sm)]"
                   height={224}
                   src={expert.image}
@@ -283,7 +289,7 @@ function PersonalExpertsPanel() {
                 </span>
               </div>
               <p className="mt-4 text-lg font-semibold leading-6 text-foreground">{expert.name}</p>
-              <p className="mt-1 text-sm leading-5 text-muted-foreground">{expert.role}</p>
+              <p className="mt-1 text-sm leading-5 text-muted-foreground">{tx(expert.role)}</p>
             </div>
           ))}
         </div>
@@ -293,12 +299,14 @@ function PersonalExpertsPanel() {
 }
 
 function AnnualFoldersPanel() {
+  const { tx } = useI18n();
+
   return (
     <div className="relative overflow-hidden border border-primary/12 bg-background p-4 shadow-[var(--shadow-xs)]">
       <div className="flex items-center justify-between border-b border-primary/12 pb-3">
         <div>
-          <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">Company file</p>
-          <p className="font-heading mt-1 text-xl leading-none text-foreground">Annual package</p>
+          <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">{tx("Company file")}</p>
+          <p className="font-heading mt-1 text-xl leading-none text-foreground">{tx("Annual package")}</p>
         </div>
         <span className="border border-secondary/40 bg-secondary/12 px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-secondary">
           2026
@@ -323,8 +331,8 @@ function AnnualFoldersPanel() {
             <div className="mt-2 h-10 border border-primary/10 bg-background/70">
               <div className={cn("h-full bg-secondary/58", folder.accent ? "w-2/3" : "w-1/2")} />
             </div>
-            <p className="mt-3 text-sm font-semibold leading-5 text-foreground">{folder.title}</p>
-            <p className="mt-1 text-[0.68rem] leading-4 text-muted-foreground">{folder.meta}</p>
+            <p className="mt-3 text-sm font-semibold leading-5 text-foreground">{tx(folder.title)}</p>
+            <p className="mt-1 text-[0.68rem] leading-4 text-muted-foreground">{tx(folder.meta)}</p>
             <span
               className={cn(
                 "mt-3 inline-flex border px-2 py-1 font-mono text-[0.58rem] uppercase leading-none tracking-[0.14em]",
@@ -333,7 +341,7 @@ function AnnualFoldersPanel() {
                   : "border-primary/12 bg-card text-muted-foreground"
               )}
             >
-              {folder.status}
+              {tx(folder.status)}
             </span>
           </div>
         ))}
@@ -345,13 +353,15 @@ function AnnualFoldersPanel() {
           <span className="h-1.5 bg-secondary/70" />
           <span className="h-1.5 bg-primary/16" />
         </div>
-        <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">3 folders</span>
+        <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">{tx("3 folders")}</span>
       </div>
     </div>
   );
 }
 
 function MonthlyNotificationsPanel() {
+  const { tx } = useI18n();
+
   return (
     <div className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,transparent,rgba(174,136,47,0.08)_46%,transparent_76%)]" />
@@ -381,8 +391,8 @@ function MonthlyNotificationsPanel() {
               <div className="min-w-0">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-sm font-semibold leading-5 text-foreground">{notification.title}</p>
-                    <p className="mt-1 max-w-sm text-xs leading-5 text-muted-foreground">{notification.text}</p>
+                    <p className="text-sm font-semibold leading-5 text-foreground">{tx(notification.title)}</p>
+                    <p className="mt-1 max-w-sm text-xs leading-5 text-muted-foreground">{tx(notification.text)}</p>
                   </div>
                   <div className="shrink-0 text-right">
                     <p className="font-mono text-[0.65rem] text-muted-foreground">{notification.time}</p>
@@ -394,7 +404,7 @@ function MonthlyNotificationsPanel() {
                           : "border-primary/12 bg-muted text-muted-foreground"
                       )}
                     >
-                      {notification.status}
+                      {tx(notification.status)}
                     </span>
                   </div>
                 </div>
@@ -418,6 +428,8 @@ function MonthlyNotificationsPanel() {
 }
 
 function OnboardingEvidencePath() {
+  const { tx } = useI18n();
+
   return (
     <div className="relative overflow-hidden py-1">
       <div className="relative hidden min-h-56 md:block">
@@ -449,7 +461,7 @@ function OnboardingEvidencePath() {
                 <p className={cn("font-heading text-2xl leading-none", index === 0 ? "text-secondary" : "text-primary/70")}>
                   {item.number}
                 </p>
-                <p className="mt-1.5 text-xs font-semibold leading-4 text-foreground">{item.label}</p>
+                <p className="mt-1.5 text-xs font-semibold leading-4 text-foreground">{tx(item.label)}</p>
               </div>
             </div>
           );
@@ -466,7 +478,7 @@ function OnboardingEvidencePath() {
             key={item.number}
           >
             <span className="font-heading text-xl leading-none text-secondary">{item.number}</span>
-            <span className="text-xs font-semibold leading-4">{item.label}</span>
+            <span className="text-xs font-semibold leading-4">{tx(item.label)}</span>
           </div>
         ))}
       </div>

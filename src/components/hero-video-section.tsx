@@ -3,6 +3,7 @@ import { ArrowRight, Star } from "lucide-react";
 import { HeroVideoBackground } from "@/components/hero-video-background";
 import { Reveal, RevealFade } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
+import { getI18n } from "@/i18n/request";
 
 const googleProof = {
   score: 4.8,
@@ -10,27 +11,30 @@ const googleProof = {
   href: "https://www.google.com/maps/search/?api=1&query=KRS+Financial+Control+Andrea+Syngrou+Athens",
 } as const;
 
-export function HeroVideoSection() {
+export async function HeroVideoSection() {
+  const { tx, href } = await getI18n();
+
   return (
     <section className="relative flex min-h-[100dvh] flex-col overflow-x-clip lg:min-h-[900px] lg:flex-1">
       <HeroVideoBackground />
       <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-[1400px] flex-1 flex-col items-center justify-center px-4 pb-6 pt-24 sm:px-6 lg:px-12">
         <RevealFade className="mx-auto w-full max-w-4xl text-center" delay={0.08} play="mount">
           <h1 className="font-heading mx-auto max-w-5xl text-balance text-[3.25rem] font-normal leading-[1.08] tracking-[-0.048em] text-primary-foreground sm:text-6xl sm:leading-[1.1] lg:text-[clamp(4.75rem,3.4vw+4vh,6.75rem)] lg:leading-[1.06]">
-            <Reveal play="mount">AI-native accounting.</Reveal>
+            <Reveal play="mount">{tx("AI-native accounting.")}</Reveal>
             <Reveal className="pb-1 leading-[1.12]" delay={0.08} play="mount">
-              <span className="hero-headline-accent italic text-primary-foreground">Human expertise.</span>
+              <span className="hero-headline-accent italic text-primary-foreground">{tx("Human expertise.")}</span>
             </Reveal>
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base leading-6 text-primary-foreground/82 sm:text-lg sm:leading-7 lg:mt-6">
-            KRS combines licensed accounting and tax professionals with AI-native workflows that organize filings,
-            documents, payroll obligations, and advisory questions before they become urgent.
+            {tx(
+              "KRS combines licensed accounting and tax professionals with AI-native workflows that organize filings, documents, payroll obligations, and advisory questions before they become urgent.",
+            )}
           </p>
-          <GoogleTrustRow />
+          <GoogleTrustRow tx={tx} />
           <div className="mt-6 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
             <Button asChild className="h-12 rounded-full px-6 text-base shadow-[var(--shadow-md)]" variant="secondary">
-              <a href="/onboarding">
-                Schedule an initial free consultation
+              <a href={href("/onboarding")}>
+                {tx("Schedule an initial free consultation")}
                 <ArrowRight className="size-5" />
               </a>
             </Button>
@@ -39,8 +43,8 @@ export function HeroVideoSection() {
               className="h-12 rounded-full border-primary-foreground/55 bg-transparent px-6 text-base text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
               variant="outline"
             >
-              <a href="/pricing">
-                Find your plan
+              <a href={href("/pricing")}>
+                {tx("Find your plan")}
                 <ArrowRight className="size-5" />
               </a>
             </Button>
@@ -51,7 +55,7 @@ export function HeroVideoSection() {
   );
 }
 
-function GoogleTrustRow() {
+function GoogleTrustRow({ tx }: { tx: (value: string) => string }) {
   return (
     <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row sm:items-center sm:gap-5">
       <a
@@ -63,12 +67,13 @@ function GoogleTrustRow() {
         <GoogleMark />
         <GoogleStars score={googleProof.score} />
         <span className="text-sm font-semibold">
-          {googleProof.score}/5 on Google
+          {googleProof.score}
+          {tx("/5 on Google")}
           <span className="ml-1.5 font-normal text-primary-foreground/62">({googleProof.count})</span>
         </span>
       </a>
       <span aria-hidden="true" className="hidden h-8 w-px bg-primary-foreground/24 sm:block" />
-      <p className="mono-label hidden text-primary-foreground/62 sm:block">Trusted by hundreds of businesses</p>
+      <p className="mono-label hidden text-primary-foreground/62 sm:block">{tx("Trusted by hundreds of businesses")}</p>
     </div>
   );
 }

@@ -191,8 +191,8 @@ export function PricingCalculator() {
   const selectedStructure = structure ? structures.find((item) => item.id === structure) : undefined;
 
   return (
-    <section aria-labelledby="calculator-heading" className="border-y border-primary/12 bg-muted/55" id="calculator">
-      <div className="mx-auto grid max-w-[1400px] gap-10 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[0.82fr_1.18fr] lg:gap-18 lg:px-12">
+    <section aria-labelledby="calculator-heading" className="border-y border-primary/12 bg-muted/55 px-4 py-16 sm:px-6 md:py-24 lg:px-12" id="calculator">
+      <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-18">
         <div className="max-w-xl">
           <p className="mono-label text-secondary">Pricing calculator</p>
           <h2 className="mt-5 text-balance text-5xl leading-[0.98] text-foreground sm:text-6xl" id="calculator-heading">

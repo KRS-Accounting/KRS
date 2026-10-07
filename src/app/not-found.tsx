@@ -5,13 +5,19 @@ import { ArrowRight } from "lucide-react";
 import { Reveal, RevealFade } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { pageMetadata } from "@/i18n/metadata";
+import { getI18n } from "@/i18n/request";
 
-export const metadata: Metadata = {
-  title: "Page not found | KRS AI",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    ...(await pageMetadata({ title: "Page not found | KRS AI" })),
+    robots: { index: false, follow: false },
+  };
+}
 
-export default function NotFound() {
+export default async function NotFound() {
+  const { tx, href } = await getI18n();
+
   return (
     <>
       <SiteHeader />
@@ -43,28 +49,28 @@ export default function NotFound() {
 
             <h1 className="font-heading mt-7 max-w-[14ch] text-balance text-4xl font-light leading-[1.08] tracking-[-0.045em] sm:text-5xl">
               <span className="sr-only">404. </span>
-              <Reveal play="mount">This page is not on file.</Reveal>
+              <Reveal play="mount">{tx("This page is not on file.")}</Reveal>
             </h1>
             <RevealFade
               className="mt-5 max-w-[36ch] text-base leading-7 text-primary-foreground/78 sm:text-lg"
               delay={0.08}
               play="mount"
             >
-              The address does not match a page we publish. Return home, or look through the services.
+              {tx("The address does not match a page we publish. Return home, or look through the services.")}
             </RevealFade>
             <RevealFade className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-2" delay={0.16} play="mount">
               <Link
                 className="inline-flex h-12 items-center gap-2 border-b border-secondary px-1 text-sm font-semibold text-primary-foreground transition hover:border-primary-foreground hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary active:translate-y-px"
-                href="/"
+                href={href("/")}
               >
-                Back home
+                {tx("Back home")}
                 <ArrowRight className="size-4" strokeWidth={1.75} />
               </Link>
               <Link
                 className="inline-flex h-12 items-center gap-2 border-b border-primary-foreground/35 px-1 text-sm font-semibold text-primary-foreground/78 transition hover:border-primary-foreground hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary active:translate-y-px"
-                href="/#services"
+                href={href("/#services")}
               >
-                See services
+                {tx("See services")}
               </Link>
             </RevealFade>
           </div>

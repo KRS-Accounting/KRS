@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/provider";
 
 import { CompactColumns } from "./compact-columns";
 import { CompactLine } from "./compact-line";
@@ -29,13 +30,14 @@ export function CompactMap({
   services: readonly PlatformService[];
   workItems: readonly FanItem[];
 }) {
+  const { tx } = useI18n();
   const getRadioProps = useRovingRadio({ activeIndex, count: services.length, select });
   const flowProps = { activeIndex, inputItems, reducedMotion, services, workItems };
 
   return (
     <div className="grid gap-8 md:gap-10">
       <div
-        aria-label="KRS services"
+        aria-label={tx("KRS services")}
         className="platform-chip-row -mx-4 flex gap-2 overflow-x-auto px-4 py-1 sm:-mx-6 sm:px-6 lg:-mx-12 lg:px-12"
         role="radiogroup"
       >
@@ -47,7 +49,7 @@ export function CompactMap({
             <button
               key={item.id}
               {...getRadioProps(index)}
-              aria-label={serviceRadioLabel(item)}
+              aria-label={serviceRadioLabel(item, tx)}
               className={cn(
                 "relative flex h-11 shrink-0 items-center gap-2 overflow-hidden rounded-full border px-4 text-sm font-semibold outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-primary",
                 active

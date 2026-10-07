@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRef } from "react";
 
 import { RevealFade } from "@/components/reveal";
+import { useI18n } from "@/i18n/provider";
 
 import { CompactMap } from "./compact-map";
 import type { PlatformService } from "./data";
@@ -87,13 +88,15 @@ function MapFooter({
   reducedMotion: boolean;
   service: PlatformService;
 }) {
+  const { tx, href } = useI18n();
+
   return (
     <div className="mt-10 grid gap-10 border-t border-primary-foreground/10 pt-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 xl:mt-12">
       <div>
         <p className="mono-label text-secondary">
-          {service.name}{" "}
+          {tx(service.name)}{" "}
           <span className="text-primary-foreground/40">
-            / {activeIndex + 1} of {count}
+            / {activeIndex + 1} {tx("of")} {count}
           </span>
         </p>
         <div aria-atomic="true" aria-live={announce ? "polite" : "off"} className="mt-4 min-h-[5.25rem] sm:min-h-[4.5rem]">
@@ -106,27 +109,27 @@ function MapFooter({
               key={service.id}
               transition={{ duration: reducedMotion ? 0 : 0.25 }}
             >
-              {service.caption}
+              {tx(service.caption)}
             </motion.p>
           </AnimatePresence>
         </div>
         <Link
           className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary-foreground transition-[gap,color] duration-300 hover:gap-3 hover:text-secondary focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
-          href={service.href}
+          href={href(service.href)}
         >
-          {service.exploreLabel}
+          {tx(service.exploreLabel)}
           <ArrowRight aria-hidden="true" className="size-4" />
         </Link>
       </div>
 
-      <ul aria-label="Status legend" className="m-0 grid list-none gap-5 p-0 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+      <ul aria-label={tx("Status legend")} className="m-0 grid list-none gap-5 p-0 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
         {reviewStatuses.map((status) => (
           <li className="flex gap-3" key={status}>
             <StatusDot className="mt-1.5" status={status} />
             <span>
-              <span className="block text-sm font-semibold">{statusMeta[status].label}</span>
+              <span className="block text-sm font-semibold">{tx(statusMeta[status].label)}</span>
               <span className="mt-1 block text-sm leading-6 text-primary-foreground/60">
-                {statusMeta[status].description}
+                {tx(statusMeta[status].description)}
               </span>
             </span>
           </li>

@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     isShortText(payload.company) &&
     isShortText(payload.companyStage) &&
     isShortText(payload.teamSize) &&
-    isShortText(payload.industry) &&
+    (payload.industry === undefined || payload.industry === "" || isShortText(payload.industry)) &&
     isShortText(payload.payroll) &&
     Array.isArray(payload.services) &&
     payload.services.length > 0 &&
@@ -82,7 +82,8 @@ export async function POST(request: Request) {
         company: payload.company,
         companyStage: payload.companyStage,
         teamSize: payload.teamSize,
-        industry: payload.industry,
+        industry:
+          typeof payload.industry === "string" && payload.industry.trim() ? payload.industry.trim() : "Other",
         payroll: payload.payroll,
         services: payload.services,
         timeline: payload.timeline ?? "",

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const testimonials = [
@@ -86,6 +87,7 @@ function CompanyLogo({ company, logo }: { company: string; logo: CompanyLogoId }
 }
 
 export function TestimonialsCarousel() {
+  const { tx } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const active = testimonials[activeIndex] ?? testimonials[0];
   const total = testimonials.length;
@@ -111,34 +113,34 @@ export function TestimonialsCarousel() {
       <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-stretch">
         <div className="flex flex-col justify-between border-t border-primary/12 pt-6">
           <div>
-            <p className="mono-label text-secondary">Customer testimonials</p>
+            <p className="mono-label text-secondary">{tx("Customer testimonials")}</p>
             <h2 className="mt-5 text-balance text-5xl font-normal leading-[0.95]">
-              <Reveal>Don&apos;t take our word for it. Take theirs.</Reveal>
+              <Reveal>{tx("Don't take our word for it. Take theirs.")}</Reveal>
             </h2>
           </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button
-              aria-label="Previous testimonial"
+              aria-label={tx("Previous testimonial")}
               className="h-11 rounded-full px-4"
               onClick={controls.previous}
               type="button"
               variant="outline"
             >
               <ArrowLeft className="size-4" />
-              Back
+              {tx("Back")}
             </Button>
             <Button
-              aria-label="Next testimonial"
+              aria-label={tx("Next testimonial")}
               className="h-11 rounded-full px-4"
               onClick={controls.next}
               type="button"
               variant="outline"
             >
-              Next
+              {tx("Next")}
               <ArrowRight className="size-4" />
             </Button>
-            <div className="ml-1 flex items-center gap-2" aria-label="Testimonial position">
+            <div className="ml-1 flex items-center gap-2" aria-label={tx("Testimonial position")}>
               {testimonials.map((testimonial, index) => (
                 <span
                   className={cn(
@@ -156,7 +158,7 @@ export function TestimonialsCarousel() {
           <div className="grid h-full grid-rows-[0.45fr_0.55fr] items-stretch gap-px bg-primary/12 lg:grid-cols-[0.48fr_0.52fr] lg:grid-rows-none">
             <div className="relative min-h-0 overflow-hidden bg-primary">
               <Image
-                alt="Portrait of testimonial speaker"
+                alt={tx("Portrait of testimonial speaker")}
                 className="object-cover"
                 fill
                 sizes="(min-width: 1024px) 34vw, 100vw"
@@ -173,12 +175,12 @@ export function TestimonialsCarousel() {
                   {"\u201C"}
                 </span>
                 <blockquote className="font-heading text-balance text-[30px] font-light leading-[1.32]">
-                  {active.quote}
+                  {tx(active.quote)}
                 </blockquote>
               </div>
               <div className="shrink-0 border-t border-primary/12 pt-6">
                 <p className="font-semibold">{active.name}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{active.role}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{tx(active.role)}</p>
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useId, type CSSProperties, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/provider";
 
 import type { FanItem } from "./fan-list";
 import { cycleDelay, type StagePoint } from "./geometry";
@@ -46,8 +47,10 @@ export function FlowList({
   /** Edge the dots sit on: `start` reads away from the dot, `end` mirrors the row to read toward it. */
   side: "start" | "end";
 }) {
+  const { tx } = useI18n();
+
   return (
-    <ul aria-label={label} className="pointer-events-none absolute inset-0 m-0 list-none p-0">
+    <ul aria-label={tx(label)} className="pointer-events-none absolute inset-0 m-0 list-none p-0">
       <AnimatePresence initial={false}>
         {items.map((item, index) => {
           const point = points[index];
@@ -72,7 +75,7 @@ export function FlowList({
               <StatusDot pulseDelay={pulseDelays?.[index]} status={item.status} />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-sm font-medium leading-[18px] text-primary-foreground/92">
-                  {item.label}
+                  {tx(item.label)}
                 </span>
                 <span className={cn("mt-1 flex items-center gap-2", side === "end" && "flex-row-reverse")}>
                   <span
@@ -83,11 +86,11 @@ export function FlowList({
                         : "text-xs text-primary-foreground/55"
                     )}
                   >
-                    {item.meta}
+                    {tx(item.meta)}
                   </span>
                   <StatusBars status={item.status} />
                 </span>
-                <span className="sr-only">{`, ${statusMeta[item.status].label}`}</span>
+                <span className="sr-only">{`, ${tx(statusMeta[item.status].label)}`}</span>
               </span>
             </motion.li>
           );
@@ -108,10 +111,12 @@ export function FlowHeader({
   subtitle: string;
   title: string;
 }) {
+  const { tx } = useI18n();
+
   return (
     <div className={cn("flex flex-wrap items-baseline gap-x-3 gap-y-1", className)} style={style}>
-      <p className="shrink-0 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">{title}</p>
-      <p className="min-w-0 truncate text-xs text-primary-foreground/50">{subtitle}</p>
+      <p className="shrink-0 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">{tx(title)}</p>
+      <p className="min-w-0 truncate text-xs text-primary-foreground/50">{tx(subtitle)}</p>
     </div>
   );
 }
@@ -127,12 +132,14 @@ export function PlatformCaption({
   count: number;
   style?: CSSProperties;
 }) {
+  const { tx } = useI18n();
+
   return (
     <div className={cn("pointer-events-none", className)} style={style}>
-      <p className="text-lg font-medium leading-tight">KRS Platform</p>
+      <p className="text-lg font-medium leading-tight">{tx("KRS Platform")}</p>
       <p className="mt-1 text-[13px] text-primary-foreground/58">
-        AI + Human review ·{" "}
-        <span className="font-semibold text-secondary tabular-nums">{activeIndex + 1}</span> of{" "}
+        {tx("AI + Human review")} ·{" "}
+        <span className="font-semibold text-secondary tabular-nums">{activeIndex + 1}</span> {tx("of")}{" "}
         <span className="font-semibold text-secondary tabular-nums">{count}</span>
       </p>
     </div>

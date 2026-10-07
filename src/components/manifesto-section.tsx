@@ -3,8 +3,11 @@
 import Image from "next/image";
 
 import { RevealFade, RevealWords } from "@/components/reveal";
+import { useI18n } from "@/i18n/provider";
 
 export function ManifestoSection() {
+  const { tx } = useI18n();
+
   return (
     <section className="relative overflow-hidden bg-primary pt-24 text-primary-foreground lg:py-36" id="about">
       <div
@@ -26,10 +29,11 @@ export function ManifestoSection() {
 
       <div className="relative z-10 mx-auto grid max-w-[1400px] grid-cols-12 gap-8 px-4 sm:px-6 lg:px-12">
         <div className="col-span-12 lg:col-span-3 lg:min-h-[520px]">
-          <p className="mono-label text-secondary">Manifesto / 01</p>
+          <p className="mono-label text-secondary">{tx("Manifesto / 01")}</p>
           <RevealFade className="mt-5 max-w-xs text-sm leading-7 text-primary-foreground/56" delay={0.05}>
-            Accounting should feel like an operating discipline, not a periodic scramble through portals, folders, and
-            inboxes.
+            {tx(
+              "Accounting should feel like an operating discipline, not a periodic scramble through portals, folders, and inboxes.",
+            )}
           </RevealFade>
         </div>
 
@@ -37,17 +41,18 @@ export function ManifestoSection() {
           <RevealWords
             className="font-heading text-balance text-4xl font-light leading-[1.04] sm:text-5xl md:text-6xl lg:text-7xl"
             lines={[
-              [{ text: "We believe trust is built through evidence, cadence, and accountable review." }],
+              [{ text: tx("We believe trust is built through evidence, cadence, and accountable review.") }],
               [
-                { text: "AI should not obscure the work.", accent: true },
-                { text: "It should make the work inspectable." },
+                { text: tx("AI should not obscure the work."), accent: true },
+                { text: tx("It should make the work inspectable.") },
               ],
             ]}
           />
           <RevealFade className="mt-8 flex items-center gap-4 lg:hidden" delay={0.15}>
             <span className="h-px w-10 bg-secondary" />
             <p className="text-sm leading-6 text-primary-foreground/68">
-              <span className="font-semibold text-primary-foreground">Konstantinos Raikos</span>, Founder and CEO
+              <span className="font-semibold text-primary-foreground">{tx("Konstantinos Raikos")}</span>
+              {tx(", Founder and CEO")}
             </p>
           </RevealFade>
         </div>
@@ -56,7 +61,7 @@ export function ManifestoSection() {
       {/* Mobile / tablet: photo sits on the bottom edge, no gradient frame */}
       <div className="relative z-10 mx-auto mt-10 max-w-[1400px] px-4 sm:px-6 lg:hidden">
         <Image
-          alt="Konstantinos Raikos, founder and CEO of KRS"
+          alt={tx("Konstantinos Raikos, founder and CEO of KRS")}
           className="mx-auto h-auto w-full max-w-sm object-contain object-bottom"
           height={900}
           sizes="(max-width: 1023px) 90vw, 0px"

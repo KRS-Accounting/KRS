@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, Languages, Menu, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronRight, Languages, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+import { useI18n } from "@/i18n/provider";
+import { withLocale, type Locale } from "@/i18n/locale";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -42,7 +45,6 @@ const navItems: MegaNavItem[] = [
     ctaHref: "/onboarding",
     columns: [
       {
-        title: "Our Services",
         links: [
           {
             label: "Accounting",
@@ -69,15 +71,6 @@ const navItems: MegaNavItem[] = [
             description: "Business plan, funding, and business development support",
             href: "/services/consulting",
           },
-        ],
-      },
-      {
-        title: "Platform Features",
-        links: [
-          { label: "Meet Tax Deadlines", description: "All deadlines automatically tracked", href: "/#process" },
-          { label: "Manage Tax Documents", description: "Documents digitally organized and secure", href: "/#agents" },
-          { label: "Get Expert Advice", description: "Direct questions to your tax advisor", href: "/onboarding" },
-          { label: "Automated Data Exchange", description: "Seamlessly connect your tools", href: "/#agents" },
         ],
       },
     ],
@@ -292,12 +285,15 @@ const navItems: MegaNavItem[] = [
 ];
 
 const languageOptions = [
-  { value: "el", label: "Greek" },
-  { value: "en", label: "English" },
-  { value: "he", label: "Hebrew" },
-  { value: "ar", label: "Arabic" },
-  { value: "zh", label: "Chinese" },
+  { value: "el", label: "Greek", native: "Ελληνικά", available: true },
+  { value: "en", label: "English", native: "English", available: true },
+  { value: "he", label: "Hebrew", native: "עברית", available: false },
+  { value: "ar", label: "Arabic", native: "العربية", available: false },
+  { value: "zh", label: "Chinese", native: "中文", available: false },
 ] as const;
+
+type LanguageValue = (typeof languageOptions)[number]["value"];
+type MobileView = "menu" | "languages";
 
 const clientLogin = "https://krs-platform-staging-6xbnf.ondigitalocean.app/portal/login";
 
@@ -314,8 +310,19 @@ const mobileLinks = [
   { label: "Blog", href: "/#field-notes" },
 ] as const;
 
+const pageVariants = {
+  enter: (direction: number) => ({ x: direction > 0 ? "100%" : "-100%" }),
+  center: { x: "0%" },
+  exit: (direction: number) => ({ x: direction > 0 ? "-100%" : "100%" }),
+};
+
 export function SiteHeader() {
+  const { locale, pathname, tx, href } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileView, setMobileView] = useState<MobileView>("menu");
+  const [direction, setDirection] = useState(1);
+  const backButtonRef = useRef<HTMLButtonElement>(null);
+  const showingLanguages = menuOpen && mobileView === "languages";
 
   useEffect(() => {
     document.documentElement.style.overflow = menuOpen ? "hidden" : "";
@@ -323,6 +330,34 @@ export function SiteHeader() {
       document.documentElement.style.overflow = "";
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    if (showingLanguages) {
+      backButtonRef.current?.focus();
+    }
+  }, [showingLanguages]);
+
+  function openLanguages() {
+    setDirection(1);
+    setMobileView("languages");
+  }
+
+  function showMenu() {
+    setDirection(-1);
+    setMobileView("menu");
+  }
+
+  function closeMenu() {
+    setMenuOpen(false);
+  }
+
+  function onLanguageChange(value: LanguageValue) {
+    if (value !== "el" && value !== "en") return;
+
+    const hash = window.location.hash;
+    window.location.assign(withLocale(value as Locale, `${pathname}${hash}`));
+    closeMenu();
+  }
 
   return (
     <>
@@ -335,17 +370,29 @@ export function SiteHeader() {
         )}
       >
         <nav className="relative mx-auto flex h-18 max-w-[1400px] items-center justify-between">
-          <Link aria-label="KRS AI home" className="flex items-center" href="/">
-            <Image
-              alt="KRS AI"
-              className="h-14 w-auto"
-              height={416}
-              priority
-              src={menuOpen ? "/logos/Full%20logo.svg" : "/logos/Full%20logo%20Dark.png"}
-              unoptimized
-              width={1008}
-            />
-          </Link>
+          {showingLanguages ? (
+            <button
+              aria-label={tx("Back to menu")}
+              className="flex size-11 items-center justify-center rounded-full bg-primary-foreground text-primary"
+              onClick={showMenu}
+              ref={backButtonRef}
+              type="button"
+            >
+              <ArrowLeft className="size-5" strokeWidth={1.75} />
+            </button>
+          ) : (
+            <Link aria-label={tx("KRS AI home")} className="flex items-center" href={href("/")}>
+              <Image
+                alt="KRS AI"
+                className="h-14 w-auto"
+                height={416}
+                priority
+                src={menuOpen ? "/logos/Full%20logo.svg" : "/logos/Full%20logo%20Dark.png"}
+                unoptimized
+                width={1008}
+              />
+            </Link>
+          )}
           <div className="hidden h-full items-center gap-2 lg:flex">
             {navItems
               .filter((item) => !item.hidden)
@@ -356,28 +403,28 @@ export function SiteHeader() {
           <div className="flex items-center gap-2">
             <div
               className={cn(
-                "hidden items-center gap-2 border-l border-primary/12 pl-4 sm:flex",
-                menuOpen && "sm:hidden",
+                "hidden items-center gap-2 border-l border-primary/12 pl-4 lg:flex",
+                menuOpen && "lg:hidden",
               )}
             >
-              <LanguageSelect id="site-language" />
+              <LanguageSelect id="site-language" onChange={onLanguageChange} value={locale} />
             </div>
             <Button
               asChild
               className={cn("hidden h-10 rounded-full px-5 sm:inline-flex", menuOpen && "sm:hidden")}
               variant="ghost"
             >
-              <a href={clientLogin}>Client login</a>
+              <a href={clientLogin}>{tx("Client login")}</a>
             </Button>
             <Button asChild className={cn("hidden h-10 rounded-full px-5 shadow-sm sm:inline-flex", menuOpen && "sm:hidden")}>
-              <a href="/onboarding">
-                Contact
+              <a href={href("/onboarding")}>
+                {tx("Contact")}
                 <ArrowRight className="size-4" strokeWidth={1.75} />
               </a>
             </Button>
             <button
               aria-expanded={menuOpen}
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-label={menuOpen ? tx("Close menu") : tx("Open menu")}
               className={cn(
                 "flex size-11 items-center justify-center rounded-full transition-colors duration-300 lg:hidden",
                 menuOpen
@@ -393,45 +440,55 @@ export function SiteHeader() {
         </nav>
       </header>
 
-      <MobileMenu onClose={() => setMenuOpen(false)} open={menuOpen} />
+      <MobileMenu
+        direction={direction}
+        language={locale}
+        onClose={closeMenu}
+        onExitComplete={() => setMobileView("menu")}
+        onLanguageChange={onLanguageChange}
+        onOpenLanguages={openLanguages}
+        open={menuOpen}
+        view={mobileView}
+      />
     </>
   );
 }
 
-function LanguageSelect({ id, tone = "light" }: { id: string; tone?: "light" | "dark" }) {
+function LanguageSelect({
+  id,
+  value,
+  onChange,
+}: {
+  id: string;
+  value: LanguageValue;
+  onChange: (value: LanguageValue) => void;
+}) {
+  const { tx } = useI18n();
+
   return (
     <>
       <label className="sr-only" htmlFor={id}>
-        Select language
+        {tx("Select language")}
       </label>
-      <Languages
-        className={cn("size-3.5 shrink-0", tone === "dark" ? "text-secondary" : "text-secondary")}
-        strokeWidth={1.75}
-      />
+      <Languages className="size-3.5 shrink-0 text-secondary" strokeWidth={1.75} />
       <div className="relative">
         <select
-          aria-label="Language selector"
-          className={cn(
-            "h-9 appearance-none rounded-full border py-0 pl-3 pr-8 text-xs font-semibold outline-none transition focus-visible:ring-3",
-            tone === "dark"
-              ? "w-full border-primary-foreground/16 bg-primary-foreground/8 text-primary-foreground hover:border-primary-foreground/28 focus-visible:border-secondary focus-visible:ring-secondary/30"
-              : "w-[118px] border-primary/12 bg-background text-foreground hover:border-primary/25 focus-visible:border-ring focus-visible:ring-ring/50",
-          )}
-          defaultValue="en"
+          aria-label={tx("Select language")}
+          className="h-9 w-[132px] appearance-none rounded-full border border-primary/12 bg-background py-0 pl-3 pr-8 text-xs font-semibold text-foreground outline-none transition hover:border-primary/25 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           id={id}
+          onChange={(event) => onChange(event.target.value as LanguageValue)}
+          value={value}
         >
-          {languageOptions.map((language) => (
-            <option key={language.value} value={language.value}>
-              {language.label}
+          {languageOptions.map((option) => (
+            <option disabled={!option.available} key={option.value} value={option.value}>
+              {option.native}
+              {option.available ? "" : ` · ${tx("Later")}`}
             </option>
           ))}
         </select>
         <ChevronDown
           aria-hidden="true"
-          className={cn(
-            "pointer-events-none absolute right-2.5 top-1/2 size-3 -translate-y-1/2",
-            tone === "dark" ? "text-primary-foreground/55" : "text-muted-foreground",
-          )}
+          className="pointer-events-none absolute right-2.5 top-1/2 size-3 -translate-y-1/2 text-muted-foreground"
           strokeWidth={1.75}
         />
       </div>
@@ -439,52 +496,154 @@ function LanguageSelect({ id, tone = "light" }: { id: string; tone?: "light" | "
   );
 }
 
-function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+const menuItemClass =
+  "flex w-full items-center justify-between gap-4 border-b border-primary-foreground/10 py-4 text-left font-heading text-3xl font-normal tracking-[-0.03em]";
+
+function MobileMenu({
+  open,
+  view,
+  direction,
+  language,
+  onOpenLanguages,
+  onLanguageChange,
+  onClose,
+  onExitComplete,
+}: {
+  open: boolean;
+  view: MobileView;
+  direction: number;
+  language: LanguageValue;
+  onOpenLanguages: () => void;
+  onLanguageChange: (value: LanguageValue) => void;
+  onClose: () => void;
+  onExitComplete: () => void;
+}) {
   const reduce = useReducedMotion();
+  const { tx, href } = useI18n();
+  const currentLanguage = languageOptions.find((option) => option.value === language) ?? languageOptions[0];
 
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={onExitComplete}>
       {open ? (
         <motion.div
           animate={{ clipPath: "inset(0% 0% 0% 0% round 0px)" }}
-          className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-primary px-6 pb-10 pt-28 text-primary-foreground lg:hidden"
+          className="fixed inset-0 z-40 overflow-hidden bg-primary text-primary-foreground lg:hidden"
           exit={{ clipPath: "inset(0% 0% 100% 0% round 0px)" }}
           initial={reduce ? false : { clipPath: "inset(0% 0% 100% 0% round 0px)" }}
           transition={{ duration: reduce ? 0 : 0.6, ease: easeOut }}
         >
-          <nav aria-label="Mobile" className="flex flex-col">
-            {mobileLinks.map((item, index) => (
+          <AnimatePresence custom={direction} initial={false}>
+            {view === "menu" ? (
               <motion.div
-                animate={{ opacity: 1, y: 0 }}
-                initial={reduce ? false : { opacity: 0, y: 24 }}
-                key={item.href + item.label}
-                transition={{ duration: reduce ? 0 : 0.6, delay: reduce ? 0 : 0.15 + index * 0.04, ease: easeOut }}
+                animate="center"
+                className="absolute inset-0 flex flex-col overflow-y-auto px-6 pb-10 pt-28"
+                custom={direction}
+                exit="exit"
+                initial={reduce ? "center" : "enter"}
+                key="menu"
+                transition={{ duration: reduce ? 0 : 0.45, ease: easeOut }}
+                variants={reduce ? undefined : pageVariants}
               >
-                <Link
-                  className="block border-b border-primary-foreground/10 py-4 font-heading text-3xl font-normal tracking-[-0.03em]"
-                  href={item.href}
-                  onClick={onClose}
-                >
-                  {item.label}
-                </Link>
-              </motion.div>
-            ))}
-          </nav>
+                <nav aria-label="Mobile" className="flex flex-col">
+                  {mobileLinks.map((item, index) => (
+                    <motion.div
+                      animate={{ opacity: 1, y: 0 }}
+                      initial={reduce || direction < 0 ? false : { opacity: 0, y: 24 }}
+                      key={item.href + item.label}
+                      transition={{ duration: reduce ? 0 : 0.6, delay: reduce || direction < 0 ? 0 : 0.15 + index * 0.04, ease: easeOut }}
+                    >
+                      <Link className={menuItemClass} href={href(item.href)} onClick={onClose}>
+                        {tx(item.label)}
+                      </Link>
+                    </motion.div>
+                  ))}
+                  <motion.div
+                    animate={{ opacity: 1, y: 0 }}
+                    initial={reduce || direction < 0 ? false : { opacity: 0, y: 24 }}
+                    transition={{
+                      duration: reduce ? 0 : 0.6,
+                      delay: reduce || direction < 0 ? 0 : 0.15 + mobileLinks.length * 0.04,
+                      ease: easeOut,
+                    }}
+                  >
+                    <button className={menuItemClass} onClick={onOpenLanguages} type="button">
+                      <span>{tx("Language")}</span>
+                      <span className="flex shrink-0 items-center gap-1 font-sans text-sm font-medium tracking-normal text-primary-foreground/60">
+                        {currentLanguage.native}
+                        <ChevronRight aria-hidden="true" className="size-4" strokeWidth={1.75} />
+                      </span>
+                    </button>
+                  </motion.div>
+                </nav>
 
-          <div className="mt-auto flex flex-col gap-4 pt-10">
-            <div className="flex items-center gap-3">
-              <LanguageSelect id="mobile-language" tone="dark" />
-            </div>
-            <Button asChild className="h-12 w-full rounded-full bg-primary-foreground px-6 text-primary hover:bg-primary-foreground/90">
-              <a href="/onboarding" onClick={onClose}>
-                Contact
-                <ArrowRight className="size-4" strokeWidth={1.75} />
-              </a>
-            </Button>
-            <a className="py-2 text-center text-sm text-primary-foreground/68 transition hover:text-primary-foreground" href={clientLogin}>
-              Client login
-            </a>
-          </div>
+                <div className="mt-auto flex flex-col gap-4 pt-10">
+                  <Button asChild className="h-12 w-full rounded-full bg-primary-foreground px-6 text-primary hover:bg-primary-foreground/90">
+                    <a href={href("/onboarding")} onClick={onClose}>
+                      {tx("Contact")}
+                      <ArrowRight className="size-4" strokeWidth={1.75} />
+                    </a>
+                  </Button>
+                  <Button
+                    asChild
+                    className="h-12 w-full rounded-full border-primary-foreground/40 bg-transparent px-6 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                    variant="outline"
+                  >
+                    <a href={clientLogin} onClick={onClose}>
+                      {tx("Client login")}
+                    </a>
+                  </Button>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                animate="center"
+                className="absolute inset-0 overflow-y-auto px-6 pb-10 pt-28"
+                custom={direction}
+                exit="exit"
+                initial={reduce ? "center" : "enter"}
+                key="languages"
+                transition={{ duration: reduce ? 0 : 0.45, ease: easeOut }}
+                variants={reduce ? undefined : pageVariants}
+              >
+                <nav aria-label="Languages" className="flex flex-col">
+                  {languageOptions.map((option, index) => {
+                    const selected = option.value === language;
+
+                    return (
+                      <motion.div
+                        animate={{ opacity: 1, y: 0 }}
+                        initial={reduce ? false : { opacity: 0, y: 24 }}
+                        key={option.value}
+                        transition={{ duration: reduce ? 0 : 0.5, delay: reduce ? 0 : 0.08 + index * 0.04, ease: easeOut }}
+                      >
+                        <button
+                          aria-current={selected ? "true" : undefined}
+                          className={menuItemClass}
+                          disabled={!option.available}
+                          onClick={() => onLanguageChange(option.value)}
+                          type="button"
+                        >
+                          <span className="min-w-0">
+                            <span className="block" lang={option.value}>
+                              {option.native}
+                            </span>
+                            {option.native === option.label ? null : (
+                              <span className="mt-1 block font-sans text-sm font-medium tracking-normal text-primary-foreground/55">
+                                {option.available ? option.label : tx("Later")}
+                              </span>
+                            )}
+                          </span>
+                          {selected ? (
+                            <Check aria-hidden="true" className="size-5 shrink-0 text-secondary" strokeWidth={1.75} />
+                          ) : null}
+                        </button>
+                      </motion.div>
+                    );
+                  })}
+                </nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       ) : null}
     </AnimatePresence>
@@ -504,6 +663,7 @@ function megaMenuPanelWidth(item: MegaNavItem, hasFeaturePanel: boolean) {
 }
 
 function HeaderMegaNavItem({ item }: { item: MegaNavItem }) {
+  const { tx, href } = useI18n();
   const features = item.features ?? [];
   const hasFeaturePanel = features.length > 0;
 
@@ -514,7 +674,7 @@ function HeaderMegaNavItem({ item }: { item: MegaNavItem }) {
         className="flex h-full appearance-none items-center gap-1 bg-transparent px-2 text-sm font-medium text-muted-foreground outline-none transition hover:text-foreground focus-visible:text-foreground"
         type="button"
       >
-        {item.label}
+        {tx(item.label)}
         <ChevronDown
           aria-hidden="true"
           className="mega-menu-chevron size-3.5 transition duration-200"
@@ -546,14 +706,14 @@ function HeaderMegaNavItem({ item }: { item: MegaNavItem }) {
             >
               {item.columns.map((column, columnIndex) => (
                 <div key={column.title ?? column.links[0]?.href ?? columnIndex}>
-                  {column.title ? <p className="mono-label mb-3 text-muted-foreground">{column.title}</p> : null}
+                  {column.title ? <p className="mono-label mb-3 text-muted-foreground">{tx(column.title)}</p> : null}
                   <ul>
                     {column.links.map((link) => (
                       <li className="border-t border-primary/10 first:border-t-0" key={link.label}>
-                        <a className="group/link block py-3 outline-none" href={link.href}>
+                        <a className="group/link block py-3 outline-none" href={href(link.href)}>
                           <span className="flex items-start justify-between gap-4">
                             <span className="text-sm font-semibold leading-5 text-foreground transition group-hover/link:text-secondary group-focus-visible/link:text-secondary">
-                              {link.label}
+                              {tx(link.label)}
                             </span>
                             <ArrowRight
                               aria-hidden="true"
@@ -563,7 +723,7 @@ function HeaderMegaNavItem({ item }: { item: MegaNavItem }) {
                           </span>
                           {link.description ? (
                             <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-                              {link.description}
+                              {tx(link.description)}
                             </span>
                           ) : null}
                         </a>
@@ -581,14 +741,14 @@ function HeaderMegaNavItem({ item }: { item: MegaNavItem }) {
                 {features.map((feature) => (
                   <a
                     className="group/card block border border-primary-foreground/12 bg-primary-foreground/8 p-4 outline-none transition hover:bg-primary-foreground/12 focus-visible:bg-primary-foreground/12"
-                    href={feature.href}
+                    href={href(feature.href)}
                     key={feature.label}
                   >
                     <span className="flex items-start justify-between gap-4">
                       <span>
-                        <span className="mono-label text-secondary">{feature.eyebrow}</span>
+                        <span className="mono-label text-secondary">{tx(feature.eyebrow)}</span>
                         <span className="mt-2 block text-base font-semibold leading-5 text-primary-foreground">
-                          {feature.label}
+                          {tx(feature.label)}
                         </span>
                       </span>
                       <ArrowRight
@@ -598,15 +758,15 @@ function HeaderMegaNavItem({ item }: { item: MegaNavItem }) {
                       />
                     </span>
                     <span className="mt-3 block text-xs leading-5 text-primary-foreground/58">
-                      {feature.description}
+                      {feature.description ? tx(feature.description) : null}
                     </span>
                   </a>
                 ))}
               </div>
 
               <Button asChild className="mt-6 h-11 w-full rounded-full px-5 text-sm font-semibold" variant="secondary">
-                <a href={item.ctaHref}>
-                  {item.ctaLabel}
+                <a href={href(item.ctaHref)}>
+                  {tx(item.ctaLabel)}
                   <ArrowRight className="size-4" strokeWidth={1.75} />
                 </a>
               </Button>

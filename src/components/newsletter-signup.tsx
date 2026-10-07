@@ -5,6 +5,7 @@ import { ArrowRight, Check, Mail, RotateCcw } from "lucide-react";
 import { useId, useState, type FormEvent } from "react";
 
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/provider";
 
 const promises = ["5 min read", "Once a month", "No spam"];
 
@@ -14,6 +15,7 @@ type FieldErrors = { email?: string; consent?: string };
 const isEmail = (value: string) => /^\S+@\S+\.\S+$/.test(value.trim());
 
 export function NewsletterSignup() {
+  const { tx } = useI18n();
   const id = useId();
   const reduce = useReducedMotion();
   const [email, setEmail] = useState("");
@@ -31,8 +33,8 @@ export function NewsletterSignup() {
     if (status === "submitting") return;
 
     const nextErrors: FieldErrors = {
-      email: isEmail(email) ? undefined : "Enter a valid email address.",
-      consent: consent ? undefined : "Tick the box so we can send you the letter.",
+      email: isEmail(email) ? undefined : tx("Enter a valid email address."),
+      consent: consent ? undefined : tx("Tick the box so we can send you the letter."),
     };
     setErrors(nextErrors);
     if (nextErrors.email || nextErrors.consent) return;
@@ -64,13 +66,14 @@ export function NewsletterSignup() {
       className="grid gap-8 border-b border-primary-foreground/12 py-12 lg:grid-cols-12 lg:items-center lg:gap-10"
     >
       <div className="lg:col-span-6">
-        <p className="mono-label text-secondary">KRS Letter</p>
+        <p className="mono-label text-secondary">{tx("KRS Letter")}</p>
         <h2 className="type-h4 mt-4 text-primary-foreground" id={`${id}-title`}>
-          Greek tax changes, before they reach your books.
+          {tx("Greek tax changes, before they reach your books.")}
         </h2>
         <p className="mt-3 max-w-xl text-sm leading-7 text-primary-foreground/68">
-          One email a month from our advisors: new AADE and myDATA rules, the deadlines coming up, and what we are
-          building at KRS.
+          {tx(
+            "One email a month from our advisors: new AADE and myDATA rules, the deadlines coming up, and what we are building at KRS.",
+          )}
         </p>
         <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
           {promises.map((promise) => (
@@ -78,7 +81,7 @@ export function NewsletterSignup() {
               <span className="flex size-4 items-center justify-center rounded-full bg-secondary/20 text-secondary">
                 <Check className="size-2.5" strokeWidth={3} />
               </span>
-              {promise}
+              {tx(promise)}
             </li>
           ))}
         </ul>
@@ -97,9 +100,9 @@ export function NewsletterSignup() {
                 <Check className="size-4" strokeWidth={2.5} />
               </span>
               <div>
-                <p className="font-semibold text-primary-foreground">You&apos;re on the list.</p>
+                <p className="font-semibold text-primary-foreground">{tx("You're on the list.")}</p>
                 <p className="mt-1 text-sm leading-6 text-primary-foreground/68">
-                  The next KRS Letter arrives at the start of the month.
+                  {tx("The next KRS Letter arrives at the start of the month.")}
                 </p>
               </div>
             </motion.div>
@@ -124,7 +127,7 @@ export function NewsletterSignup() {
               >
                 <Mail aria-hidden="true" className="size-4 shrink-0 text-primary-foreground/48" strokeWidth={1.75} />
                 <label className="sr-only" htmlFor={emailId}>
-                  Email address
+                  {tx("Email address")}
                 </label>
                 <input
                   aria-describedby={errors.email ? emailErrorId : undefined}
@@ -142,7 +145,7 @@ export function NewsletterSignup() {
                     setEmail(event.target.value);
                     if (errors.email && isEmail(event.target.value)) setErrors((current) => ({ ...current, email: undefined }));
                   }}
-                  placeholder="Enter your email"
+                  placeholder={tx("Enter your email")}
                   type="email"
                   value={email}
                 />
@@ -153,12 +156,12 @@ export function NewsletterSignup() {
                 >
                   {status === "submitting" ? (
                     <>
-                      Sending
+                      {tx("Sending")}
                       <RotateCcw className="size-4 animate-spin" strokeWidth={1.75} />
                     </>
                   ) : (
                     <>
-                      Subscribe
+                      {tx("Subscribe")}
                       <ArrowRight className="size-4" strokeWidth={1.75} />
                     </>
                   )}
@@ -183,7 +186,7 @@ export function NewsletterSignup() {
                   }}
                   type="checkbox"
                 />
-                <span>I agree to receive the KRS Letter and occasional updates from KRS. Unsubscribe anytime.</span>
+                <span>{tx("I agree to receive the KRS Letter and occasional updates from KRS. Unsubscribe anytime.")}</span>
               </label>
               {errors.consent && (
                 <FieldError className="pl-7" id={consentErrorId}>
@@ -192,7 +195,7 @@ export function NewsletterSignup() {
               )}
               {status === "error" && (
                 <FieldError className="pl-7">
-                  We couldn&apos;t sign you up just now. Try again, or email krs@krs.gr.
+                  {tx("We couldn't sign you up just now. Try again, or email krs@krs.gr.")}
                 </FieldError>
               )}
             </motion.form>

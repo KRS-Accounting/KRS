@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight, Check, CircleCheck } from "lucide-react";
+import { motion } from "motion/react";
 
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/utils";
@@ -230,39 +231,51 @@ export function PricingPlans() {
   const headings = journey === "existing" ? ["Independent", "IKE / EPE", "AE", "Custom"] : ["Independent Start", "IKE / EPE Start", "AE Start", "Custom Start"];
   return (
     <div className="border-b border-primary/12 bg-[#FDF8F0]">
-    <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-12">
+    <section className="px-4 py-16 sm:px-6 md:py-24 lg:px-12">
+      <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-6 border-b border-primary/12 pb-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
           <div><p className="mono-label text-secondary">Monthly plans</p><h2 className="mt-4 text-balance text-5xl leading-[0.98] sm:text-6xl"><Reveal>A plan for the structure you run.</Reveal></h2></div>
           <p className="max-w-2xl text-lg leading-8 text-muted-foreground">Select the route that describes you today. Existing companies get a clear operating rhythm. New companies get formation support before that rhythm begins.</p>
         </div>
-        <div aria-label="Select your business journey" className="mt-8 inline-grid w-full border border-primary/15 bg-muted/55 p-1 sm:w-auto sm:grid-cols-2" role="tablist">
-          <button
-            aria-selected={journey === "existing"}
-            className={`min-h-12 px-5 text-sm font-semibold transition ${journey === "existing" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-            onClick={() => {
-              setJourney("existing");
-              setSelectedPlanIndex(DEFAULT_PLAN_INDEX);
-              setHoveredPlanIndex(null);
-            }}
-            role="tab"
-            type="button"
-          >
-            I have a business
-          </button>
-          <button
-            aria-selected={journey === "formation"}
-            className={`min-h-12 px-5 text-sm font-semibold transition ${journey === "formation" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-            onClick={() => {
-              setJourney("formation");
-              setSelectedPlanIndex(DEFAULT_PLAN_INDEX);
-              setHoveredPlanIndex(null);
-            }}
-            role="tab"
-            type="button"
-          >
-            I&apos;m starting a business
-          </button>
+        <div
+          aria-label="Select your business journey"
+          className="mt-8 inline-flex w-max max-w-full items-center gap-1 rounded-full bg-background p-1 ring-1 ring-primary/8"
+          role="tablist"
+        >
+          {(
+            [
+              ["existing", "I have a business"],
+              ["formation", "I'm starting a business"],
+            ] as const
+          ).map(([value, label]) => {
+            const selected = journey === value;
+            return (
+              <button
+                aria-selected={selected}
+                className={cn(
+                  "relative whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-colors duration-300 min-[375px]:px-4 min-[375px]:text-sm",
+                  selected ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+                )}
+                key={value}
+                onClick={() => {
+                  setJourney(value);
+                  setSelectedPlanIndex(DEFAULT_PLAN_INDEX);
+                  setHoveredPlanIndex(null);
+                }}
+                role="tab"
+                type="button"
+              >
+                {selected ? (
+                  <motion.span
+                    className="absolute inset-0 rounded-full bg-primary"
+                    layoutId="pricing-journey-tab"
+                    transition={{ type: "spring", stiffness: 380, damping: 34 }}
+                  />
+                ) : null}
+                <span className="relative">{label}</span>
+              </button>
+            );
+          })}
         </div>
         <div
           className="mt-10 grid auto-rows-auto grid-cols-1 items-stretch gap-x-4 gap-y-4 md:grid-cols-2 xl:grid-cols-4"
@@ -282,8 +295,8 @@ export function PricingPlans() {
         <p className="mt-6 text-sm leading-6 text-muted-foreground">Prices are monthly starting points, excluding VAT. Formation steps, specialist tax work, and complex legal or notarial requirements are confirmed in writing before work begins.</p>
       </div>
     </section>
-    <section className="py-16 md:py-24" id="comparison">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-12">
+    <section className="px-4 py-16 sm:px-6 md:py-24 lg:px-12" id="comparison">
+      <div className="mx-auto max-w-[1400px]">
         <div className="max-w-2xl"><p className="mono-label text-secondary">Compare plans</p><h2 className="mt-4 text-balance text-5xl leading-[0.98] sm:text-6xl"><Reveal>The detail behind the monthly fee.</Reveal></h2><p className="mt-5 text-lg leading-8 text-muted-foreground">The table follows the selected path above, so you can compare recurring work or the setup work that prepares your company to operate.</p></div>
         <div className="mt-10 overflow-x-auto border border-primary/15 bg-background">
           <div className="min-w-240">

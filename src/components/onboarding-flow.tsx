@@ -151,7 +151,6 @@ export function OnboardingFlow({
     if (currentStep === 1) {
       if (!formData.companyStage) nextErrors.companyStage = "Choose the option that best describes your company.";
       if (!formData.teamSize) nextErrors.teamSize = "Choose your current team size.";
-      if (!formData.industry) nextErrors.industry = "Choose your industry.";
       if (!formData.payroll) nextErrors.payroll = "Let us know whether you currently run payroll.";
       if (formData.services.length === 0) nextErrors.services = "Choose at least one area where you need help.";
     }
@@ -176,6 +175,7 @@ export function OnboardingFlow({
     ...formData,
     workEmail: formData.workEmail.trim().toLowerCase(),
     phone: formatPhoneForSubmit(formData.phone),
+    industry: formData.industry || "Other",
     timeline: booking === "phone_call" ? formData.timeline : "",
     callWindow: booking === "phone_call" ? formData.callWindow : "",
     notes: booking === "phone_call" ? formData.notes : "",
@@ -398,9 +398,8 @@ export function OnboardingFlow({
 
                   <div className="grid items-start gap-6 sm:grid-cols-2">
                     <label className={fieldLabelClassName} htmlFor="industry">
-                      Industry
+                      Industry (optional)
                       <select
-                        aria-invalid={Boolean(errors.industry)}
                         className={cn(
                           "mt-2 h-12 w-full appearance-none px-4 text-left outline-none",
                           choiceControlClassName
@@ -416,7 +415,6 @@ export function OnboardingFlow({
                           </option>
                         ))}
                       </select>
-                      {errors.industry && <FieldError>{errors.industry}</FieldError>}
                     </label>
                     <OptionGroup
                       columns="grid-cols-2"

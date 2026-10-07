@@ -30,6 +30,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SlimCta } from "@/components/slim-cta";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
+import { getI18n } from "@/i18n/request";
 import { cn } from "@/lib/utils";
 
 const mediaSignals = [
@@ -162,12 +163,13 @@ export default function Home() {
   );
 }
 
-function MediaSection() {
+async function MediaSection() {
+  const { tx } = await getI18n();
   const sequence = Array.from({ length: pressTickerCopies }, () => mediaSignals).flat();
 
   return (
     <section className="shrink-0 border-y border-primary/12 bg-card py-6" id="media">
-      <h2 className="sr-only">Press</h2>
+      <h2 className="sr-only">{tx("Press")}</h2>
       <div className="overflow-hidden">
         <div className="ticker-track flex w-max" style={{ animationDuration: pressTickerDuration }}>
           {[0, 1].map((copy) => (
@@ -194,9 +196,9 @@ function MediaSection() {
                     </span>
                     <div>
                       <p className="font-semibold underline decoration-primary/0 underline-offset-4 transition group-hover/media:decoration-secondary group-focus-visible/media:decoration-secondary">
-                        {item.label}
+                        {tx(item.label)}
                       </p>
-                      <p className="mt-0.5 text-sm text-muted-foreground">{item.note}</p>
+                      <p className="mt-0.5 text-sm text-muted-foreground">{tx(item.note)}</p>
                     </div>
                   </a>
                 );
@@ -247,15 +249,19 @@ function SectionIntro({
   );
 }
 
-function ProcessSection() {
+async function ProcessSection() {
+  const { tx } = await getI18n();
+
   return (
     <section className="relative overflow-hidden border-y border-primary/12 bg-muted/55 px-4 py-24 text-foreground sm:px-6 lg:px-12" id="process">
       <div className="relative mx-auto max-w-[1400px]">
         <SectionIntro
           className="lg:grid-cols-[0.65fr_0.35fr]"
-          eyebrow="Your start at KRS AI"
-          text="The timeline remains simple: start, monthly close, annual filings, and ongoing advisory. Each phase has visible evidence and a clear owner."
-          title="From day one to year-end."
+          eyebrow={tx("Your start at KRS AI")}
+          text={tx(
+            "The timeline remains simple: start, monthly close, annual filings, and ongoing advisory. Each phase has visible evidence and a clear owner.",
+          )}
+          title={tx("From day one to year-end.")}
         />
         <ProcessTimeline steps={processSteps} />
       </div>
@@ -263,31 +269,34 @@ function ProcessSection() {
   );
 }
 
-function WhySection() {
+async function WhySection() {
+  const { tx, href } = await getI18n();
+
   return (
     <section className="bg-card px-4 py-24 sm:px-6 lg:px-12" id="why">
       <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
           <div>
-            <p className="mono-label text-secondary">Why KRS AI?</p>
+            <p className="mono-label text-secondary">{tx("Why KRS AI?")}</p>
             <h2 className="type-h3 mt-5 max-w-3xl text-balance">
-              <Reveal>Built for founders and finance teams.</Reveal>
+              <Reveal>{tx("Built for founders and finance teams.")}</Reveal>
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-              The benefit is not a prettier portal. It is fewer unknowns, earlier questions, and better-reviewed
-              decisions across accounting, payroll, tax, and filings.
+              {tx(
+                "The benefit is not a prettier portal. It is fewer unknowns, earlier questions, and better-reviewed decisions across accounting, payroll, tax, and filings.",
+              )}
             </p>
             <Link
               className="mt-8 inline-flex items-center gap-2 text-sm font-semibold transition hover:gap-3 hover:text-secondary"
-              href="/why"
+              href={href("/why")}
             >
-              See why KRS
+              {tx("See why KRS")}
               <ArrowRight className="size-4" />
             </Link>
           </div>
           <div className="gradient-shell shadow-[var(--shadow-lg)]">
             <Image
-              alt="A connected KRS AI operating layer for accounting, advice, compliance, and live reporting"
+              alt={tx("A connected KRS AI operating layer for accounting, advice, compliance, and live reporting")}
               className="w-full bg-card"
               height={640}
               src="/images/krs-why-ai-phone.jpg"
@@ -306,8 +315,8 @@ function WhySection() {
                   <span className="font-mono text-xs text-secondary">0{index + 1}</span>
                   <Icon className="size-5 text-muted-foreground" />
                 </div>
-                <h3 className="mt-16 text-2xl font-semibold leading-tight">{benefit.value}</h3>
-                <p className="mt-3 leading-7 text-muted-foreground">{benefit.text}</p>
+                <h3 className="mt-16 text-2xl font-semibold leading-tight">{tx(benefit.value)}</h3>
+                <p className="mt-3 leading-7 text-muted-foreground">{tx(benefit.text)}</p>
               </div>
             );
           })}
@@ -321,7 +330,9 @@ function TestimonialSection() {
   return <TestimonialsCarousel />;
 }
 
-function CareersSection() {
+async function CareersSection() {
+  const { tx, href } = await getI18n();
+
   return (
     <section className="bg-accent px-4 py-24 text-primary-foreground sm:px-6 lg:px-12" id="careers">
       <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:items-center">
@@ -329,30 +340,30 @@ function CareersSection() {
           <div className="relative aspect-[3/4] overflow-hidden bg-background p-8 text-foreground">
             <div className="relative flex h-full flex-col justify-between">
               <div className="flex items-center justify-center">
-                <Image alt="KRS AI" className="h-8 w-auto" height={416} src="/logos/Full%20logo%20Dark.png" unoptimized width={1008} />
+                <Image alt={tx("KRS AI")} className="h-8 w-auto" height={416} src="/logos/Full%20logo%20Dark.png" unoptimized width={1008} />
               </div>
               <div className="relative mx-auto flex aspect-square w-[74%] items-center justify-center">
                 <CareersClock className="w-full" />
               </div>
               <div className="text-center">
                 <p className="font-heading text-balance text-4xl font-normal leading-none">
-                  Six focused hours. Work worth doing.
+                  {tx("Six focused hours. Work worth doing.")}
                 </p>
-                <p className="mono-label mt-5 text-muted-foreground">Athens / On site / Six-hour day</p>
+                <p className="mono-label mt-5 text-muted-foreground">{tx("Athens / On site / Six-hour day")}</p>
               </div>
             </div>
           </div>
         </div>
 
         <div>
-          <p className="mono-label text-secondary">FEATURE / SPRING EDITION</p>
+          <p className="mono-label text-secondary">{tx("FEATURE / SPRING EDITION")}</p>
           <h2 className="type-h3 mt-6 text-balance">
-            <Reveal>Join a 6-hour working day.</Reveal>
+            <Reveal>{tx("Join a 6-hour working day.")}</Reveal>
           </h2>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-primary-foreground/72">
-            KRS AI is built around focused work, healthy lifestyle, and fewer repetitive loops. Agentic workflows handle
-            document chasing, routing, and mundane portal work so advisors, operators, and engineers can spend their best
-            hours on judgment, systems, and client outcomes.
+            {tx(
+              "KRS AI is built around focused work, healthy lifestyle, and fewer repetitive loops. Agentic workflows handle document chasing, routing, and mundane portal work so advisors, operators, and engineers can spend their best hours on judgment, systems, and client outcomes.",
+            )}
           </p>
           <div className="mt-10 grid grid-cols-2 gap-6">
             {[
@@ -363,13 +374,13 @@ function CareersSection() {
             ].map(([value, label]) => (
               <div key={label}>
                 <p className="font-heading text-5xl font-medium text-secondary">{value}</p>
-                <p className="mono-label mt-2 text-primary-foreground/58">{label}</p>
+                <p className="mono-label mt-2 text-primary-foreground/58">{tx(label)}</p>
               </div>
             ))}
           </div>
           <Button asChild className="mt-10 h-12 rounded-full bg-primary-foreground px-6 text-primary hover:bg-primary-foreground/90">
-            <Link href="/careers">
-              See open roles
+            <Link href={href("/careers")}>
+              {tx("See open roles")}
               <ArrowRight className="size-4" />
             </Link>
           </Button>
@@ -379,19 +390,21 @@ function CareersSection() {
   );
 }
 
-function FaqSection() {
+async function FaqSection() {
+  const { tx } = await getI18n();
+
   return (
     <section className="bg-background px-4 py-24 sm:px-6 lg:px-12" id="faq">
       <div className="mx-auto max-w-[1400px]">
         <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mono-label text-secondary">FAQ</p>
+            <p className="mono-label text-secondary">{tx("FAQ")}</p>
             <h2 className="type-h3 mt-5 text-balance">
-              <Reveal>Before you start.</Reveal>
+              <Reveal>{tx("Before you start.")}</Reveal>
             </h2>
           </div>
           <p className="max-w-sm text-sm leading-7 text-muted-foreground">
-            Straight answers on bookkeeping, tax advice, and how KRS works with Greek businesses.
+            {tx("Straight answers on bookkeeping, tax advice, and how KRS works with Greek businesses.")}
           </p>
         </div>
 
@@ -400,10 +413,10 @@ function FaqSection() {
             <AccordionItem className="border-b border-primary/16" key={faq.question} value={`item-${index}`}>
               <AccordionTrigger className="grid grid-cols-[auto_1fr_auto] gap-5 rounded-none py-8 text-left text-xl font-semibold hover:no-underline sm:text-2xl">
                 <span className="font-mono text-base text-secondary">0{index + 1}</span>
-                <span>{faq.question}</span>
+                <span>{tx(faq.question)}</span>
               </AccordionTrigger>
               <AccordionContent className="ml-11 max-w-3xl pb-8 text-base leading-8 text-muted-foreground">
-                {faq.answer}
+                {tx(faq.answer)}
               </AccordionContent>
             </AccordionItem>
           ))}
@@ -413,15 +426,17 @@ function FaqSection() {
   );
 }
 
-function SocialVideosSection() {
+async function SocialVideosSection() {
+  const { tx } = await getI18n();
+
   return (
     <section className="bg-card px-4 pb-24 sm:px-6 lg:px-12" id="social-videos">
       <div className="mx-auto max-w-[1400px] pt-16">
         <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mono-label text-secondary">Video podcasts</p>
+            <p className="mono-label text-secondary">{tx("Video podcasts")}</p>
             <h2 className="type-h3 mt-5 text-balance">
-              <Reveal>The founder on building a company.</Reveal>
+              <Reveal>{tx("The founder on building a company.")}</Reveal>
             </h2>
           </div>
           <a
@@ -430,7 +445,7 @@ function SocialVideosSection() {
             rel="noreferrer"
             target="_blank"
           >
-            Watch more episodes
+            {tx("Watch more episodes")}
             <ArrowRight className="size-4" />
           </a>
         </div>
@@ -452,16 +467,16 @@ function SocialVideosSection() {
                   loading="lazy"
                   referrerPolicy="strict-origin-when-cross-origin"
                   src={`https://www.youtube-nocookie.com/embed/${video.id}`}
-                  title={video.title}
+                  title={tx(video.title)}
                 />
               </div>
               <div className="mb-3 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                <span>Episode</span>
+                <span>{tx("Episode")}</span>
                 <span>/</span>
                 <span>0{index + 1}</span>
               </div>
-              <h3 className="text-2xl font-semibold leading-tight">{video.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{video.text}</p>
+              <h3 className="text-2xl font-semibold leading-tight">{tx(video.title)}</h3>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{tx(video.text)}</p>
             </article>
           ))}
         </div>

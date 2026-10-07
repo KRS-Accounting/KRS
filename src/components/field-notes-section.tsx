@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 import { Reveal } from "@/components/reveal";
+import { getI18n } from "@/i18n/request";
 import { cn } from "@/lib/utils";
 
 const fieldNotes = [
@@ -25,11 +26,13 @@ const fieldNotes = [
   },
 ];
 
-export function FieldNotesSection({
+export async function FieldNotesSection({
   showTopRule = true,
 }: {
   showTopRule?: boolean;
 } = {}) {
+  const { tx } = await getI18n();
+
   return (
     <section className="bg-card px-4 pb-24 sm:px-6 lg:px-12" id="field-notes">
       <div
@@ -40,13 +43,13 @@ export function FieldNotesSection({
       >
         <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mono-label text-secondary">From the KRS blog</p>
+            <p className="mono-label text-secondary">{tx("From the KRS blog")}</p>
             <h2 className="type-h3 mt-5 text-balance">
-              <Reveal>Tax news from Greece.</Reveal>
+              <Reveal>{tx("Tax news from Greece.")}</Reveal>
             </h2>
           </div>
           <a className="inline-flex items-center gap-2 text-sm font-semibold transition hover:gap-3" href="#">
-            Read all articles
+            {tx("Read all articles")}
             <ArrowRight className="size-4" />
           </a>
         </div>
@@ -71,20 +74,20 @@ export function FieldNotesSection({
                   />
                 ) : (
                   <div className="relative flex h-full flex-col justify-between p-7 text-primary-foreground">
-                    <p className="relative mono-label text-primary-foreground/58">note / 0{index + 1}</p>
+                    <p className="relative mono-label text-primary-foreground/58">{tx("note")} / 0{index + 1}</p>
                     <p className="font-heading relative text-balance text-5xl font-normal leading-[0.92]">
-                      {index === 1 ? "The month closes before year-end." : "Advisory begins with evidence."}
+                      {tx(index === 1 ? "The month closes before year-end." : "Advisory begins with evidence.")}
                     </p>
                   </div>
                 )}
               </div>
               <div className="mb-3 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                <span>{note.type}</span>
+                <span>{tx(note.type)}</span>
                 <span>/</span>
-                <span>{note.read}</span>
+                <span>{tx(note.read)}</span>
               </div>
-              <h3 className="text-2xl font-semibold leading-tight">{note.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{note.text}</p>
+              <h3 className="text-2xl font-semibold leading-tight">{tx(note.title)}</h3>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{tx(note.text)}</p>
             </article>
           ))}
         </div>
