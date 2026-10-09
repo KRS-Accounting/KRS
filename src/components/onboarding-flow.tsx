@@ -6,6 +6,8 @@ import { ArrowLeft, ArrowRight, CalendarDays, Check, ExternalLink, Phone, Rotate
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 
+import { useI18n } from "@/i18n/provider";
+import type { Locale } from "@/i18n/locale";
 import { cn } from "@/lib/utils";
 
 type FormState = {
@@ -71,28 +73,44 @@ const serviceOptions = ["Tax advisory", "Accounting and myDATA", "Payroll", "Bus
 const timelineOptions = ["This week", "Within two weeks", "I am flexible"] as const;
 const callWindows = ["Morning, 09:00-12:00", "Midday, 12:00-15:00", "Afternoon, 15:00-18:00"] as const;
 
-const callSummary = (timeline: string, callWindow: string) => {
+const callSummary = (timeline: string, callWindow: string, locale: Locale) => {
+  const [start, end] = callWindow.split(", ")[1]?.split("-") ?? [];
+  const greek = locale === "el";
   const when =
     timeline === "This week"
-      ? "this week"
+      ? greek
+        ? "αυτή την εβδομάδα"
+        : "this week"
       : timeline === "Within two weeks"
-        ? "within the next two weeks"
-        : "when it suits you";
-  const [start, end] = callWindow.split(", ")[1]?.split("-") ?? [];
-  const part =
-    callWindow.startsWith("Morning")
-      ? "in the morning"
-      : callWindow.startsWith("Midday")
-        ? "around midday"
+        ? greek
+          ? "μέσα στις επόμενες δύο εβδομάδες"
+          : "within the next two weeks"
+        : greek
+          ? "όποτε σας βολεύει"
+          : "when it suits you";
+  const part = callWindow.startsWith("Morning")
+    ? greek
+      ? "το πρωί"
+      : "in the morning"
+    : callWindow.startsWith("Midday")
+      ? greek
+        ? "το μεσημέρι"
+        : "around midday"
+      : greek
+        ? "το απόγευμα"
         : "in the afternoon";
 
-  return start && end ? `${when}, ${part}, between ${start} and ${end} Athens time` : when;
+  if (!start || !end) return when;
+
+  return greek
+    ? `${when}, ${part}, μεταξύ ${start} και ${end}, ώρα Αθήνας`
+    : `${when}, ${part}, between ${start} and ${end} Athens time`;
 };
 type ContactMode = "phone" | "calendar";
 type SubmitStatus = "idle" | "submitting" | "success";
 
 const bookingsPageUrl =
-  "https://bookings.cloud.microsoft/book/MichaelSfictos@pgroup.gr/?ismsaljsauthenabled";
+  "https://bookings.cloud.microsoft/book/KRSSalesmeeting@krs.gr/?ismsaljsauthenabled";
 
 const fieldLabelClassName = "block text-sm font-semibold";
 const fieldsetClassName = "m-0 min-w-0 border-0 p-0";
@@ -111,6 +129,7 @@ export function OnboardingFlow({
   defaultServices?: readonly string[];
 } = {}) {
   const prefersReducedMotion = useReducedMotion();
+  const { tx, locale, href } = useI18n();
   const [formData, setFormData] = useState<FormState>(() =>
     defaultServices?.length ? { ...initialState, services: [...defaultServices] } : initialState,
   );
@@ -231,19 +250,20 @@ export function OnboardingFlow({
         <span className="flex size-12 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
           <Check className="size-6" strokeWidth={2} />
         </span>
-        <p className="mono-label mt-8 text-secondary">Consultation request</p>
+        <p className="mono-label mt-8 text-secondary">{tx("Consultation request")}</p>
         <h2 className={cn("mt-4 max-w-xl text-balance font-medium leading-tight", compact ? "text-3xl" : "text-4xl sm:text-5xl")}>
-          Thank you{firstName ? `, ${firstName}` : ""}.
+          {locale === "el" ? "Ευχαριστούμε" : "Thank you"}
+          {firstName ? `, ${firstName}` : ""}.
         </h2>
         <p className={cn("mt-5 max-w-xl text-muted-foreground", compact ? "text-sm leading-6" : "text-base leading-7 sm:text-lg sm:leading-8")}>
-          We will call you {callSummary(formData.timeline, formData.callWindow)}.
+          {locale === "el" ? "Θα σας καλέσουμε" : "We will call you"} {callSummary(formData.timeline, formData.callWindow, locale)}.
         </p>
         <div className="mt-9 flex flex-col gap-3 border-t border-primary/14 pt-7 sm:flex-row">
           <Link
             className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-primary/20 px-6 text-sm font-semibold text-primary transition hover:border-primary/40 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary active:translate-y-px"
-            href="/"
+            href={href("/")}
           >
-            Return to KRS
+            {tx("Return to KRS")}
             <ArrowRight className="size-4" strokeWidth={1.75} />
           </Link>
         </div>
@@ -253,7 +273,7 @@ export function OnboardingFlow({
 
   return (
     <div>
-      <ol aria-label="Consultation request progress" className="grid grid-cols-3 gap-3 border-b border-primary/14 pb-4">
+      <ol aria-label={tx("Consultation request progress")} className="grid grid-cols-3 gap-3 border-b border-primary/14 pb-4">
         {progressLabels.map((label, index) => (
           <li
             aria-current={step === index ? "step" : undefined}
@@ -273,7 +293,7 @@ export function OnboardingFlow({
               >
                 {index < step ? <Check className="size-3" strokeWidth={2.25} /> : index + 1}
               </span>
-              <span className="leading-4">{label}</span>
+              <span className="leading-4">{tx(label)}</span>
             </span>
           </li>
         ))}
@@ -302,7 +322,7 @@ export function OnboardingFlow({
           >
             {step === 0 && (
               <div>
-                <p className="mono-label text-secondary">A few essentials</p>
+                <p className="mono-label text-secondary">{tx("A few essentials")}</p>
                 <h2
                   className={cn(
                     "mt-4 text-balance font-medium leading-tight",
@@ -311,7 +331,7 @@ export function OnboardingFlow({
                   ref={headingRef}
                   tabIndex={-1}
                 >
-                  Let&apos;s make the first call useful.
+                  {tx("Let's make the first call useful.")}
                 </h2>
                 <p
                   className={cn(
@@ -319,7 +339,7 @@ export function OnboardingFlow({
                     compact ? "text-sm leading-6" : "leading-7",
                   )}
                 >
-                  We use these details to match you with the right advisor and reply personally.
+                  {tx("We use these details to match you with the right advisor and reply personally.")}
                 </p>
 
                 <div className={cn("grid gap-x-5 gap-y-6 sm:grid-cols-2", compact ? "mt-6" : "mt-8")}>
@@ -360,7 +380,7 @@ export function OnboardingFlow({
 
             {step === 1 && (
               <div>
-                <p className="mono-label text-secondary">Your business</p>
+                <p className="mono-label text-secondary">{tx("Your business")}</p>
                 <h2
                   className={cn(
                     "mt-4 text-balance font-medium leading-tight",
@@ -369,7 +389,7 @@ export function OnboardingFlow({
                   ref={headingRef}
                   tabIndex={-1}
                 >
-                  Give us the shape of your business.
+                  {tx("Give us the shape of your business.")}
                 </h2>
                 <p
                   className={cn(
@@ -377,7 +397,7 @@ export function OnboardingFlow({
                     compact ? "text-sm leading-6" : "leading-7",
                   )}
                 >
-                  A quick profile helps us bring the right tax, accounting, or payroll context to the call.
+                  {tx("A quick profile helps us bring the right tax, accounting, or payroll context to the call.")}
                 </p>
 
                 <div className={cn("grid", compact ? "mt-6 gap-5" : "mt-8 gap-7")}>
@@ -398,7 +418,7 @@ export function OnboardingFlow({
 
                   <div className="grid items-start gap-6 sm:grid-cols-2">
                     <label className={fieldLabelClassName} htmlFor="industry">
-                      Industry (optional)
+                      {tx("Industry (optional)")}
                       <select
                         className={cn(
                           "mt-2 h-12 w-full appearance-none px-4 text-left outline-none",
@@ -408,10 +428,10 @@ export function OnboardingFlow({
                         onChange={(event) => updateField("industry", event.target.value)}
                         value={formData.industry}
                       >
-                        <option value="">Select your industry</option>
+                        <option value="">{tx("Select your industry")}</option>
                         {industries.map((industry) => (
                           <option key={industry} value={industry}>
-                            {industry}
+                            {tx(industry)}
                           </option>
                         ))}
                       </select>
@@ -453,7 +473,7 @@ export function OnboardingFlow({
                 type="button"
               >
                 <ArrowLeft className="size-4" strokeWidth={1.75} />
-                Back
+                {tx("Back")}
               </button>
             ) : (
               <span />
@@ -463,7 +483,7 @@ export function OnboardingFlow({
               className="inline-flex h-12 min-w-36 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary active:translate-y-px"
               type="submit"
             >
-              Continue
+              {tx("Continue")}
               <ArrowRight className="size-4" strokeWidth={1.75} />
             </button>
           </div>
@@ -473,7 +493,7 @@ export function OnboardingFlow({
 
       {step === 2 && (
         <div className={compact ? "mt-6" : "mt-8"}>
-          <p className="mono-label text-secondary">The call</p>
+          <p className="mono-label text-secondary">{tx("The call")}</p>
           <h2
             className={cn(
               "mt-4 text-balance font-medium leading-tight",
@@ -482,7 +502,7 @@ export function OnboardingFlow({
             ref={headingRef}
             tabIndex={-1}
           >
-            When should we talk?
+            {tx("When should we talk?")}
           </h2>
           <p
             className={cn(
@@ -490,10 +510,10 @@ export function OnboardingFlow({
               compact ? "text-sm leading-6" : "leading-7",
             )}
           >
-            Ask us to phone you at a time that suits you, or book an exact slot on our calendar.
+            {tx("Ask us to phone you at a time that suits you, or book an exact slot on our calendar.")}
           </p>
 
-          <div className={cn("grid gap-3 sm:grid-cols-2", compact ? "mt-6" : "mt-8")} role="group" aria-label="How should we talk?">
+          <div className={cn("grid gap-3 sm:grid-cols-2", compact ? "mt-6" : "mt-8")} role="group" aria-label={tx("How should we talk?")}>
             <button
               aria-pressed={contactMode === "phone"}
               className={cn(
@@ -509,10 +529,10 @@ export function OnboardingFlow({
             >
               <span className="flex items-center gap-2">
                 <Phone className="size-4" strokeWidth={1.75} />
-                Phone me
+                {tx("Phone me")}
               </span>
               <span className={cn("text-sm font-normal leading-5", contactMode === "phone" ? "text-primary-foreground/78" : "text-muted-foreground")}>
-                Choose a day window and a time of day. We will call you then.
+                {tx("Choose a day window and a time of day. We will call you then.")}
               </span>
             </button>
             <button
@@ -531,10 +551,10 @@ export function OnboardingFlow({
             >
               <span className="flex items-center gap-2">
                 <CalendarDays className="size-4" strokeWidth={1.75} />
-                Book on the calendar
+                {tx("Book on the calendar")}
               </span>
               <span className={cn("text-sm font-normal leading-5", contactMode === "calendar" ? "text-primary-foreground/78" : "text-muted-foreground")}>
-                Pick an exact time. The calendar opens in a new window.
+                {tx("Pick an exact time. The calendar opens in a new window.")}
               </span>
             </button>
           </div>
@@ -558,13 +578,13 @@ export function OnboardingFlow({
                 value={formData.callWindow}
               />
               <label className={fieldLabelClassName} htmlFor="notes">
-                Anything we should know before the call? (optional)
+                {tx("Anything we should know before the call? (optional)")}
                 <textarea
                   className={cn(inputClassName, "h-28 resize-none py-3 leading-6")}
                   id="notes"
                   maxLength={1000}
                   onChange={(event) => updateField("notes", event.target.value)}
-                  placeholder="A deadline, current challenge, or question you want us to prepare for."
+                  placeholder={tx("A deadline, current challenge, or question you want us to prepare for.")}
                   value={formData.notes}
                 />
               </label>
@@ -576,7 +596,7 @@ export function OnboardingFlow({
                     onChange={(event) => updateField("privacy", event.target.checked)}
                     type="checkbox"
                   />
-                  <span>I agree that KRS may contact me about this consultation request.</span>
+                  <span>{tx("I agree that KRS may contact me about this consultation request.")}</span>
                 </label>
                 {errors.privacy && <FieldError>{errors.privacy}</FieldError>}
               </div>
@@ -588,12 +608,12 @@ export function OnboardingFlow({
                 >
                   {status === "submitting" ? (
                     <>
-                      Sending
+                      {tx("Sending")}
                       <RotateCcw className="size-4 animate-spin" strokeWidth={1.75} />
                     </>
                   ) : (
                     <>
-                      Request my call
+                      {tx("Request my call")}
                       <ArrowRight className="size-4" strokeWidth={1.75} />
                     </>
                   )}
@@ -605,7 +625,7 @@ export function OnboardingFlow({
           {contactMode === "calendar" && (
             <div className={cn("border border-primary/12 px-5 py-5", compact ? "mt-6" : "mt-8")}>
               <p className={cn("max-w-xl text-muted-foreground", compact ? "text-sm leading-6" : "leading-7")}>
-                The call is booked as soon as you choose a time, and you will get a confirmation invite.
+                {tx("The call is booked as soon as you choose a time, and you will get a confirmation invite.")}
               </p>
               <a
                 className="mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary active:translate-y-px"
@@ -616,7 +636,7 @@ export function OnboardingFlow({
                 rel="noreferrer"
                 target="_blank"
               >
-                Open calendar
+                {tx("Open calendar")}
                 <ExternalLink className="size-4" strokeWidth={1.75} />
               </a>
             </div>
@@ -629,7 +649,7 @@ export function OnboardingFlow({
               type="button"
             >
               <ArrowLeft className="size-4" strokeWidth={1.75} />
-              Back
+              {tx("Back")}
             </button>
           </div>
         </div>
@@ -657,9 +677,11 @@ function TextField({
   type?: "text";
   autoComplete?: string;
 }) {
+  const { tx } = useI18n();
+
   return (
     <label className={fieldLabelClassName} htmlFor={name}>
-      {label}
+      {tx(label)}
       <input
         aria-invalid={Boolean(error)}
         autoComplete={autoComplete}
@@ -667,7 +689,7 @@ function TextField({
         id={name}
         name={name}
         onChange={(event) => onChange(event.target.value)}
-        placeholder={placeholder}
+        placeholder={tx(placeholder)}
         type={type}
         value={value}
       />
@@ -691,11 +713,12 @@ function EmailField({
   onChange: (value: string) => void;
   onBlur: (value: string) => void;
 }) {
+  const { tx } = useI18n();
   const errorId = `${name}-error`;
 
   return (
     <label className={fieldLabelClassName} htmlFor={name}>
-      {label}
+      {tx(label)}
       <input
         aria-describedby={error ? errorId : undefined}
         aria-invalid={Boolean(error)}
@@ -731,11 +754,12 @@ function PhoneField({
   error?: string;
   onPhoneChange: (value: string) => void;
 }) {
+  const { tx } = useI18n();
   const errorId = "phone-error";
 
   return (
     <label className={fieldLabelClassName}>
-      Phone
+      {tx("Phone")}
       <div className="mt-2 flex">
         <span
           aria-hidden="true"
@@ -802,9 +826,11 @@ function OptionGroup({
   error?: string;
   columns?: string;
 }) {
+  const { tx } = useI18n();
+
   return (
     <fieldset className={fieldsetClassName}>
-      <legend className={cn(fieldLabelClassName, "w-full max-w-full px-0 ps-0")}>{label}</legend>
+      <legend className={cn(fieldLabelClassName, "w-full max-w-full px-0 ps-0")}>{tx(label)}</legend>
       <div className={cn("mt-2 grid gap-2", columns)}>
         {options.map((option) => {
           const selected = value === option;
@@ -821,7 +847,7 @@ function OptionGroup({
               onClick={() => onSelect(option)}
               type="button"
             >
-              <span>{option}</span>
+              <span>{tx(option)}</span>
               {selected && <Check className="size-4 shrink-0 text-secondary" strokeWidth={2.25} />}
             </button>
           );
@@ -845,9 +871,11 @@ function MultiOptionGroup({
   onToggle: (value: string) => void;
   error?: string;
 }) {
+  const { tx } = useI18n();
+
   return (
     <fieldset className={fieldsetClassName}>
-      <legend className={cn(fieldLabelClassName, "w-full max-w-full px-0 ps-0")}>{label}</legend>
+      <legend className={cn(fieldLabelClassName, "w-full max-w-full px-0 ps-0")}>{tx(label)}</legend>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {options.map((option) => {
           const selected = values.includes(option);
@@ -864,7 +892,7 @@ function MultiOptionGroup({
               onClick={() => onToggle(option)}
               type="button"
             >
-              <span>{option}</span>
+              <span>{tx(option)}</span>
               <span
                 className={cn(
                   "flex size-5 shrink-0 items-center justify-center border border-primary/22",
@@ -883,9 +911,11 @@ function MultiOptionGroup({
 }
 
 function FieldError({ children, id }: { children: string; id?: string }) {
+  const { tx } = useI18n();
+
   return (
     <span className="mt-2 block text-xs font-medium leading-5 text-destructive" id={id} role="alert">
-      {children}
+      {tx(children)}
     </span>
   );
 }

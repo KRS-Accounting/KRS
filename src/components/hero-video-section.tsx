@@ -19,9 +19,9 @@ export async function HeroVideoSection() {
       <HeroVideoBackground />
       <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-[1400px] flex-1 flex-col items-center justify-center px-4 pb-6 pt-24 sm:px-6 lg:px-12">
         <RevealFade className="mx-auto w-full max-w-4xl text-center" delay={0.08} play="mount">
-          <h1 className="font-heading mx-auto max-w-5xl text-balance text-[3.25rem] font-normal leading-[1.08] tracking-[-0.048em] text-primary-foreground sm:text-6xl sm:leading-[1.1] lg:text-[clamp(4.75rem,3.4vw+4vh,6.75rem)] lg:leading-[1.06]">
+          <h1 className="hero-display-heading font-heading mx-auto max-w-5xl text-balance text-[3.25rem] font-normal leading-[1.08] tracking-[-0.048em] text-primary-foreground sm:text-6xl sm:leading-[1.1] lg:text-[clamp(4.75rem,3.4vw+4vh,6.75rem)] lg:leading-[1.06]">
             <Reveal play="mount">{tx("AI-native accounting.")}</Reveal>
-            <Reveal className="pb-1 leading-[1.12]" delay={0.08} play="mount">
+            <Reveal className="hero-headline-accent-line pb-1 leading-[1.12]" delay={0.08} play="mount">
               <span className="hero-headline-accent italic text-primary-foreground">{tx("Human expertise.")}</span>
             </Reveal>
           </h1>
@@ -34,7 +34,7 @@ export async function HeroVideoSection() {
           <div className="mt-6 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
             <Button asChild className="h-12 rounded-full px-6 text-base shadow-[var(--shadow-md)]" variant="secondary">
               <a href={href("/onboarding")}>
-                {tx("Schedule an initial free consultation")}
+                {tx("Book a free consultation")}
                 <ArrowRight className="size-5" />
               </a>
             </Button>

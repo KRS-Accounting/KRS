@@ -11,7 +11,7 @@ const defaultPromises = [
 ];
 
 export async function ContactCta({
-  ctaLabel = "Schedule a consultation",
+  ctaLabel = "Book a free consultation",
   heading = "We take care of admin. You take care of business.",
   text = "Our helpful team is on standby to get you set up and running without the admin headache.",
   promises = defaultPromises,

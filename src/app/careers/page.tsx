@@ -3,7 +3,7 @@ import { pageMetadata } from "@/i18n/metadata";
 
 export function generateMetadata() {
   return pageMetadata({
-    title: "Careers | KRS AI",
+    title: "Careers | KRS",
     description:
       "Join KRS: a six-hour working day with eight-hour pay, licensed accounting work, and an AI operating file. Open roles in Athens.",
     canonical: "/careers",

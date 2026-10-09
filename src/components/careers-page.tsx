@@ -7,6 +7,7 @@ import { Reveal, RevealFade } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
+import { T } from "@/i18n/t";
 import { cn } from "@/lib/utils";
 
 const applyInbox = "krs@krs.gr";
@@ -134,21 +135,21 @@ function Hero() {
     <section className="border-b border-primary/12 bg-[#fdf8f0] px-4 sm:px-6 lg:px-12">
       <div className="mx-auto grid max-w-[1400px] lg:min-h-[620px] lg:grid-cols-[0.92fr_1.08fr]">
         <div className="flex flex-col justify-center py-16 sm:py-20 lg:py-24">
-          <p className="mono-label text-secondary">Careers / Athens / On site</p>
+          <p className="mono-label text-secondary"><T text="Careers / Athens / On site" /></p>
           <h1 className="type-h1 mt-6">
-            <Reveal play="mount">Join a six-hour working day.</Reveal>
+            <Reveal play="mount"><T text="Join a six-hour working day." /></Reveal>
           </h1>
           <RevealFade
             className="mt-6 max-w-[34rem] text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8"
             delay={0.12}
             play="mount"
           >
-            Licensed accountants, operators, and people who keep the file. Eight-hour pay. Six hours of focused work.
+            <T text="Licensed accountants, operators, and people who keep the file. Eight-hour pay. Six hours of focused work." />
           </RevealFade>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Button asChild className="h-12 rounded-full px-6 text-sm">
               <a href="#roles">
-                See open roles
+                <T text="See open roles" />
                 <ArrowRight className="size-4" strokeWidth={1.75} />
               </a>
             </Button>
@@ -156,7 +157,7 @@ function Hero() {
               className="inline-flex h-12 items-center gap-2 border-b border-primary/30 px-1 text-sm font-semibold transition hover:border-secondary hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
               href="/about"
             >
-              About the practice
+              <T text="About the practice" />
               <ChevronRight className="size-4" strokeWidth={1.75} />
             </Link>
           </div>
@@ -167,7 +168,7 @@ function Hero() {
             <div className="bg-background p-8 text-foreground">
               <div className="flex items-center justify-center">
                 <Image
-                  alt="KRS AI"
+                  alt="KRS"
                   className="h-8 w-auto"
                   height={416}
                   src="/logos/Full%20logo%20Dark.png"
@@ -177,7 +178,7 @@ function Hero() {
               </div>
               <CareersClock className="mt-10" />
               <p className="font-heading mt-10 text-center text-balance text-3xl font-normal leading-tight">
-                Six focused hours. Work worth doing.
+                <T text="Six focused hours. Work worth doing." />
               </p>
             </div>
           </div>
@@ -192,16 +193,16 @@ function Reasons() {
     <section className="bg-background px-4 py-24 sm:px-6 lg:px-12">
       <div className="mx-auto max-w-[1400px]">
         <h2 className="type-h3 max-w-3xl text-balance">
-          <Reveal>Why people stay.</Reveal>
+          <Reveal><T text="Why people stay." /></Reveal>
         </h2>
         <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-          The offer is not a perks list. It is a working day that leaves room for the work that actually needs a person.
+          <T text="The offer is not a perks list. It is a working day that leaves room for the work that actually needs a person." />
         </p>
         <div className="mt-16 grid gap-x-16 gap-y-12 md:grid-cols-2">
           {reasons.map((item) => (
             <article key={item.title}>
-              <h3 className="text-2xl font-semibold leading-tight">{item.title}</h3>
-              <p className="mt-3 max-w-md text-base leading-7 text-muted-foreground">{item.text}</p>
+              <h3 className="text-2xl font-semibold leading-tight"><T text={item.title} /></h3>
+              <p className="mt-3 max-w-md text-base leading-7 text-muted-foreground"><T text={item.text} /></p>
             </article>
           ))}
         </div>
@@ -215,11 +216,10 @@ function Roles() {
     <section className="scroll-mt-24 border-y border-primary/12 bg-card px-4 py-24 sm:px-6 lg:px-12" id="roles">
       <div className="mx-auto max-w-[1400px]">
         <h2 className="type-h3 max-w-3xl text-balance">
-          <Reveal>Roles we hire for.</Reveal>
+          <Reveal><T text="Roles we hire for." /></Reveal>
         </h2>
         <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-          The practice is in Athens. Roles are full-time and on site. Openings change. If the title is not listed this
-          week, send your CV anyway.
+          <T text="The practice is in Athens. Roles are full-time and on site. Openings change. If the title is not listed this week, send your CV anyway." />
         </p>
 
         <ul className="mt-14">
@@ -227,19 +227,19 @@ function Roles() {
             <li className="border-b border-primary/12 first:border-t" key={role.title}>
               <div className="grid gap-6 py-8 lg:grid-cols-[1fr_auto] lg:items-center">
                 <div>
-                  <h3 className="text-2xl font-semibold leading-tight">{role.title}</h3>
+                  <h3 className="text-2xl font-semibold leading-tight"><T text={role.title} /></h3>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {role.team}
+                    <T text={role.team} />
                     <span className="mx-2 text-primary/25">/</span>
-                    {role.location}
+                    <T text={role.location} />
                     <span className="mx-2 text-primary/25">/</span>
-                    {role.arrangement}
+                    <T text={role.arrangement} />
                   </p>
-                  <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">{role.text}</p>
+                  <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground"><T text={role.text} /></p>
                 </div>
                 <Button asChild className="h-11 w-fit rounded-full px-5">
                   <a href={applyHref(role.title)}>
-                    Apply
+                    <T text="Apply" />
                     <ArrowRight className="size-4" strokeWidth={1.75} />
                   </a>
                 </Button>
@@ -258,10 +258,10 @@ function HireFor() {
       <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[0.42fr_0.58fr] lg:items-start">
         <div>
           <h2 className="type-h3 max-w-xl text-balance">
-            <Reveal>How we hire.</Reveal>
+            <Reveal><T text="How we hire." /></Reveal>
           </h2>
           <p className="mt-6 max-w-md text-lg leading-8 text-primary-foreground/68">
-            No portal maze. A read of the CV, a conversation with the team, then a start date if it is a fit.
+            <T text="No portal maze. A read of the CV, a conversation with the team, then a start date if it is a fit." />
           </p>
         </div>
         <ol className="border-t border-primary-foreground/16">
@@ -269,8 +269,8 @@ function HireFor() {
             <li className="grid gap-3 border-b border-primary-foreground/16 py-8 sm:grid-cols-[auto_1fr] sm:gap-8" key={step.n}>
               <p className="font-mono text-sm text-secondary">{step.n}</p>
               <div>
-                <h3 className="text-xl font-semibold leading-tight">{step.title}</h3>
-                <p className="mt-3 max-w-md text-sm leading-7 text-primary-foreground/68">{step.text}</p>
+                <h3 className="text-xl font-semibold leading-tight"><T text={step.title} /></h3>
+                <p className="mt-3 max-w-md text-sm leading-7 text-primary-foreground/68"><T text={step.text} /></p>
               </div>
             </li>
           ))}
@@ -286,12 +286,12 @@ function TeamInterviews() {
       <div className="mx-auto max-w-[1400px]">
         <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mono-label text-secondary">Employee interviews</p>
+            <p className="mono-label text-secondary"><T text="Employee interviews" /></p>
             <h2 className="type-h3 mt-5 text-balance">
-              <Reveal>Hear the team.</Reveal>
+              <Reveal><T text="Hear the team." /></Reveal>
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-              People who keep the file, talking about the six-hour day. Not a recruiting reel.
+              <T text="People who keep the file, talking about the six-hour day. Not a recruiting reel." />
             </p>
           </div>
           <a
@@ -300,7 +300,7 @@ function TeamInterviews() {
             rel="noreferrer"
             target="_blank"
           >
-            Watch more on YouTube
+            <T text="Watch more on YouTube" />
             <ArrowRight className="size-4" />
           </a>
         </div>
@@ -318,12 +318,12 @@ function TeamInterviews() {
             />
           </div>
           <div className="mb-3 mt-5 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            <span>Interview</span>
+            <span><T text="Interview" /></span>
             <span>/</span>
-            <span>The Sixers #17</span>
+            <span><T text="The Sixers #17" /></span>
           </div>
-          <h3 className="text-2xl font-semibold leading-tight">{teamInterview.title}</h3>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">{teamInterview.text}</p>
+          <h3 className="text-2xl font-semibold leading-tight"><T text={teamInterview.title} /></h3>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground"><T text={teamInterview.text} /></p>
         </article>
 
         <div className="grid gap-8 md:grid-cols-3">
@@ -347,12 +347,12 @@ function TeamInterviews() {
                 />
               </div>
               <div className="mb-3 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                <span>Interview</span>
+                <span><T text="Interview" /></span>
                 <span>/</span>
                 <span>0{index + 1}</span>
               </div>
-              <h3 className="text-2xl font-semibold leading-tight">{video.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{video.text}</p>
+              <h3 className="text-2xl font-semibold leading-tight"><T text={video.title} /></h3>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground"><T text={video.text} /></p>
             </article>
           ))}
         </div>
@@ -366,19 +366,19 @@ function OpenApplication() {
     <section className="bg-background px-4 py-24 sm:px-6 lg:px-12">
       <div className="mx-auto max-w-[1400px] border border-primary/12 bg-card px-6 py-12 sm:px-10 lg:px-14">
         <h2 className="type-h3 max-w-3xl text-balance">
-          <Reveal>If nothing listed fits.</Reveal>
+          <Reveal><T text="If nothing listed fits." /></Reveal>
         </h2>
         <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-          Send your CV to{" "}
+          <T text="Send your CV to" />{" "}
           <a className="font-semibold text-foreground underline decoration-secondary/70 underline-offset-4" href={`mailto:${applyInbox}`}>
             {applyInbox}
           </a>
-          . If we open a seat that fits, you will hear from us first. Engineers and operators who want to build the file
-          should write too.
+          {". "}
+          <T text="If we open a seat that fits, you will hear from us first. Engineers and operators who want to build the file should write too." />
         </p>
         <Button asChild className="mt-10 h-12 rounded-full px-6">
           <a href={applyHref("Open application")}>
-            Send your CV
+            <T text="Send your CV" />
             <ArrowRight className="size-4" strokeWidth={1.75} />
           </a>
         </Button>
@@ -402,17 +402,16 @@ function AboutLink() {
         </div>
         <div className="flex flex-col justify-center px-4 py-16 sm:px-6 lg:px-12">
           <h2 className="type-h3 max-w-xl text-balance">
-            <Reveal>The practice behind the day.</Reveal>
+            <Reveal><T text="The practice behind the day." /></Reveal>
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-            KRS started in 2011 as a licensed Greek firm. The operating file is how that practice works now. Read the
-            story before you apply.
+            <T text="KRS started in 2011 as a licensed Greek firm. The operating file is how that practice works now. Read the story before you apply." />
           </p>
           <Link
             className="mt-8 inline-flex h-12 w-fit items-center gap-2 border-b border-primary/30 px-1 text-sm font-semibold transition hover:border-secondary hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
             href="/about"
           >
-            About the practice
+            <T text="About the practice" />
             <ChevronRight className="size-4" strokeWidth={1.75} />
           </Link>
         </div>

@@ -57,8 +57,8 @@ const footerLinkGroups: FooterLinkGroup[] = [
   {
     title: "Company",
     links: [
-      { label: "About KRS AI", href: "/about" },
-      { label: "Why KRS AI", href: "/why" },
+      { label: "About KRS", href: "/about" },
+      { label: "Why KRS", href: "/why" },
       { label: "Careers", href: "/careers" },
       { label: "Contact us", href: "/onboarding" },
     ],
@@ -155,12 +155,12 @@ export async function SiteFooter() {
 
   return (
     <footer className="relative isolate overflow-hidden bg-primary px-4 text-primary-foreground sm:px-6 lg:px-12">
-      <div className="relative z-10 mx-auto max-w-[1400px] pb-[calc(min(42vw,520px)+100px)] pt-16">
+      <div className="relative z-10 mx-auto max-w-[1400px] pt-16">
         <div className="grid gap-14 border-b border-primary-foreground/12 pb-14 lg:grid-cols-12 lg:items-center lg:gap-10">
           <div className="lg:col-span-5">
-            <Link aria-label={tx("KRS AI home")} className="inline-flex items-center" href={href("/")}>
+            <Link aria-label={tx("KRS home")} className="inline-flex items-center" href={href("/")}>
               <Image
-                alt="KRS AI"
+                alt="KRS"
                 className="h-[88px] w-auto"
                 height={208}
                 src="/logos/Full%20logo.svg"
@@ -170,24 +170,26 @@ export async function SiteFooter() {
             </Link>
 
             <p className="mt-8 max-w-sm text-sm leading-7 text-primary-foreground/68">
-              {tx("Accounting, tax, payroll and advisory for Greek businesses. Prepared by AI, signed by people.")}
+              {tx(
+                "Accounting, tax, payroll, and advisory for businesses operating in Greece. Delivered by experienced professionals and supported by KRS technology.",
+              )}
             </p>
 
             <SocialLinks className="mt-6" />
 
             <div className="mt-8 grid gap-5 text-sm leading-7 text-primary-foreground/68 sm:grid-cols-2">
               <address className="not-italic">
-                <strong className="font-semibold text-primary-foreground">KRS AI Services</strong>
+                <strong className="font-semibold text-primary-foreground">KRS Group</strong>
                 <br />
                 <a
                   className="transition-colors hover:text-primary-foreground"
-                  href="https://www.google.com/maps/search/?api=1&query=KRS+Group+Leof.+Andrea+Siggrou+120+Athina+117+42"
+                  href="https://www.google.com/maps/search/?api=1&query=KRS+120+Andrea+Syngrou+Avenue+Athens+117+42"
                   rel="noreferrer"
                   target="_blank"
                 >
-                  Leof. Andrea Siggrou 120
+                  {tx("120 Andrea Syngrou Avenue")}
                   <br />
-                  Athina 117 42
+                  {tx("Athens 117 42")}
                 </a>
               </address>
               <p>
@@ -228,7 +230,7 @@ export async function SiteFooter() {
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <p className="max-w-4xl text-xs leading-6 text-primary-foreground/52">
               {tx(
-                "Your digital tax service with its own platform. The technical platform is operated by KRS AI Services. Reserved tasks are performed by licensed tax and accounting professionals. KRS AI Services and its licensed tax partners are separate legal entities cooperating as part of a network. Each entity is responsible only for its own acts and omissions to the extent permitted by law.",
+                "KRS provides technology-enabled accounting, tax, payroll, funding, and advisory services. Regulated accounting and tax work is performed by licensed KRS professionals.",
               )}
             </p>
             <div aria-label={tx("Compliance certifications")} className="flex shrink-0 gap-2">
@@ -253,23 +255,22 @@ export async function SiteFooter() {
                 </a>
               ))}
             </nav>
-            <p className="text-xs text-primary-foreground/36">{tx("© 2026 KRS.ai | All rights reserved.")}</p>
+            <p className="text-xs text-primary-foreground/36">{tx("© 2026 KRS | All rights reserved.")}</p>
           </div>
         </div>
       </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 translate-y-[200px]"
+        className="pointer-events-none relative -mx-4 mt-8 h-[clamp(200px,62vw,260px)] overflow-hidden sm:-mx-6 sm:mt-10 sm:h-[clamp(260px,52vw,340px)] md:h-[clamp(300px,42vw,420px)] lg:-mx-12 lg:mt-12 lg:h-[clamp(340px,36vw,460px)] xl:h-[clamp(420px,34vw,640px)]"
       >
         <Image
           alt=""
-          className="h-auto w-full select-none"
+          className="absolute top-0 left-1/2 h-auto w-[175%] max-w-none -translate-x-1/2 -translate-y-[30%] select-none sm:w-[148%] sm:-translate-y-[32%] md:w-[124%] md:-translate-y-[34%] lg:w-[108%] lg:-translate-y-[36%] xl:w-full xl:-translate-y-[36%]"
           height={1435}
           sizes="100vw"
           src="/images/Footer-bg.png"
           width={2560}
         />
-        <div className="absolute inset-x-0 top-0 h-[32%] bg-gradient-to-b from-primary to-transparent" />
       </div>
     </footer>
   );

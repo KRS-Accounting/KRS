@@ -10,7 +10,7 @@ import { getI18n } from "@/i18n/request";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    ...(await pageMetadata({ title: "Page not found | KRS AI" })),
+    ...(await pageMetadata({ title: "Page not found | KRS" })),
     robots: { index: false, follow: false },
   };
 }

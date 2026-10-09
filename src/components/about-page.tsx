@@ -6,6 +6,7 @@ import { Reveal, RevealFade } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
+import { T } from "@/i18n/t";
 import { cn } from "@/lib/utils";
 
 const ctaLabel = "Talk to KRS";
@@ -143,11 +144,11 @@ function Hero() {
     <section className="border-b border-primary/12 bg-[#fdf8f0]">
       <div className="mx-auto grid max-w-[1400px] lg:min-h-[620px] lg:grid-cols-[0.92fr_1.08fr]">
         <div className="flex flex-col justify-center px-4 py-14 sm:px-6 sm:py-16 lg:px-12 lg:py-16">
-          <p className="mono-label text-secondary">About us</p>
+          <p className="mono-label text-secondary"><T text="About us" /></p>
           <h1 className="type-h1 mt-6">
-            <Reveal play="mount">Accountants.</Reveal>
+            <Reveal play="mount"><T text="Accountants." /></Reveal>
             <Reveal delay={0.08} play="mount">
-              Software.
+              <T text="Software." />
             </Reveal>
           </h1>
           <RevealFade
@@ -155,12 +156,12 @@ function Hero() {
             delay={0.12}
             play="mount"
           >
-            Named advisors handle bookkeeping, payroll and tax. The platform keeps the work in one place.
+            <T text="Named advisors handle bookkeeping, payroll and tax. The platform keeps the work in one place." />
           </RevealFade>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Button asChild className="h-12 rounded-full px-6 text-sm">
               <Link href="/onboarding">
-                {ctaLabel}
+                <T text={ctaLabel} />
                 <ArrowRight className="size-4" strokeWidth={1.75} />
               </Link>
             </Button>
@@ -168,7 +169,7 @@ function Hero() {
               className="inline-flex h-12 items-center gap-2 border-b border-primary/30 px-1 text-sm font-semibold transition hover:border-secondary hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
               href="#how-we-work"
             >
-              How we work
+              <T text="How we work" />
               <ChevronRight className="size-4" strokeWidth={1.75} />
             </Link>
           </div>
@@ -219,23 +220,21 @@ function Origin() {
 
         <div className="lg:col-span-8 lg:col-start-5 lg:pb-4">
           <h2 className="font-heading text-balance text-4xl font-light leading-[1.08] sm:text-5xl lg:text-6xl">
-            <Reveal>We did not start another accounting office.</Reveal>
+            <Reveal><T text="We did not start another accounting office." /></Reveal>
           </h2>
           <RevealFade className="mt-8 max-w-2xl text-lg leading-8 text-primary-foreground/72" delay={0.08}>
-            When Konstantinos Raikos founded KRS in 2011, the brief was to prove that a Greek firm can respect its
-            people, ship its own tools, and still do the reserved work of a licensed practice.
+            <T text="When Konstantinos Raikos founded KRS in 2011, the brief was to prove that a Greek firm can respect its people, ship its own tools, and still do the reserved work of a licensed practice." />
           </RevealFade>
           <RevealFade className="mt-5 max-w-2xl text-lg leading-8 text-primary-foreground/72" delay={0.14}>
-            Today that means licensed accountants and tax advisors, working on software we built. AI prepares the work.
-            Advisors remain accountable. You still run the company.
+            <T text="Today that means licensed accountants and tax advisors, working on software we built. AI prepares the work. Advisors remain accountable. You still run the company." />
           </RevealFade>
           <blockquote className="mt-12 max-w-xl border-l border-secondary pl-6">
             <p className="font-heading text-2xl font-light leading-snug text-secondary sm:text-3xl">
-              We do not only manage numbers. We take part in the next day of Greek entrepreneurship.
+              <T text="We do not only manage numbers. We take part in the next day of Greek entrepreneurship." />
             </p>
             <footer className="mt-5 text-sm leading-6 text-primary-foreground/58">
-              Konstantinos Raikos
-              <span className="mt-0.5 block text-primary-foreground/42">Founder and CEO</span>
+              <T text="Konstantinos Raikos" />
+              <span className="mt-0.5 block text-primary-foreground/42"><T text="Founder and CEO" /></span>
             </footer>
           </blockquote>
         </div>
@@ -250,17 +249,16 @@ function Practice() {
       <div className="mx-auto grid max-w-[1400px] lg:grid-cols-2">
         <div className="bg-muted/55 px-4 py-20 sm:px-6 sm:py-24 lg:px-12">
           <h2 className="type-h3 max-w-lg text-balance">
-            <Reveal>The usual setup.</Reveal>
+            <Reveal><T text="The usual setup." /></Reveal>
           </h2>
           <p className="mt-5 max-w-md text-base leading-7 text-muted-foreground">
-            Most businesses do not fail at accounting because they lack a tool. They fail because the work is split
-            across people and portals that never talk to each other.
+            <T text="Most businesses do not fail at accounting because they lack a tool. They fail because the work is split across people and portals that never talk to each other." />
           </p>
           <ul className="mt-12 grid gap-8">
             {inherited.map((item) => (
               <li key={item.title}>
-                <h3 className="text-xl font-semibold leading-tight">{item.title}</h3>
-                <p className="mt-2 max-w-md text-sm leading-7 text-muted-foreground">{item.text}</p>
+                <h3 className="text-xl font-semibold leading-tight"><T text={item.title} /></h3>
+                <p className="mt-2 max-w-md text-sm leading-7 text-muted-foreground"><T text={item.text} /></p>
               </li>
             ))}
           </ul>
@@ -268,17 +266,16 @@ function Practice() {
 
         <div className="bg-primary px-4 py-20 text-primary-foreground sm:px-6 sm:py-24 lg:px-12">
           <h2 className="type-h3 max-w-lg text-balance">
-            <Reveal>How KRS works.</Reveal>
+            <Reveal><T text="How KRS works." /></Reveal>
           </h2>
           <p className="mt-5 max-w-md text-base leading-7 text-primary-foreground/68">
-            KRS is still a licensed practice. The difference is the platform: visible work, a named reviewer, and a
-            clock on the question.
+            <T text="KRS is still a licensed practice. The difference is the platform: visible work, a named reviewer, and a clock on the question." />
           </p>
           <ul className="mt-12 grid gap-8">
             {practiced.map((item) => (
               <li key={item.title}>
-                <h3 className="text-xl font-semibold leading-tight text-secondary">{item.title}</h3>
-                <p className="mt-2 max-w-md text-sm leading-7 text-primary-foreground/68">{item.text}</p>
+                <h3 className="text-xl font-semibold leading-tight text-secondary"><T text={item.title} /></h3>
+                <p className="mt-2 max-w-md text-sm leading-7 text-primary-foreground/68"><T text={item.text} /></p>
               </li>
             ))}
           </ul>
@@ -293,17 +290,17 @@ function Principles() {
     <section className="scroll-mt-24 bg-background px-4 py-24 sm:px-6 lg:px-12" id="how-we-work">
       <div className="mx-auto max-w-[1400px]">
         <h2 className="type-h3 max-w-3xl text-balance">
-          <Reveal>How the practice works.</Reveal>
+          <Reveal><T text="How the practice works." /></Reveal>
         </h2>
         <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-          These are the rules we hold ourselves to. If work cannot be inspected, it does not go out.
+          <T text="These are the rules we hold ourselves to. If work cannot be inspected, it does not go out." />
         </p>
 
         <div className="mt-16 grid gap-x-16 gap-y-12 md:grid-cols-2">
           {principles.map((item) => (
             <article key={item.title}>
-              <h3 className="text-2xl font-semibold leading-tight">{item.title}</h3>
-              <p className="mt-3 max-w-md text-base leading-7 text-muted-foreground">{item.text}</p>
+              <h3 className="text-2xl font-semibold leading-tight"><T text={item.title} /></h3>
+              <p className="mt-3 max-w-md text-base leading-7 text-muted-foreground"><T text={item.text} /></p>
             </article>
           ))}
         </div>
@@ -317,7 +314,7 @@ function Stats() {
     <section className="border-y border-primary/12 bg-card px-4 py-24 sm:px-6 lg:px-12">
       <div className="mx-auto max-w-[1400px]">
         <h2 className="type-h3 max-w-3xl text-balance">
-          <Reveal>The practice, in numbers.</Reveal>
+          <Reveal><T text="The practice, in numbers." /></Reveal>
         </h2>
 
         <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 xl:grid-cols-4 xl:gap-0">
@@ -329,12 +326,12 @@ function Stats() {
               )}
               key={stat.label}
             >
-              <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
+              <p className="text-sm font-medium text-muted-foreground"><T text={stat.label} /></p>
               <p className="font-heading mt-6 inline-flex items-baseline gap-1 text-6xl font-medium leading-none tracking-[-0.04em] text-primary sm:text-7xl">
                 <span>{stat.value}</span>
                 {stat.unit ? <span className="text-[0.42em] font-semibold tracking-tight">{stat.unit}</span> : null}
               </p>
-              <p className="mt-6 max-w-xs text-sm leading-7 text-muted-foreground">{stat.text}</p>
+              <p className="mt-6 max-w-xs text-sm leading-7 text-muted-foreground"><T text={stat.text} /></p>
             </article>
           ))}
         </div>
@@ -349,14 +346,13 @@ function Platform() {
       <div className="mx-auto grid max-w-[1400px] items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         <div>
           <h2 className="type-h3 max-w-xl text-balance">
-            <Reveal>See the work as it happens.</Reveal>
+            <Reveal><T text="See the work as it happens." /></Reveal>
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-            KRS built reporting and invoicing tools because the market did not. The platform is the next layer:
-            questions, documents and filings in one place you can actually see.
+            <T text="KRS built reporting and invoicing tools because the market did not. The platform is the next layer: questions, documents and filings in one place you can actually see." />
           </p>
           <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">
-            Automation prepares. Licensed people decide. You are never asked to trust a black box with a tax return.
+            <T text="Automation prepares. Licensed people decide. You are never asked to trust a black box with a tax return." />
           </p>
         </div>
 
@@ -380,18 +376,17 @@ function Careers() {
       <div className="mx-auto grid max-w-[1400px] items-start gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
         <div>
           <h2 className="type-h3 max-w-xl text-balance text-primary-foreground">
-            <Reveal>Join the team in Athens.</Reveal>
+            <Reveal><T text="Join the team in Athens." /></Reveal>
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-8 text-primary-foreground/72">
-            Licensed accountants, payroll specialists, and the people who build our platform. Advisors spend the day on
-            review. Six focused hours, paid as eight.
+            <T text="Licensed accountants, payroll specialists, and the people who build our platform. Advisors spend the day on review. Six focused hours, paid as eight." />
           </p>
           <Button
             asChild
             className="mt-10 h-12 rounded-full bg-primary-foreground px-6 text-primary hover:bg-primary-foreground/90"
           >
             <Link href="/careers">
-              See open roles
+              <T text="See open roles" />
               <ArrowRight className="size-4" strokeWidth={1.75} />
             </Link>
           </Button>
@@ -400,8 +395,8 @@ function Careers() {
         <ul className="border-t border-primary-foreground/16">
           {careersOffer.map((item) => (
             <li className="border-b border-primary-foreground/16 py-8" key={item.title}>
-              <h3 className="text-xl font-semibold leading-tight">{item.title}</h3>
-              <p className="mt-3 max-w-md text-sm leading-7 text-primary-foreground/68">{item.text}</p>
+              <h3 className="text-xl font-semibold leading-tight"><T text={item.title} /></h3>
+              <p className="mt-3 max-w-md text-sm leading-7 text-primary-foreground/68"><T text={item.text} /></p>
             </li>
           ))}
         </ul>
@@ -416,20 +411,20 @@ function FinalCta() {
       <div className="relative mx-auto grid max-w-[1400px] grid-cols-12 items-start gap-8">
         <div className="col-span-12 lg:col-span-8">
           <h2 className="type-display-xl text-primary">
-            <Reveal>Begin</Reveal>
-            <Reveal delay={0.1}>together.</Reveal>
+            <Reveal><T text="Begin" /></Reveal>
+            <Reveal delay={0.1}><T text="together." /></Reveal>
           </h2>
         </div>
         <div className="col-span-12 lg:col-span-4">
-          <h3 className="type-h4 max-w-md text-balance text-primary">We take care of admin. You take care of business.</h3>
+          <h3 className="type-h4 max-w-md text-balance text-primary"><T text="We take care of admin. You take care of business." /></h3>
           <p className="mt-4 max-w-md text-lg leading-8 text-primary/74">
-            Our team will get you onboarded, the authorisations in place, and the first close on a calendar.
+            <T text="Our team will get you onboarded, the authorisations in place, and the first close on a calendar." />
           </p>
           <ul className="mt-6 grid max-w-md gap-2.5 text-base leading-6 text-primary">
             {contactPromises.map((item) => (
               <li className="flex items-start gap-2.5" key={item}>
                 <Check className="mt-0.5 size-4 shrink-0" strokeWidth={2.5} />
-                {item}
+                <T text={item} />
               </li>
             ))}
           </ul>
@@ -438,7 +433,7 @@ function FinalCta() {
             className="mt-8 h-13 w-full justify-between rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90"
           >
             <Link href="/onboarding">
-              {ctaLabel}
+              <T text={ctaLabel} />
               <ArrowRight className="size-5" />
             </Link>
           </Button>

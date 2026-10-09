@@ -38,7 +38,7 @@ export function Footer() {
             </p>
             <div className="mt-10 grid gap-6 text-[15px] leading-relaxed text-neutral-50/60 sm:grid-cols-2">
               <address className="not-italic">
-                <span className="block text-neutral-50">KRS AI Services</span>
+                <span className="block text-neutral-50">KRS Group</span>
                 <a
                   className="transition-colors hover:text-neutral-50"
                   href="https://www.google.com/maps/search/?api=1&query=KRS+Group+Leof.+Andrea+Siggrou+120+Athina+117+42"

@@ -41,7 +41,7 @@ const services: ReadonlyArray<{
     id: "accounting",
     name: "Accounting",
     title: "Monthly books, closed on time.",
-    text: "From company formation to year-end. AI matches every invoice and bank line, and an accountant signs off.",
+    text: "From company formation to year-end, KRS keeps the books moving. AI helps match invoices and bank transactions; KRS accountants review the records and close each period.",
     points: ["myDATA kept current", "Monthly P&L", "Year-end statements"],
     href: "/services/accounting",
     tone: "mist",
@@ -101,6 +101,7 @@ const tones = {
 } as const;
 
 export function ServicesScroll() {
+  const { tx } = useI18n();
   const reduce = Boolean(useReducedMotion());
   const wrapRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -157,14 +158,14 @@ export function ServicesScroll() {
         <div className={cn("flex flex-col", pinned && "sticky top-0 h-[100dvh] overflow-hidden")}>
           <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-8 px-4 pt-24 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:px-12 lg:pt-28">
             <div className="max-w-3xl">
-              <p className="mono-label text-secondary">What we handle</p>
+              <p className="mono-label text-secondary">{tx("What we handle")}</p>
               <h2 className="type-h3 mt-5 text-balance text-foreground">
-                <Reveal>
-                  One team for the <span className="italic text-secondary">whole</span> back office.
-                </Reveal>
+                <Reveal>{tx("One team across your operations.")}</Reveal>
               </h2>
               <RevealFade className="mt-5 max-w-lg text-lg leading-8 text-muted-foreground" delay={0.1}>
-                Five services on one platform, reviewed by the same people who know your file.
+                {tx(
+                  "Accounting, tax, payroll, advisory, and funding support reviewed by the same people who know your business.",
+                )}
               </RevealFade>
             </div>
             {pinned ? <ServiceTabs active={active} onSelect={goTo} /> : null}

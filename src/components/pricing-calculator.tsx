@@ -3,6 +3,7 @@
 import { useId, useMemo, useState } from "react";
 import { ArrowRight, Check, Info, Minus, Plus } from "lucide-react";
 
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
@@ -171,6 +172,7 @@ function NumericStepper({
 }
 
 export function PricingCalculator() {
+  const { tx, href } = useI18n();
   const [journey, setJourney] = useState<"existing" | "formation" | null>(null);
   const [structure, setStructure] = useState<(typeof structures)[number]["id"] | null>(null);
   const [volumeTier, setVolumeTier] = useState<VolumeTierId | null>(null);
@@ -194,31 +196,29 @@ export function PricingCalculator() {
     <section aria-labelledby="calculator-heading" className="border-y border-primary/12 bg-muted/55 px-4 py-16 sm:px-6 md:py-24 lg:px-12" id="calculator">
       <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-18">
         <div className="max-w-xl">
-          <p className="mono-label text-secondary">Pricing calculator</p>
+          <p className="mono-label text-secondary">{tx("Pricing calculator")}</p>
           <h2 className="mt-5 text-balance text-5xl leading-[0.98] text-foreground sm:text-6xl" id="calculator-heading">
-            <Reveal>A starting point, not a surprise invoice.</Reveal>
+            <Reveal>{tx("A starting point, not a surprise invoice.")}</Reveal>
           </h2>
           <p className="mt-6 max-w-lg text-lg leading-8 text-muted-foreground">
-            Tell us a little about the operating load. We use this estimate to start a transparent scoping conversation,
-            including the Greek filings and support your business needs.
+            {tx("Tell us a little about the operating load. We use this estimate to start a transparent scoping conversation, including the Greek filings and support your business needs.")}
           </p>
           <div className="mt-10 border-l-2 border-secondary pl-5 text-sm leading-6 text-muted-foreground">
-            The estimate excludes VAT and reflects standard monthly bookkeeping. If you are starting a business, we also
-            show a separate starting estimate for formation support. Specialist tax work and complex legal or notarial matters are scoped separately.
+            {tx("The estimate excludes VAT and reflects standard monthly bookkeeping. If you are starting a business, we also show a separate starting estimate for formation support. Specialist tax work and complex legal or notarial matters are scoped separately.")}
           </div>
         </div>
 
         <div className="border border-primary/16 bg-background p-5 shadow-[var(--shadow-lg)] sm:p-8">
           <div className="grid gap-8">
             <fieldset className={calculatorFieldsetClassName}>
-              <legend className={calculatorLegendClassName}>Where are you today?</legend>
+              <legend className={calculatorLegendClassName}>{tx("Where are you today?")}</legend>
               <div className="mt-2 grid gap-2 sm:grid-cols-2">
-                <button aria-pressed={journey === "existing"} className={calculatorChoiceButtonClass(journey === "existing")} onClick={() => setJourney("existing")} type="button">I have a business</button>
-                <button aria-pressed={journey === "formation"} className={calculatorChoiceButtonClass(journey === "formation")} onClick={() => setJourney("formation")} type="button">I&apos;m starting a business</button>
+                <button aria-pressed={journey === "existing"} className={calculatorChoiceButtonClass(journey === "existing")} onClick={() => setJourney("existing")} type="button">{tx("I have a business")}</button>
+                <button aria-pressed={journey === "formation"} className={calculatorChoiceButtonClass(journey === "formation")} onClick={() => setJourney("formation")} type="button">{tx("I'm starting a business")}</button>
               </div>
             </fieldset>
             <fieldset className={calculatorFieldsetClassName}>
-              <legend className={calculatorLegendClassName}>Your business structure</legend>
+              <legend className={calculatorLegendClassName}>{tx("Your business structure")}</legend>
               <div className="mt-2 grid gap-2 sm:grid-cols-4">
                 {structures.map((item) => {
                   const active = structure === item.id;
@@ -230,7 +230,7 @@ export function PricingCalculator() {
                       onClick={() => setStructure(item.id)}
                       type="button"
                     >
-                      {item.label}
+                      {tx(item.label)}
                     </button>
                   );
                 })}
@@ -240,23 +240,23 @@ export function PricingCalculator() {
 
           <div className="mt-8 grid gap-8">
             <VolumeSegments
-              label="Bookkeeping"
-              note="Transactions and invoices per month."
+              label={tx("Bookkeeping")}
+              note={tx("Transactions and invoices per month.")}
               onChange={setVolumeTier}
-              tooltip="Includes all bank transactions (such as card payments, bank fees and transfers) as well as purchase and sales invoices. Please estimate the average across all entities."
+              tooltip={tx("Includes all bank transactions (such as card payments, bank fees and transfers) as well as purchase and sales invoices. Please estimate the average across all entities.")}
               value={volumeTier}
             />
-            <NumericStepper label="Employees" note="Payroll administration and ERGANI workflow" onChange={setEmployees} value={employees} />
+            <NumericStepper label={tx("Employees")} note={tx("Payroll administration and ERGANI workflow")} onChange={setEmployees} value={employees} />
           </div>
 
           <div className="mt-8 grid gap-5 border-t border-primary/12 pt-7 sm:grid-cols-[1fr_auto] sm:items-end">
             <div>
-              <p className="mono-label text-secondary">Indicative monthly fee</p>
+              <p className="mono-label text-secondary">{tx("Indicative monthly fee")}</p>
               <p className="mt-2 font-heading text-6xl leading-none tracking-tight text-foreground">
                 {estimate !== null ? (
                   <>
                     €{estimate}
-                    <span className="ml-2 font-sans text-base font-medium tracking-normal text-muted-foreground">/ month</span>
+                    <span className="ml-2 font-sans text-base font-medium tracking-normal text-muted-foreground">{tx("/ month")}</span>
                   </>
                 ) : (
                   <span className="text-muted-foreground">—</span>
@@ -264,26 +264,27 @@ export function PricingCalculator() {
               </p>
               {estimate === null ? (
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  Choose your structure and monthly volume to see an indicative fee.
+                  {tx("Choose your structure and monthly volume to see an indicative fee.")}
                 </p>
               ) : null}
               {journey === "formation" && selectedStructure ? (
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  Estimated one-time formation support from{" "}
-                  <span className="font-semibold text-foreground">€{selectedStructure.formation}</span>, excluding VAT.
+                  {tx("Estimated one-time formation support from")}{" "}
+                  <span className="font-semibold text-foreground">€{selectedStructure.formation}</span>
+                  {tx(", excluding VAT.")}
                 </p>
               ) : null}
             </div>
             <Button asChild className="h-12 rounded-full px-6 shadow-[var(--shadow-md)]" variant="secondary">
-              <a href="/onboarding">
-                Book a consultation
+              <a href={href("/onboarding")}>
+                {tx("Book a free consultation")}
                 <ArrowRight className="size-4" strokeWidth={1.75} />
               </a>
             </Button>
           </div>
           <p className="mt-5 flex gap-2 text-xs leading-5 text-muted-foreground">
             <Check className="mt-0.5 size-3.5 shrink-0 text-secondary" strokeWidth={2} />
-            No commitment. Your final scope and pricing will be confirmed before onboarding.
+            {tx("No commitment. Your final scope and pricing will be confirmed before onboarding.")}
           </p>
         </div>
       </div>

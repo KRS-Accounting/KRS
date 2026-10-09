@@ -15,7 +15,7 @@ export const statusMeta: Record<
   prepared: {
     label: "AI prepared",
     short: "AI prepared",
-    description: "KRS AI gathers evidence, deadlines, and open questions.",
+    description: "KRS technology gathers evidence, deadlines, and open questions.",
     color: "rgba(244, 239, 230, 0.78)",
   },
   waiting: {

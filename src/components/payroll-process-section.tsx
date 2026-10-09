@@ -7,6 +7,7 @@ import { CalendarClock, FileCheck2, UsersRound } from "lucide-react";
 import { ProcessTimeline, type ProcessStep } from "@/components/process-timeline";
 import { Reveal, RevealFade } from "@/components/reveal";
 import { Badge } from "@/components/ui/badge";
+import { useI18n } from "@/i18n/provider";
 
 const steps: ProcessStep[] = [
   {
@@ -42,6 +43,7 @@ const steps: ProcessStep[] = [
 ];
 
 export function PayrollProcessSection() {
+  const { tx } = useI18n();
   const proofs = useMemo(
     () => [
       <IntakeProof key="intake" />,
@@ -58,13 +60,13 @@ export function PayrollProcessSection() {
       <div className="relative mx-auto max-w-[1400px]">
         <div className="grid gap-6 lg:grid-cols-[0.65fr_0.35fr] lg:items-end">
           <div>
-            <p className="mono-label text-secondary">How it works</p>
+            <p className="mono-label text-secondary">{tx("How it works")}</p>
             <h2 className="type-h3 mt-5 max-w-4xl text-balance">
-              <Reveal>From intake to payday.</Reveal>
+              <Reveal>{tx("From intake to payday.")}</Reveal>
             </h2>
           </div>
           <RevealFade className="max-w-xl text-lg leading-8 text-muted-foreground" delay={0.1}>
-            Five steps, one advisor. KRS takes the employee record so the next pay date is not left to a spreadsheet.
+            {tx("Five steps, one advisor. KRS takes the employee record so the next pay date is not left to a spreadsheet.")}
           </RevealFade>
         </div>
         <ProcessTimeline proofs={proofs} steps={steps} />
@@ -74,10 +76,12 @@ export function PayrollProcessSection() {
 }
 
 function ProofShell({ label, title, children }: { label: string; title: string; children: ReactNode }) {
+  const { tx } = useI18n();
+
   return (
     <div className="p-5 sm:p-6">
-      <p className="mono-label text-muted-foreground">{label}</p>
-      <p className="font-heading mt-2 text-xl font-medium leading-tight">{title}</p>
+      <p className="mono-label text-muted-foreground">{tx(label)}</p>
+      <p className="font-heading mt-2 text-xl font-medium leading-tight">{tx(title)}</p>
       {children}
     </div>
   );

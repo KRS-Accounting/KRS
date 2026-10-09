@@ -5,6 +5,7 @@ import { ArrowRight, Check, CircleCheck } from "lucide-react";
 import { motion } from "motion/react";
 
 import { Reveal } from "@/components/reveal";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
@@ -136,6 +137,8 @@ function PlanCard({
   onHover: () => void;
   onSelect: () => void;
 }) {
+  const { tx, href } = useI18n();
+
   return (
     <article
       aria-current={isSelected ? "true" : undefined}
@@ -159,14 +162,14 @@ function PlanCard({
       onMouseEnter={onHover}
       tabIndex={0}
     >
-      <p className="mono-label self-start text-muted-foreground">{plan.label}</p>
-      <h3 className="self-start text-4xl leading-none">{plan.name}</h3>
-      <p className="self-start text-sm leading-6 text-muted-foreground">{plan.description}</p>
+      <p className="mono-label self-start text-muted-foreground">{tx(plan.label)}</p>
+      <h3 className="self-start text-4xl leading-none">{tx(plan.name)}</h3>
+      <p className="self-start text-sm leading-6 text-muted-foreground">{tx(plan.description)}</p>
       <div className="self-start border-t border-primary/12 pt-5">
-        <p className="text-sm font-medium text-muted-foreground">Starting at</p>
-        <p className="mt-2 font-heading text-5xl leading-none">{plan.price}</p>
+        <p className="text-sm font-medium text-muted-foreground">{tx("Starting at")}</p>
+        <p className="mt-2 font-heading text-5xl leading-none">{plan.price === "Tailored" ? tx(plan.price) : plan.price}</p>
         <p className="mt-2 text-sm text-muted-foreground">
-          {plan.unit === "/ month" ? "All-inclusive monthly fee, excluding VAT" : "A tailored monthly scope, confirmed before work begins"}
+          {tx(plan.unit === "/ month" ? "All-inclusive monthly fee, excluding VAT" : "A tailored monthly scope, confirmed before work begins")}
         </p>
       </div>
       <div className="grid self-start gap-3">
@@ -178,34 +181,34 @@ function PlanCard({
           )}
           variant={isSelected ? "secondary" : "outline"}
         >
-          <a href="/onboarding">
-            Book a free consultation
+          <a href={href("/onboarding")}>
+            {tx("Book a free consultation")}
             <ArrowRight className="size-4" strokeWidth={1.75} />
           </a>
         </Button>
         <a className="inline-flex min-h-10 items-center justify-center gap-2 text-sm font-semibold text-foreground underline decoration-current/35 underline-offset-4 transition hover:text-secondary" href="#calculator">
-          Calculate pricing
+          {tx("Calculate pricing")}
           <ArrowRight className="size-4" strokeWidth={1.75} />
         </a>
       </div>
       <div className="self-start border-t border-primary/12 pt-6">
-        <h4 className="text-base font-semibold">Choose {plan.name} if you:</h4>
+        <h4 className="text-base font-semibold">{tx("Choose this plan if you:")}</h4>
         <ul className="mt-4 grid gap-3 text-sm leading-6">
-          {plan.chooseIf.map((reason) => <li className="flex gap-3" key={reason}><Check className="mt-1 size-4 shrink-0 text-secondary" strokeWidth={2} />{reason}</li>)}
+          {plan.chooseIf.map((reason) => <li className="flex gap-3" key={reason}><Check className="mt-1 size-4 shrink-0 text-secondary" strokeWidth={2} />{tx(reason)}</li>)}
         </ul>
       </div>
       <div className="self-start border-t border-primary/12 pt-6">
-        <h4 className="text-base font-semibold">Financial administration</h4>
+        <h4 className="text-base font-semibold">{tx("Financial administration")}</h4>
         <ul className="mt-4 grid gap-3 text-sm leading-6">
-          {plan.details.map((detail) => <li className="flex gap-3" key={detail}><Check className="mt-1 size-4 shrink-0 text-secondary" strokeWidth={2} />{detail}</li>)}
+          {plan.details.map((detail) => <li className="flex gap-3" key={detail}><Check className="mt-1 size-4 shrink-0 text-secondary" strokeWidth={2} />{tx(detail)}</li>)}
         </ul>
       </div>
       <div className="self-start border-t border-primary/12 pt-6">
-        <h4 className="text-base font-semibold">Payroll</h4>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">Starting at €14 per employee / month</p>
+        <h4 className="text-base font-semibold">{tx("Payroll")}</h4>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">{tx("Starting at €14 per employee / month")}</p>
         <p className="mt-2 flex gap-3 text-sm leading-6 text-muted-foreground">
           <Check className="mt-1 size-4 shrink-0 text-secondary" strokeWidth={2} />
-          Payroll administration and ERGANI coordination.
+          {tx("Payroll administration and ERGANI coordination.")}
         </p>
       </div>
     </article>
@@ -223,6 +226,7 @@ function comparisonColumnClass(planIndex: number, selectedPlanIndex: number | nu
 }
 
 export function PricingPlans() {
+  const { tx } = useI18n();
   const [journey, setJourney] = useState<"existing" | "formation">("existing");
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(DEFAULT_PLAN_INDEX);
   const [hoveredPlanIndex, setHoveredPlanIndex] = useState<number | null>(null);
@@ -234,11 +238,11 @@ export function PricingPlans() {
     <section className="px-4 py-16 sm:px-6 md:py-24 lg:px-12">
       <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-6 border-b border-primary/12 pb-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-          <div><p className="mono-label text-secondary">Monthly plans</p><h2 className="mt-4 text-balance text-5xl leading-[0.98] sm:text-6xl"><Reveal>A plan for the structure you run.</Reveal></h2></div>
-          <p className="max-w-2xl text-lg leading-8 text-muted-foreground">Select the route that describes you today. Existing companies get a clear operating rhythm. New companies get formation support before that rhythm begins.</p>
+          <div><p className="mono-label text-secondary">{tx("Monthly plans")}</p><h2 className="mt-4 text-balance text-5xl leading-[0.98] sm:text-6xl"><Reveal>{tx("A plan for the structure you run.")}</Reveal></h2></div>
+          <p className="max-w-2xl text-lg leading-8 text-muted-foreground">{tx("Select the route that describes you today. Existing companies get a clear operating rhythm. New companies get formation support before that rhythm begins.")}</p>
         </div>
         <div
-          aria-label="Select your business journey"
+          aria-label={tx("Select your business journey")}
           className="mt-8 inline-flex w-max max-w-full items-center gap-1 rounded-full bg-background p-1 ring-1 ring-primary/8"
           role="tablist"
         >
@@ -272,7 +276,7 @@ export function PricingPlans() {
                     transition={{ type: "spring", stiffness: 380, damping: 34 }}
                   />
                 ) : null}
-                <span className="relative">{label}</span>
+                <span className="relative">{tx(label)}</span>
               </button>
             );
           })}
@@ -292,19 +296,19 @@ export function PricingPlans() {
             />
           ))}
         </div>
-        <p className="mt-6 text-sm leading-6 text-muted-foreground">Prices are monthly starting points, excluding VAT. Formation steps, specialist tax work, and complex legal or notarial requirements are confirmed in writing before work begins.</p>
+        <p className="mt-6 text-sm leading-6 text-muted-foreground">{tx("Prices are monthly starting points, excluding VAT. Formation steps, specialist tax work, and complex legal or notarial requirements are confirmed in writing before work begins.")}</p>
       </div>
     </section>
     <section className="px-4 py-16 sm:px-6 md:py-24 lg:px-12" id="comparison">
       <div className="mx-auto max-w-[1400px]">
-        <div className="max-w-2xl"><p className="mono-label text-secondary">Compare plans</p><h2 className="mt-4 text-balance text-5xl leading-[0.98] sm:text-6xl"><Reveal>The detail behind the monthly fee.</Reveal></h2><p className="mt-5 text-lg leading-8 text-muted-foreground">The table follows the selected path above, so you can compare recurring work or the setup work that prepares your company to operate.</p></div>
+        <div className="max-w-2xl"><p className="mono-label text-secondary">{tx("Compare plans")}</p><h2 className="mt-4 text-balance text-5xl leading-[0.98] sm:text-6xl"><Reveal>{tx("The detail behind the monthly fee.")}</Reveal></h2><p className="mt-5 text-lg leading-8 text-muted-foreground">{tx("The table follows the selected path above, so you can compare recurring work or the setup work that prepares your company to operate.")}</p></div>
         <div className="mt-10 overflow-x-auto border border-primary/15 bg-background">
           <div className="min-w-240">
             <div className="grid grid-cols-[1.8fr_repeat(4,1fr)] border-b border-primary/15 bg-muted/55 text-sm font-semibold">
-              <div className="p-5">Included work</div>
+              <div className="p-5">{tx("Included work")}</div>
               {headings.map((heading, index) => (
                 <div className={comparisonColumnClass(index, selectedPlanIndex, hoveredPlanIndex)} key={heading}>
-                  {heading}
+                  {tx(heading)}
                 </div>
               ))}
             </div>
@@ -316,7 +320,7 @@ export function PricingPlans() {
                 )}
                 key={row.feature}
               >
-                <div className="p-5 font-semibold text-foreground">{row.feature}</div>
+                <div className="p-5 font-semibold text-foreground">{tx(row.feature)}</div>
                 {row.values.map((value, valueIndex) => (
                   <div
                     className={cn(
@@ -326,7 +330,7 @@ export function PricingPlans() {
                     key={`${row.feature}-${valueIndex}`}
                   >
                     {value !== "-" ? <CircleCheck className="size-4 shrink-0 text-secondary" strokeWidth={1.75} /> : null}
-                    <span className={value === "-" ? "text-muted-foreground" : "text-foreground"}>{value}</span>
+                    <span className={value === "-" ? "text-muted-foreground" : "text-foreground"}>{value === "-" ? value : tx(value)}</span>
                   </div>
                 ))}
               </div>

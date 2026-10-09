@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 
 import { OnboardingFlow } from "@/components/onboarding-flow";
 import { Reveal } from "@/components/reveal";
+import { getI18n } from "@/i18n/request";
 
 const promises = [
   "Initial consultation 100% free",
@@ -9,7 +10,7 @@ const promises = [
   "Guaranteed fast response",
 ];
 
-export function AccountingContactCta({
+export async function AccountingContactCta({
   subheading = "We take care of the books. You take care of the business.",
   body = "Share a few details and we will match you with a KRS accountant for a free first call.",
   defaultServices = ["Accounting and myDATA"],
@@ -18,6 +19,8 @@ export function AccountingContactCta({
   body?: string;
   defaultServices?: readonly string[];
 } = {}) {
+  const { tx } = await getI18n();
+
   return (
     <section
       className="relative overflow-x-clip bg-secondary-200 px-4 py-16 text-primary sm:px-6 lg:px-12 lg:py-20"
@@ -41,18 +44,18 @@ export function AccountingContactCta({
       <div className="relative mx-auto grid max-w-[1400px] items-start gap-10 lg:grid-cols-12 lg:gap-14">
         <div className="lg:sticky lg:top-28 lg:col-span-4">
           <h2 className="font-heading max-w-[8ch] text-5xl font-normal leading-[0.9] tracking-tight sm:text-6xl lg:text-7xl">
-            <Reveal>Begin</Reveal>
-            <Reveal delay={0.1}>together.</Reveal>
+            <Reveal>{tx("Begin")}</Reveal>
+            <Reveal delay={0.1}>{tx("together.")}</Reveal>
           </h2>
           <h3 className="mt-7 max-w-sm text-balance text-xl font-medium leading-snug sm:text-2xl">
-            {subheading}
+            {tx(subheading)}
           </h3>
-          <p className="mt-4 max-w-sm text-base leading-7 text-primary/74">{body}</p>
+          <p className="mt-4 max-w-sm text-base leading-7 text-primary/74">{tx(body)}</p>
           <ul className="mt-6 grid max-w-sm gap-2.5 text-sm leading-6">
             {promises.map((item) => (
               <li className="flex items-start gap-2.5" key={item}>
                 <Check className="mt-0.5 size-4 shrink-0" strokeWidth={2.5} />
-                {item}
+                {tx(item)}
               </li>
             ))}
           </ul>

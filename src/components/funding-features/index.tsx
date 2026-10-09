@@ -14,6 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 type FeatureBlock = {
@@ -140,17 +141,18 @@ export function FundingFeatureShowcase() {
 }
 
 function FeatureRow({ block }: { block: FeatureBlock }) {
+  const { tx } = useI18n();
   const [focus, setFocus] = useState(0);
   const defaultItem = block.items[0]?.id ?? "";
 
   return (
     <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div className={cn(block.reversed && "lg:order-2")}>
-        <p className="mono-label text-secondary">{block.label}</p>
+        <p className="mono-label text-secondary">{tx(block.label)}</p>
         <h2 className="mt-4 max-w-xl text-balance text-3xl font-normal leading-tight sm:text-4xl lg:text-5xl">
-          <Reveal>{block.title}</Reveal>
+          <Reveal>{tx(block.title)}</Reveal>
         </h2>
-        <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">{block.body}</p>
+        <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">{tx(block.body)}</p>
         <Accordion
           className="mt-8 border-t border-primary/14"
           defaultValue={defaultItem}
@@ -166,10 +168,10 @@ function FeatureRow({ block }: { block: FeatureBlock }) {
                 className="rounded-none py-5 text-left text-base font-semibold hover:no-underline"
                 onMouseEnter={() => setFocus(index)}
               >
-                {item.title}
+                {tx(item.title)}
               </AccordionTrigger>
               <AccordionContent className="max-w-xl pb-5 text-sm leading-7 text-muted-foreground">
-                {item.text}
+                {tx(item.text)}
               </AccordionContent>
             </AccordionItem>
           ))}

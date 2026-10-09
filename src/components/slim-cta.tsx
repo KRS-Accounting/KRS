@@ -5,7 +5,7 @@ import { getI18n } from "@/i18n/request";
 
 export async function SlimCta({
   heading = "Ready for an accounting file that stays ready?",
-  ctaLabel = "Schedule an initial free consultation",
+  ctaLabel = "Book a free consultation",
 }: {
   heading?: string;
   ctaLabel?: string;

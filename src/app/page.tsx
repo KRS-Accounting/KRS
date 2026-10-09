@@ -116,17 +116,17 @@ const socialVideos = [
 
 const faqs = [
   {
-    question: "Does KRS AI do all bookkeeping tasks for me?",
+    question: "Does KRS do all bookkeeping tasks for me?",
     answer:
-      "KRS AI supports document routing, classification, deadline tracking, and evidence gathering. Licensed accounting professionals review and complete the reserved accounting work, while you provide context or documents when something is missing.",
+      "KRS supports document routing, classification, deadline tracking, and evidence gathering. Licensed accounting professionals review and complete the reserved accounting work, while you provide context or documents when something is missing.",
   },
   {
-    question: "Does KRS AI replace my accountant?",
+    question: "Does KRS replace my accountant?",
     answer:
       "No. The platform improves preparation and visibility. Human KRS advisors remain responsible for judgment, review, and professional work that must be handled by licensed specialists.",
   },
   {
-    question: "Which Greek compliance systems does KRS AI support?",
+    question: "Which Greek compliance systems does KRS support?",
     answer:
       "The operating model is designed around AADE, myDATA, Taxisnet, EFKA, ERGANI, gov.gr workflows, and the documents Greek businesses need for accounting, payroll, and tax continuity.",
   },
@@ -257,9 +257,9 @@ async function ProcessSection() {
       <div className="relative mx-auto max-w-[1400px]">
         <SectionIntro
           className="lg:grid-cols-[0.65fr_0.35fr]"
-          eyebrow={tx("Your start at KRS AI")}
+          eyebrow={tx("Working with KRS")}
           text={tx(
-            "The timeline remains simple: start, monthly close, annual filings, and ongoing advisory. Each phase has visible evidence and a clear owner.",
+            "A clear rhythm from onboarding to monthly accounting, annual filings, and ongoing advice. You can see what is needed, what KRS is handling, and what happens next.",
           )}
           title={tx("From day one to year-end.")}
         />
@@ -277,13 +277,13 @@ async function WhySection() {
       <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
           <div>
-            <p className="mono-label text-secondary">{tx("Why KRS AI?")}</p>
+            <p className="mono-label text-secondary">{tx("Why KRS?")}</p>
             <h2 className="type-h3 mt-5 max-w-3xl text-balance">
               <Reveal>{tx("Built for founders and finance teams.")}</Reveal>
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
               {tx(
-                "The benefit is not a prettier portal. It is fewer unknowns, earlier questions, and better-reviewed decisions across accounting, payroll, tax, and filings.",
+                "Bring documents, deadlines, filings, and advisor questions into one visible workflow, so fewer issues are discovered late and decisions are better informed.",
               )}
             </p>
             <Link
@@ -296,7 +296,7 @@ async function WhySection() {
           </div>
           <div className="gradient-shell shadow-[var(--shadow-lg)]">
             <Image
-              alt={tx("A connected KRS AI operating layer for accounting, advice, compliance, and live reporting")}
+              alt={tx("A connected KRS operating layer for accounting, advice, compliance, and live reporting")}
               className="w-full bg-card"
               height={640}
               src="/images/krs-why-ai-phone.jpg"
@@ -340,7 +340,7 @@ async function CareersSection() {
           <div className="relative aspect-[3/4] overflow-hidden bg-background p-8 text-foreground">
             <div className="relative flex h-full flex-col justify-between">
               <div className="flex items-center justify-center">
-                <Image alt={tx("KRS AI")} className="h-8 w-auto" height={416} src="/logos/Full%20logo%20Dark.png" unoptimized width={1008} />
+                <Image alt={tx("KRS")} className="h-8 w-auto" height={416} src="/logos/Full%20logo%20Dark.png" unoptimized width={1008} />
               </div>
               <div className="relative mx-auto flex aspect-square w-[74%] items-center justify-center">
                 <CareersClock className="w-full" />
@@ -362,7 +362,7 @@ async function CareersSection() {
           </h2>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-primary-foreground/72">
             {tx(
-              "KRS AI is built around focused work, healthy lifestyle, and fewer repetitive loops. Agentic workflows handle document chasing, routing, and mundane portal work so advisors, operators, and engineers can spend their best hours on judgment, systems, and client outcomes.",
+              "KRS is built around focused work, healthy lifestyle, and fewer repetitive loops. Agentic workflows handle document chasing, routing, and mundane portal work so advisors, operators, and engineers can spend their best hours on judgment, systems, and client outcomes.",
             )}
           </p>
           <div className="mt-10 grid grid-cols-2 gap-6">

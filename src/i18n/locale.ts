@@ -1,11 +1,11 @@
-export const locales = ["el", "en"] as const;
+export const locales = ["en", "el"] as const;
 
 export type Locale = (typeof locales)[number];
 
-export const defaultLocale: Locale = "el";
+export const defaultLocale: Locale = "en";
 
 export function isLocale(value: string | null | undefined): value is Locale {
-  return value === "el" || value === "en";
+  return value === "en" || value === "el";
 }
 
 export function withLocale(locale: Locale, href: string) {
@@ -14,10 +14,10 @@ export function withLocale(locale: Locale, href: string) {
   const hashIndex = href.indexOf("#");
   const hash = hashIndex >= 0 ? href.slice(hashIndex) : "";
   const path = hashIndex >= 0 ? href.slice(0, hashIndex) : href;
-  const bare = path.replace(/^\/en(?=\/|$)/, "") || "/";
+  const bare = path.replace(/^\/(?:en|el)(?=\/|$)/, "") || "/";
 
-  if (locale === "el") return `${bare}${hash}`;
-  if (bare === "/") return `/en${hash}`;
+  if (locale === defaultLocale) return `${bare}${hash}`;
+  if (bare === "/") return `/${locale}${hash}`;
 
-  return `/en${bare}${hash}`;
+  return `/${locale}${bare}${hash}`;
 }

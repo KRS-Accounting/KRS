@@ -21,8 +21,8 @@ const stats: Array<{
   },
   {
     label: "Service lines, one file",
-    value: "4",
-    text: "Advisory, accounting, payroll, and statutory returns move through the same controlled operating file.",
+    value: "5",
+    text: "Accounting, tax, payroll, advisory, and funding move through the same controlled operating file.",
   },
   {
     label: "Practice since",

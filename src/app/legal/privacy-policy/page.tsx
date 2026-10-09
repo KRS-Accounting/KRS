@@ -4,7 +4,7 @@ import { LegalDocumentView } from "@/components/legal-document";
 import { privacyPolicy } from "@/lib/legal";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | KRS AI",
+  title: "Privacy Policy | KRS",
   description: privacyPolicy.description,
   alternates: { canonical: "/legal/privacy-policy" },
 };

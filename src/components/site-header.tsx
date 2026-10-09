@@ -41,7 +41,7 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 const navItems: MegaNavItem[] = [
   {
     label: "Services",
-    ctaLabel: "Book an initial free consultation",
+    ctaLabel: "Book a free consultation",
     ctaHref: "/onboarding",
     columns: [
       {
@@ -190,14 +190,14 @@ const navItems: MegaNavItem[] = [
   },
   {
     label: "About Us",
-    ctaLabel: "Book an initial free consultation",
+    ctaLabel: "Book a free consultation",
     ctaHref: "/onboarding",
     columns: [
       {
         links: [
-          { label: "About us", description: "KRS AI's story and mission", href: "/about" },
-          { label: "Why KRS AI?", description: "Benefits of our platform and advice", href: "/why" },
-          { label: "Careers", description: "Open positions at KRS AI", href: "/careers" },
+          { label: "About us", description: "KRS's story and mission", href: "/about" },
+          { label: "Why KRS?", description: "Benefits of our platform and advice", href: "/why" },
+          { label: "Careers", description: "Open positions at KRS", href: "/careers" },
           { label: "Contact us", description: "Personal contact with our team", href: "/onboarding" },
         ],
       },
@@ -206,7 +206,7 @@ const navItems: MegaNavItem[] = [
       {
         eyebrow: "Careers",
         label: "Open positions",
-        description: "Your start at KRS AI.",
+        description: "Your start at KRS.",
         href: "/careers",
       },
     ],
@@ -277,7 +277,7 @@ const navItems: MegaNavItem[] = [
       {
         eyebrow: "Press",
         label: "Known from",
-        description: "Media, updates, and public notes from KRS AI.",
+        description: "Media, updates, and public notes from KRS.",
         href: "/#media",
       },
     ],
@@ -285,8 +285,8 @@ const navItems: MegaNavItem[] = [
 ];
 
 const languageOptions = [
-  { value: "el", label: "Greek", native: "Ελληνικά", available: true },
   { value: "en", label: "English", native: "English", available: true },
+  { value: "el", label: "Greek", native: "Ελληνικά", available: true },
   { value: "he", label: "Hebrew", native: "עברית", available: false },
   { value: "ar", label: "Arabic", native: "العربية", available: false },
   { value: "zh", label: "Chinese", native: "中文", available: false },
@@ -304,7 +304,7 @@ const mobileLinks = [
   { label: "Consulting", href: "/services/consulting" },
   { label: "Funding & Grants", href: "/services/funding-grants" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Why KRS AI", href: "/why" },
+  { label: "Why KRS", href: "/why" },
   { label: "About", href: "/about" },
   { label: "Careers", href: "/careers" },
   { label: "Blog", href: "/#field-notes" },
@@ -381,9 +381,9 @@ export function SiteHeader() {
               <ArrowLeft className="size-5" strokeWidth={1.75} />
             </button>
           ) : (
-            <Link aria-label={tx("KRS AI home")} className="flex items-center" href={href("/")}>
+            <Link aria-label={tx("KRS home")} className="flex items-center" href={href("/")}>
               <Image
-                alt="KRS AI"
+                alt="KRS"
                 className="h-14 w-auto"
                 height={416}
                 priority

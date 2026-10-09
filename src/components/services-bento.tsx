@@ -13,6 +13,7 @@ import { PayrollScene } from "@/components/services-bento/payroll-scene";
 import { sceneEase, type ServiceSceneProps } from "@/components/services-bento/scene-motion";
 import { TaxAdvisoryScene } from "@/components/services-bento/tax-advisory-scene";
 import { BentoSceneProvider, useHoverScene } from "@/components/services-bento/use-hover-scene";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 type ServiceCard = {
@@ -92,6 +93,7 @@ function ServiceBentoCard({
   service: ServiceCard;
   index: number;
 }) {
+  const { tx, href } = useI18n();
   const reduce = useReducedMotion();
   const {
     ref,
@@ -126,7 +128,7 @@ function ServiceBentoCard({
           active && "-translate-y-0.5 shadow-md",
         )}
         data-scene-active={active ? "true" : "false"}
-        href={service.href}
+        href={href(service.href)}
         onBlur={onBlur}
         onFocus={onFocus}
         onMouseEnter={onPointerEnter}
@@ -143,7 +145,7 @@ function ServiceBentoCard({
       >
         <div className="relative z-10 px-5 pt-5 pb-3">
           <div className="flex items-start justify-between gap-4">
-            <h3 className="text-lg font-medium tracking-tight">{service.title}</h3>
+            <h3 className="text-lg font-medium tracking-tight">{tx(service.title)}</h3>
             <ArrowRight
               className={cn(
                 "mt-1 size-4 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1",
@@ -151,7 +153,7 @@ function ServiceBentoCard({
               )}
             />
           </div>
-          <p className="mt-1.5 max-w-md text-sm leading-6 text-muted-foreground">{service.text}</p>
+          <p className="mt-1.5 max-w-md text-sm leading-6 text-muted-foreground">{tx(service.text)}</p>
         </div>
         <div aria-hidden="true" className="relative min-h-0 flex-1 px-4 pb-4">
           <Scene active={active} reducedMotion={reducedMotion} />

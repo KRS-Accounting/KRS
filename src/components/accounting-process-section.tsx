@@ -7,6 +7,7 @@ import { BadgeCheck, Landmark, PanelsTopLeft } from "lucide-react";
 import { ProcessTimeline, type ProcessStep } from "@/components/process-timeline";
 import { Reveal, RevealFade } from "@/components/reveal";
 import { Badge } from "@/components/ui/badge";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const steps: ProcessStep[] = [
@@ -43,6 +44,7 @@ const steps: ProcessStep[] = [
 ];
 
 export function AccountingProcessSection() {
+  const { tx } = useI18n();
   const proofs = useMemo(
     () => [
       <IntakeProof key="intake" />,
@@ -59,13 +61,13 @@ export function AccountingProcessSection() {
       <div className="relative mx-auto max-w-[1400px]">
         <div className="grid gap-6 lg:grid-cols-[0.65fr_0.35fr] lg:items-end">
           <div>
-            <p className="mono-label text-secondary">How it works</p>
+            <p className="mono-label text-secondary">{tx("How it works")}</p>
             <h2 className="type-h3 mt-5 max-w-4xl text-balance">
-              <Reveal>From intake to a current close.</Reveal>
+              <Reveal>{tx("From intake to a current close.")}</Reveal>
             </h2>
           </div>
           <RevealFade className="max-w-xl text-lg leading-8 text-muted-foreground" delay={0.1}>
-            Five steps, one owner. KRS handles the switch so the business keeps moving while the books come across.
+            {tx("Five steps, one owner. KRS handles the switch so the business keeps moving while the books come across.")}
           </RevealFade>
         </div>
         <ProcessTimeline proofs={proofs} steps={steps} />
@@ -85,10 +87,12 @@ function ProofShell({
   children: ReactNode;
   className?: string;
 }) {
+  const { tx } = useI18n();
+
   return (
     <div className={cn("p-5 sm:p-6", className)}>
-      <p className="mono-label text-muted-foreground">{label}</p>
-      <p className="font-heading mt-2 text-xl font-medium leading-tight">{title}</p>
+      <p className="mono-label text-muted-foreground">{tx(label)}</p>
+      <p className="font-heading mt-2 text-xl font-medium leading-tight">{tx(title)}</p>
       {children}
     </div>
   );

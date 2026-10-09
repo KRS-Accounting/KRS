@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Brygada_1918, Fraunces, IBM_Plex_Sans, Inter, JetBrains_Mono } from "next/font/google";
+import { Brygada_1918, Fraunces, IBM_Plex_Sans, Inter, JetBrains_Mono, Literata } from "next/font/google";
 import { headers } from "next/headers";
 
 import { getI18n } from "@/i18n/request";
@@ -18,6 +18,14 @@ const greekSerif = Brygada_1918({
   subsets: ["latin", "greek"],
   style: ["normal", "italic"],
   variable: "--font-greek-serif",
+});
+
+const greekDisplay = Literata({
+  axes: ["opsz"],
+  display: "swap",
+  subsets: ["latin", "greek"],
+  style: ["normal", "italic"],
+  variable: "--font-greek-display",
 });
 
 const inter = Inter({
@@ -41,7 +49,7 @@ const ibmPlexSans = IBM_Plex_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
-const siteTitle = "KRS AI | Accounting, Tax Advisory & Agentic Operations";
+const siteTitle = "KRS | Accounting, Tax Advisory & Agentic Operations";
 const siteDescription =
   "Premium accounting, payroll, tax advisory, and agentic compliance operations for modern Greek businesses.";
 const ogAlt = "KRS logo and the line, Building the financial platform for the businesses of tomorrow";
@@ -68,7 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      siteName: "KRS AI",
+      siteName: "KRS",
       images: [ogImage],
       type: "website",
     },
@@ -103,7 +111,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${fraunces.variable} ${greekSerif.variable} ${inter.variable} ${ibmPlexSans.variable} ${jetBrainsMono.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${greekSerif.variable} ${greekDisplay.variable} ${inter.variable} ${ibmPlexSans.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>

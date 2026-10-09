@@ -4,11 +4,18 @@ import type { NextRequest } from "next/server";
 import { isIndexableHost } from "@/lib/site";
 
 function localeFromPath(pathname: string) {
-  return pathname === "/en" || pathname.startsWith("/en/") ? "en" : "el";
+  return pathname === "/el" || pathname.startsWith("/el/") ? "el" : "en";
 }
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (pathname === "/en" || pathname.startsWith("/en/")) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = pathname === "/en" ? "/" : pathname.slice(3) || "/";
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
   const locale = localeFromPath(pathname);
   const requestHeaders = new Headers(request.headers);
 
@@ -17,12 +24,12 @@ export function proxy(request: NextRequest) {
 
   const nextUrl = request.nextUrl.clone();
 
-  if (locale === "en") {
-    nextUrl.pathname = pathname === "/en" ? "/" : pathname.slice(3) || "/";
+  if (locale === "el") {
+    nextUrl.pathname = pathname === "/el" ? "/" : pathname.slice(3) || "/";
   }
 
   const response =
-    locale === "en"
+    locale === "el"
       ? NextResponse.rewrite(nextUrl, { request: { headers: requestHeaders } })
       : NextResponse.next({ request: { headers: requestHeaders } });
 

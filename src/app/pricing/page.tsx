@@ -17,7 +17,7 @@ import { getI18n } from "@/i18n/request";
 
 export function generateMetadata() {
   return pageMetadata({
-    title: "Pricing | KRS AI",
+    title: "Pricing | KRS",
     description: "Transparent accounting, payroll, and tax advisory pricing for Greek businesses.",
   });
 }

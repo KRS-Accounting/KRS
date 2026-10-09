@@ -20,14 +20,14 @@ export async function AgentsSection({ id = "agents", workSide = "panel" }: { id?
       <div className="relative mx-auto flex max-w-[1400px] flex-col gap-14 xl:gap-16">
         <div className="grid gap-6 lg:grid-cols-[0.65fr_0.35fr] lg:items-end">
           <div>
-            <p className="mono-label text-secondary">{tx("KRS AI Agents")}</p>
+            <p className="mono-label text-secondary">{tx("How KRS technology works")}</p>
             <h2 className="type-h3 mt-5 max-w-4xl text-balance">
-              <Reveal>{tx("People decide. AI keeps it moving.")}</Reveal>
+              <Reveal>{tx("People decide. Technology keeps the work moving.")}</Reveal>
             </h2>
           </div>
           <RevealFade className="max-w-xl text-lg leading-8 text-primary-foreground/68" delay={0.1}>
             {tx(
-              "Licensed advisors and operators stay in charge. KRS AI prepares context, routes evidence, and keeps every compliance workflow visible before a person makes the next call.",
+              "KRS technology organises information, flags what is missing, routes requests, and tracks deadlines. KRS professionals stay in control and provide the advice.",
             )}
           </RevealFade>
         </div>

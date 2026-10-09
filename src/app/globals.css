@@ -554,10 +554,32 @@ html[lang="el"] {
   }
 
   .hero-headline-accent {
-    font-family: var(--font-heading);
+    font-family: inherit;
     font-weight: 300;
     font-optical-sizing: auto;
+    font-variation-settings: "wght" 300;
+  }
+
+  html[lang="en"] .hero-headline-accent {
     font-variation-settings: "wght" 300, "WONK" 1;
+  }
+
+  html[lang="el"] .hero-display-heading {
+    font-family: var(--font-greek-display), "Literata", ui-serif, serif;
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+  }
+
+  html[lang="el"] .hero-headline-accent-line {
+    line-height: 1.18;
+    margin-top: 0.06em;
+    padding-bottom: 0.12em;
+  }
+
+  @media (min-width: 64rem) {
+    html[lang="el"] .hero-display-heading {
+      font-size: clamp(4.5rem, calc(3vw + 3.75vh), 6rem);
+    }
   }
 
   .hero-photo-mask {

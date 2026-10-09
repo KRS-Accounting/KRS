@@ -13,6 +13,7 @@ import { ServicesBento } from "@/components/services-bento";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
+import { T } from "@/i18n/t";
 import { cn } from "@/lib/utils";
 
 const ctaLabel = "Talk to KRS";
@@ -56,7 +57,7 @@ const faqs = [
   {
     question: "What does the KRS platform actually do?",
     answer:
-      "The file keeps accounting, payroll, tax, and filings in one sequence. KRS AI prepares evidence, routes missing documents, and tracks deadlines. Licensed accountants and tax advisors remain accountable for the review.",
+      "The file keeps accounting, payroll, tax, and filings in one sequence. KRS technology prepares evidence, routes missing documents, and tracks deadlines. Licensed accountants and tax advisors remain accountable for the review.",
   },
   {
     question: "Is KRS right for my company?",
@@ -103,20 +104,19 @@ function Hero() {
     <section className="bg-[#fdf8f0] px-4 pt-16 pb-10 sm:px-6 sm:pt-20 lg:px-12 lg:pt-24">
       <div className="mx-auto max-w-[920px] text-center">
         <h1 className="font-heading text-[3.25rem] font-light leading-[1.08] tracking-[-0.045em] sm:text-7xl lg:text-8xl">
-          <Reveal play="mount">Why KRS?</Reveal>
+          <Reveal play="mount"><T text="Why KRS?" /></Reveal>
         </h1>
         <RevealFade
           className="mx-auto mt-6 max-w-[38rem] text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8"
           delay={0.12}
           play="mount"
         >
-          A licensed Greek practice and an AI operating file for accounting, payroll, and tax. You still run the
-          company.
+          <T text="A licensed Greek practice and an AI operating file for accounting, payroll, and tax. You still run the company." />
         </RevealFade>
         <div className="mt-8 flex justify-center">
           <Button asChild className="h-12 rounded-full px-6 text-sm">
             <Link href="/onboarding">
-              {ctaLabel}
+              <T text={ctaLabel} />
               <ArrowRight className="size-4" strokeWidth={1.75} />
             </Link>
           </Button>
@@ -131,7 +131,7 @@ function Reasons() {
     <section className="bg-[#fdf8f0] px-4 pb-0 sm:px-6 lg:px-12">
       <div className="mx-auto max-w-[1400px]">
         <h2 className="type-h2 text-center">
-          <Reveal>3 reasons to choose KRS</Reveal>
+          <Reveal><T text="3 reasons to choose KRS" /></Reveal>
         </h2>
         <div className="mt-12 grid border-y border-primary/12 md:grid-cols-3">
           {reasons.map((reason, index) => (
@@ -142,8 +142,8 @@ function Reasons() {
               )}
               key={reason.title}
             >
-              <h3 className="text-xl font-semibold leading-tight">{reason.title}</h3>
-              <p className="max-w-sm text-sm leading-7 text-muted-foreground">{reason.text}</p>
+              <h3 className="text-xl font-semibold leading-tight"><T text={reason.title} /></h3>
+              <p className="max-w-sm text-sm leading-7 text-muted-foreground"><T text={reason.text} /></p>
             </article>
           ))}
         </div>
@@ -167,33 +167,29 @@ function Unique() {
         </div>
         <div className="flex flex-col justify-center px-4 py-16 sm:px-8 sm:py-20 lg:px-16">
           <h2 className="type-h3">
-            <Reveal>What makes KRS unique?</Reveal>
+            <Reveal><T text="What makes KRS unique?" /></Reveal>
           </h2>
           <RevealFade className="mt-6 max-w-xl text-base leading-8 text-primary-foreground/72" delay={0.08}>
-            KRS is a licensed practice with its own operating layer. Advisors work in the same file you can see:
-            documents, deadlines, payroll changes, and tax questions. Simple, secure, and inspectable.
+            <T text="KRS is a licensed practice with its own operating layer. Advisors work in the same file you can see: documents, deadlines, payroll changes, and tax questions. Simple, secure, and inspectable." />
           </RevealFade>
         </div>
 
         <div className="flex flex-col justify-center px-4 py-16 sm:px-8 sm:py-20 lg:order-none lg:px-16">
           <h2 className="type-h3">
-            <Reveal>Who is KRS for?</Reveal>
+            <Reveal><T text="Who is KRS for?" /></Reveal>
           </h2>
           <RevealFade className="mt-6 max-w-xl text-base leading-8 text-primary-foreground/72" delay={0.08}>
-            Greek companies that need accounting, payroll, and tax in one place. IKE, EPE, AE, founders, and operators
-            who want a reviewed file instead of a monthly scramble.
+            <T text="Greek companies that need accounting, payroll, and tax in one place. IKE, EPE, AE, founders, and operators who want a reviewed file instead of a monthly scramble." />
           </RevealFade>
           <RevealFade className="mt-4 max-w-xl text-base leading-8 text-primary-foreground/72" delay={0.12}>
-            Startups, in particular, get help with registration, myDATA, and the first close. If you want the work to
-            stay inspectable, KRS is the right practice. If your setup is more complex, we still want the first
-            conversation.
+            <T text="Startups, in particular, get help with registration, myDATA, and the first close. If you want the work to stay inspectable, KRS is the right practice. If your setup is more complex, we still want the first conversation." />
           </RevealFade>
           <Button
             asChild
             className="mt-8 h-12 w-fit rounded-full bg-secondary px-6 text-secondary-foreground hover:bg-secondary/90"
           >
             <Link href="/onboarding">
-              {ctaLabel}
+              <T text={ctaLabel} />
               <ArrowRight className="size-4" strokeWidth={1.75} />
             </Link>
           </Button>
@@ -217,7 +213,7 @@ function Platform() {
     <section className="bg-[#fdf8f0] px-4 py-24 sm:px-6 lg:px-12 lg:py-28" id="platform">
       <div className="mx-auto max-w-[1400px]">
         <h2 className="type-h2 mx-auto max-w-4xl text-center">
-          <Reveal>Bookkeeping, payroll and taxes, on one smart platform</Reveal>
+          <Reveal><T text="Bookkeeping, payroll and taxes, on one smart platform" /></Reveal>
         </h2>
         <ServicesBento className="mt-14" />
       </div>
@@ -230,7 +226,7 @@ function Collaboration() {
     <section className="bg-[#fdf8f0] px-4 pb-24 sm:px-6 lg:px-12" id="how-we-start">
       <div className="mx-auto max-w-[1400px]">
         <h2 className="type-h2 text-center">
-          <Reveal>How does the collaboration work?</Reveal>
+          <Reveal><T text="How does the collaboration work?" /></Reveal>
         </h2>
         <div className="mt-14 grid border-y border-primary/12 md:grid-cols-3">
           {collaboration.map((step, index) => (
@@ -241,8 +237,8 @@ function Collaboration() {
               )}
               key={step.title}
             >
-              <h3 className="text-xl font-semibold leading-tight">{step.title}</h3>
-              <p className="max-w-sm text-sm leading-7 text-muted-foreground">{step.text}</p>
+              <h3 className="text-xl font-semibold leading-tight"><T text={step.title} /></h3>
+              <p className="max-w-sm text-sm leading-7 text-muted-foreground"><T text={step.text} /></p>
             </article>
           ))}
         </div>
@@ -257,12 +253,11 @@ function Proof() {
       <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
         <div>
           <blockquote className="font-heading text-balance text-3xl font-light leading-snug sm:text-4xl lg:text-[2.6rem] lg:leading-[1.2]">
-            KRS gives us the operating clarity we wanted from an internal finance team, without losing the judgement of
-            real tax advisors.
+            <T text="KRS gives us the operating clarity we wanted from an internal finance team, without losing the judgement of real tax advisors." />
           </blockquote>
           <footer className="mt-8">
-            <p className="font-semibold">Nikos Vardakis</p>
-            <p className="mt-1 text-sm text-muted-foreground">Co-founder, HelioStack Technologies</p>
+            <p className="font-semibold"><T text="Nikos Vardakis" /></p>
+            <p className="mt-1 text-sm text-muted-foreground"><T text="Co-founder, HelioStack Technologies" /></p>
           </footer>
         </div>
         <div className="relative aspect-[4/3] overflow-hidden bg-primary">
@@ -285,16 +280,16 @@ function WhyFaq() {
       <div className="mx-auto grid max-w-[1400px] items-start gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         <div>
           <h2 className="type-h3">
-            <Reveal>Frequently asked questions to KRS</Reveal>
+            <Reveal><T text="Frequently asked questions to KRS" /></Reveal>
           </h2>
           <Accordion className="mt-10 border-t border-primary/16" defaultValue="why-faq-0" collapsible type="single">
             {faqs.map((faq, index) => (
               <AccordionItem className="border-primary/14" key={faq.question} value={`why-faq-${index}`}>
                 <AccordionTrigger className="rounded-none py-6 text-left text-lg font-semibold hover:no-underline">
-                  {faq.question}
+                  <T text={faq.question} />
                 </AccordionTrigger>
                 <AccordionContent className="max-w-2xl pb-7 text-sm leading-7 text-muted-foreground">
-                  {faq.answer}
+                  <T text={faq.answer} />
                 </AccordionContent>
               </AccordionItem>
             ))}
@@ -320,20 +315,20 @@ function FinalCta() {
       <div className="relative mx-auto grid max-w-[1400px] grid-cols-12 items-start gap-8">
         <div className="col-span-12 lg:col-span-8">
           <h2 className="type-display-xl text-primary">
-            <Reveal>Begin</Reveal>
-            <Reveal delay={0.1}>together.</Reveal>
+            <Reveal><T text="Begin" /></Reveal>
+            <Reveal delay={0.1}><T text="together." /></Reveal>
           </h2>
         </div>
         <div className="col-span-12 lg:col-span-4">
-          <h3 className="type-h4 max-w-md text-balance text-primary">We take care of admin. You take care of business.</h3>
+          <h3 className="type-h4 max-w-md text-balance text-primary"><T text="We take care of admin. You take care of business." /></h3>
           <p className="mt-4 max-w-md text-lg leading-8 text-primary/74">
-            Our team will get the file open, the authorisations in place, and the first close on a calendar.
+            <T text="Our team will get the file open, the authorisations in place, and the first close on a calendar." />
           </p>
           <ul className="mt-6 grid max-w-md gap-2.5 text-base leading-6 text-primary">
             {contactPromises.map((item) => (
               <li className="flex items-start gap-2.5" key={item}>
                 <Check className="mt-0.5 size-4 shrink-0" strokeWidth={2.5} />
-                {item}
+                <T text={item} />
               </li>
             ))}
           </ul>
@@ -342,7 +337,7 @@ function FinalCta() {
             className="mt-8 h-13 w-full justify-between rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90"
           >
             <Link href="/onboarding">
-              {ctaLabel}
+              <T text={ctaLabel} />
               <ArrowRight className="size-5" />
             </Link>
           </Button>
