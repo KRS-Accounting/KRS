@@ -12,32 +12,32 @@ import { useI18n } from "@/i18n/provider";
 const steps: ProcessStep[] = [
   {
     time: "Day 1",
-    title: "Complete your intake",
-    text: "Share the company and the project you want to fund, so we can see which Greek and EU routes are worth checking.",
+    title: "Share the company and project",
+    text: "Tell us about the company, the proposed investment and the costs you want to fund.",
     cta: "Talk to KRS",
   },
   {
     time: "Same week",
     title: "We build the funding profile",
-    text: "Legal form, sector, region, headcount and the planned spend go on the file before any call is scored.",
+    text: "Legal form, sector, region, company size, planned costs and timing are recorded before opportunities are screened.",
     cta: "Talk to KRS",
   },
   {
     time: "As calls open",
-    title: "Matches and alerts start",
-    text: "ESPA, national schemes, Horizon Europe, the EIC and other EU programmes are compared with that profile.",
+    title: "We review potential matches",
+    text: "Current national and EU opportunities are compared with the profile and shortlisted for detailed review.",
     cta: "Talk to KRS",
   },
   {
-    time: "When a call fits",
-    title: "We prepare the application with you",
-    text: "KRS drafts the case and the budget. You provide the documents and the approval the call still needs.",
+    time: "Once you choose a call",
+    title: "We prepare the selected application",
+    text: "KRS drafts the business case, budget and forms. You provide the required documents, decisions and approvals.",
     cta: "Talk to KRS",
   },
   {
-    time: "On the deadline",
-    title: "We file, then keep the project current",
-    text: "The application is submitted after your sign-off. Reporting dates stay on the same file if it is awarded.",
+    time: "After your approval",
+    title: "We submit after approval",
+    text: "Once you approve the complete application, KRS submits it and records the acknowledgement. If awarded, the next obligations are added to the project calendar.",
     cta: "Talk to KRS",
   },
 ];
@@ -62,11 +62,11 @@ export function FundingProcessSection() {
           <div>
             <p className="mono-label text-secondary">{tx("How it works")}</p>
             <h2 className="type-h3 mt-5 max-w-4xl text-balance">
-              <Reveal>{tx("From company profile to filed application.")}</Reveal>
+              <Reveal>{tx("From funding profile to submitted application.")}</Reveal>
             </h2>
           </div>
           <RevealFade className="max-w-xl text-lg leading-8 text-muted-foreground" delay={0.1}>
-            {tx("Five steps, one file. KRS matches the calls and prepares the application with you before the deadline.")}
+            {tx("Five steps, one file. KRS screens current opportunities and prepares the selected application with you before submission.")}
           </RevealFade>
         </div>
         <ProcessTimeline proofs={proofs} steps={steps} />
@@ -88,6 +88,8 @@ function ProofShell({ label, title, children }: { label: string; title: string; 
 }
 
 function IntakeProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Intake" title="Project details received">
       <div className="mt-5 grid gap-2">
@@ -97,8 +99,8 @@ function IntakeProof() {
           ["Project", "Product development"],
         ].map(([label, value]) => (
           <div className="flex items-center justify-between border border-primary/12 bg-background px-3 py-2" key={label}>
-            <span className="text-sm text-muted-foreground">{label}</span>
-            <span className="text-sm font-medium">{value}</span>
+            <span className="text-sm text-muted-foreground">{tx(label)}</span>
+            <span className="text-sm font-medium">{tx(value)}</span>
           </div>
         ))}
       </div>
@@ -107,21 +109,23 @@ function IntakeProof() {
 }
 
 function ProfileProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="File" title="Your funding advisor">
       <div className="mt-5 flex items-center gap-4">
         <Image
-          alt="KRS funding advisor"
+          alt={tx("KRS funding advisor")}
           className="size-16 shrink-0 rounded-full object-cover"
           height={128}
           src="/images/krs-funding-advisor.png"
           width={128}
         />
         <div>
-          <p className="text-lg font-semibold">KRS funding</p>
-          <p className="text-sm text-muted-foreground">Application advisor</p>
+          <p className="text-lg font-semibold">{tx("KRS funding")}</p>
+          <p className="text-sm text-muted-foreground">{tx("Application advisor")}</p>
           <Badge className="mt-2 rounded-full" variant="secondary">
-            Direct access
+            {tx("Direct access")}
           </Badge>
         </div>
       </div>
@@ -130,18 +134,20 @@ function ProfileProof() {
 }
 
 function MatchProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Match" title="Calls compared with the file">
       <div className="mt-5 grid gap-2">
         {[
-          { title: "ESPA competitiveness", status: "Fit" },
-          { title: "EIC Accelerator", status: "Fit" },
+          { title: "ESPA competitiveness", status: "Potential match" },
+          { title: "EIC Accelerator", status: "Potential match" },
           { title: "Horizon Europe cluster", status: "Review" },
         ].map((item) => (
           <div className="flex items-center justify-between border border-primary/12 bg-background px-3 py-2" key={item.title}>
-            <span className="text-sm font-medium">{item.title}</span>
+            <span className="text-sm font-medium">{tx(item.title)}</span>
             <Badge className="rounded-full" variant={item.status === "Review" ? "outline" : "secondary"}>
-              {item.status}
+              {tx(item.status)}
             </Badge>
           </div>
         ))}
@@ -151,19 +157,21 @@ function MatchProof() {
 }
 
 function ApplyProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Application" title="Pack prepared with you">
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
         {[
           { label: "Match", icon: ScanSearch },
           { label: "Alerts", icon: Bell },
-          { label: "Filing", icon: FileCheck2 },
+          { label: "Submission", icon: FileCheck2 },
         ].map((item) => {
           const Icon = item.icon;
           return (
             <div className="border border-primary/12 bg-background px-3 py-4 text-center" key={item.label}>
               <Icon className="mx-auto size-5 text-secondary" />
-              <p className="mt-2 text-sm font-medium">{item.label}</p>
+              <p className="mt-2 text-sm font-medium">{tx(item.label)}</p>
             </div>
           );
         })}
@@ -173,18 +181,20 @@ function ApplyProof() {
 }
 
 function LiveProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Current" title="The open calls in view">
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         {[
-          ["ESPA", "Fit"],
+          ["ESPA", "Potential match"],
           ["EIC Accelerator", "Deadline watched"],
           ["Your documents", "2 still needed"],
           ["Advisor", "One message away"],
         ].map(([label, value]) => (
           <div className="border border-primary/12 bg-background px-3 py-3" key={label}>
-            <p className="text-xs text-muted-foreground">{label}</p>
-            <p className="mt-1 text-sm font-semibold">{value}</p>
+            <p className="text-xs text-muted-foreground">{tx(label)}</p>
+            <p className="mt-1 text-sm font-semibold">{tx(value)}</p>
           </div>
         ))}
       </div>

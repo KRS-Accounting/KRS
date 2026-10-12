@@ -31,8 +31,8 @@ const blocks: FeatureBlock[] = [
   {
     id: "run",
     label: "Payroll",
-    title: "The monthly run, with the cost visible first",
-    body: "KRS calculates gross, net and the employer charge before anyone is paid. Payslips go out with the run, not after a chase.",
+    title: "The monthly payroll, with the full cost visible first",
+    body: "KRS calculates gross pay, net pay and employer contributions before anyone is paid. Payslips are issued with the run, not chased afterwards.",
     items: [
       {
         id: "calc",
@@ -42,12 +42,12 @@ const blocks: FeatureBlock[] = [
       {
         id: "file",
         title: "APD drafted from the same numbers",
-        text: "The monthly declaration to EFKA is prepared from the payslips, so the filing and the pay describe the same month.",
+        text: "The APD, the monthly declaration to EFKA, is prepared from the payslips, so the filing and the pay always match.",
       },
       {
         id: "cost",
         title: "Employer cost before you approve",
-        text: "EFKA charged to the company is on the run before payment, so the total is not a surprise after payday.",
+        text: "Employer EFKA contributions are shown on the run before you approve it, so the total cost is clear before payday.",
       },
     ],
     Scene: PayrollRunScene,
@@ -55,24 +55,24 @@ const blocks: FeatureBlock[] = [
   {
     id: "compliance",
     label: "Compliance",
-    title: "EFKA, withholding and ERGANI on one calendar",
-    body: "Contributions and employment notices are checked with the payroll. Corrections are caught while the month is still open.",
+    title: "EFKA, payroll tax and ERGANI on one calendar",
+    body: "Contributions, payroll tax and ERGANI notices are checked with each run, so corrections are made while the month is still open.",
     reversed: true,
     items: [
       {
         id: "ergani",
-        title: "ERGANI notices before the work starts",
-        text: "Hires, schedule changes and leavers are declared on their own dates, with the employee record already in the file.",
+        title: "ERGANI notices on time",
+        text: "New hires are declared before they start. Schedule changes and departures are filed within their own deadlines.",
       },
       {
         id: "efka",
-        title: "Contributions on the gross",
-        text: "Employee and employer EFKA are calculated on the run and kept next to the payslip they come from.",
+        title: "Contributions and payroll tax",
+        text: "Employee and employer EFKA, and the tax withheld from pay, are calculated on each run and filed with EFKA and AADE.",
       },
       {
         id: "apd",
-        title: "The APD when the run agrees",
-        text: "The monthly declaration is filed once open changes are resolved, so a later correction is not the reminder.",
+        title: "APD filed once the run is final",
+        text: "The monthly APD is filed once open changes are resolved, so corrections are not left for later.",
       },
     ],
     Scene: PayrollComplianceScene,
@@ -80,23 +80,23 @@ const blocks: FeatureBlock[] = [
   {
     id: "onboarding",
     label: "Onboarding",
-    title: "New hires ready before the first shift",
-    body: "Contract, tax number, social security number and bank details are collected once. ERGANI is filed before they start, and the first payslip is on the next run.",
+    title: "New hires ready before their first day",
+    body: "The contract, tax number (AFM), social security number (AMKA) and bank details are collected once. The ERGANI hire notice is filed before the first day, and the first payslip is included in the next run.",
     items: [
       {
         id: "details",
         title: "One set of details",
-        text: "The contract, AFM, AMKA and IBAN are collected before payroll setup starts, so nothing is chased on the morning they arrive.",
+        text: "The contract, AFM, AMKA and IBAN are collected before payroll setup starts, so nothing is chased on their first morning.",
       },
       {
         id: "record",
         title: "Added to the payroll record",
-        text: "The person is set up in the same file as the rest of the team, including the pay pattern and the start date.",
+        text: "The new employee is set up alongside the rest of the team, with their pay terms, working hours and start date.",
       },
       {
         id: "first",
-        title: "On the next payslip",
-        text: "When the details arrive complete, the hire is ready within one business day and included in the following run.",
+        title: "Included in the next run",
+        text: "When the details arrive complete, the new employee is set up within one business day and paid in the next run.",
       },
     ],
     Scene: PayrollOnboardingScene,
@@ -105,7 +105,7 @@ const blocks: FeatureBlock[] = [
     id: "advice",
     label: "Payroll advice",
     title: "Answers during the month, not on payday",
-    body: "Questions about a hire, a leaver or a change in hours go to the person who already has the payroll. The answer lands on the calendar.",
+    body: "Questions about a hire, a departure or a change in hours go to the advisor who already runs your payroll. Any follow-up is added to the payroll calendar.",
     reversed: true,
     items: [
       {
@@ -116,11 +116,11 @@ const blocks: FeatureBlock[] = [
       {
         id: "context",
         title: "Advice that fits the contract",
-        text: "A part-time hire, a schedule change and a departure do not share one answer. The reply uses the employee already on the file.",
+        text: "A part-time hire, a schedule change and a departure each need a different answer. The reply is based on the employee’s actual contract.",
       },
       {
         id: "calendar",
-        title: "The next step is dated",
+        title: "Next steps on the payroll calendar",
         text: "When a decision needs an ERGANI notice or a change on the next payslip, that date is added to the payroll calendar.",
       },
     ],

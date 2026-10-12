@@ -3,9 +3,10 @@ import Link from "next/link";
 import { ArrowRight, CalendarClock, MessageSquareText, Scale } from "lucide-react";
 
 import { AccountingContactCta } from "@/components/accounting-contact-cta";
-import { Benefits, ServiceFaq, SwitchProcess } from "@/components/accounting-service-page";
+import { ServiceFaq, SwitchProcess } from "@/components/accounting-service-page";
 import { FieldNotesSection } from "@/components/field-notes-section";
 import { Reveal, RevealFade } from "@/components/reveal";
+import { ServiceBenefits } from "@/components/service-benefits";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SlimCta } from "@/components/slim-cta";
@@ -40,11 +41,11 @@ export function TaxPage() {
         defaultServices={["Tax advisory"]}
         subheading="We take care of the filings. You take care of the business."
       />
-      <Benefits page={taxAdvisoryPage} />
+      <ServiceBenefits page={taxAdvisoryPage} />
       <SwitchProcess page={taxAdvisoryPage} />
       <TestimonialsCarousel />
       <ServiceFaq page={taxAdvisoryPage} />
-      <SlimCta ctaLabel={ctaLabel} heading="Ready for filings that stay on time?" />
+      <SlimCta ctaLabel={ctaLabel} heading="Ready for every tax deadline to have an owner?" />
       <FieldNotesSection showTopRule={false} />
       <SiteFooter />
     </main>

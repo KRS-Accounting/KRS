@@ -6,16 +6,18 @@ import type { FeatureSceneProps } from "@/components/accounting-features/demo-fr
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge } from "@/components/services-bento/scene-ui";
 import { GlassScene } from "@/components/tax-features/glass";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const filings = [
   { title: "Greece VAT", detail: "April · AADE", status: "In review", sure: true },
   { title: "OSS return", detail: "Q1 · EU consumer sales", status: "Submitted", sure: true },
   { title: "Intra-EU listing", detail: "April · B2B supplies", status: "Ready", sure: true },
-  { title: "UK VAT", detail: "No UK establishment", status: "Out of scope", sure: false },
+  { title: "UK VAT", detail: "Separate review required", status: "Review", sure: false },
 ];
 
 export function CrossBorderScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
   const coordinated = ready && focus >= 1;
   const owned = ready && focus >= 2;
@@ -38,21 +40,21 @@ export function CrossBorderScene({ active, reducedMotion, focus }: FeatureSceneP
             transition={sceneTransition(reducedMotion, 0.08 + index * 0.07, active)}
           >
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[13px] font-medium leading-4">{item.title}</p>
-              <p className="mt-0.5 text-[11px] text-muted-foreground">{item.detail}</p>
+              <p className="truncate text-[13px] font-medium leading-4">{tx(item.title)}</p>
+              <p className="mt-0.5 text-[11px] text-muted-foreground">{tx(item.detail)}</p>
             </div>
             <UiBadge
               className={cn(!coordinated && item.sure && "opacity-70")}
               variant={item.sure && ready ? "secondary" : "outline"}
             >
-              {item.status}
+              {tx(item.status)}
             </UiBadge>
           </motion.div>
         ))}
       </div>
       <div className="border-t border-border px-3 py-2">
         <p className="text-[11px] text-muted-foreground">
-          {owned ? "Each deadline has a named advisor" : "EU sales stay on the same calendar"}
+          {tx(owned ? "Each deadline has a named advisor" : "EU sales stay on the same calendar")}
         </p>
       </div>
     </GlassScene>

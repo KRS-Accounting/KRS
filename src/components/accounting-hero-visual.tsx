@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneFrame, SceneHeader, UiBadge } from "@/components/services-bento/scene-ui";
+import { useI18n } from "@/i18n/provider";
 
 const lines = [
   { label: "Client revenue", value: "+€5,380.00", matched: true },
@@ -13,18 +14,18 @@ const lines = [
 ];
 
 export function AccountingHeroVisual() {
+  const { tx } = useI18n();
   const reduce = Boolean(useReducedMotion());
-  const [ready, setReady] = useState(false);
+  const [animatedReady, setAnimatedReady] = useState(false);
 
   useEffect(() => {
-    if (reduce) {
-      setReady(true);
-      return;
-    }
+    if (reduce) return;
 
-    const timer = window.setTimeout(() => setReady(true), 280);
+    const timer = window.setTimeout(() => setAnimatedReady(true), 280);
     return () => window.clearTimeout(timer);
   }, [reduce]);
+
+  const ready = reduce || animatedReady;
 
   return (
     <SceneFrame className="h-full bg-background/80 p-1.5 shadow-[var(--shadow-lg)]">
@@ -48,7 +49,7 @@ export function AccountingHeroVisual() {
                     : "size-1.5 rounded-full bg-muted-foreground/35"
                 }
               />
-              <p className="truncate text-[12px] font-medium">{line.label}</p>
+              <p className="truncate text-[12px] font-medium">{tx(line.label)}</p>
             </div>
             <p className="text-[12px] tabular-nums text-muted-foreground">{line.value}</p>
           </motion.div>
@@ -56,7 +57,7 @@ export function AccountingHeroVisual() {
       </div>
       <div className="border-t border-border px-3 py-2">
         <p className="text-[11px] text-muted-foreground">
-          {ready ? "48 transactions matched" : "Matching in progress"}
+          {tx(ready ? "48 transactions matched" : "Matching in progress")}
         </p>
       </div>
     </SceneFrame>

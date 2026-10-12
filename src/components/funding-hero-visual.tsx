@@ -5,30 +5,32 @@ import { motion, useReducedMotion } from "motion/react";
 
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneFrame, SceneHeader, UiBadge } from "@/components/services-bento/scene-ui";
+import { useI18n } from "@/i18n/provider";
 
 const lines = [
-  { label: "ESPA competitiveness", value: "Fit", ready: true },
-  { label: "EIC Accelerator", value: "Fit", ready: true },
+  { label: "ESPA competitiveness", value: "Potential match", ready: true },
+  { label: "EIC Accelerator", value: "Potential match", ready: true },
   { label: "Horizon Europe", value: "Review", ready: false },
 ];
 
 export function FundingHeroVisual() {
+  const { tx } = useI18n();
   const reduce = Boolean(useReducedMotion());
-  const [ready, setReady] = useState(false);
+  const [animatedReady, setAnimatedReady] = useState(false);
 
   useEffect(() => {
-    if (reduce) {
-      setReady(true);
-      return;
-    }
-    const timer = window.setTimeout(() => setReady(true), 280);
+    if (reduce) return;
+
+    const timer = window.setTimeout(() => setAnimatedReady(true), 280);
     return () => window.clearTimeout(timer);
   }, [reduce]);
+
+  const ready = reduce || animatedReady;
 
   return (
     <SceneFrame className="h-full bg-background/80 p-1.5 shadow-[var(--shadow-lg)]">
       <SceneHeader subtitle="Open calls" title="Matched today">
-        <UiBadge variant={ready ? "secondary" : "outline"}>{ready ? "2 fits" : "Checking"}</UiBadge>
+        <UiBadge variant={ready ? "secondary" : "outline"}>{ready ? "2 to review" : "Checking"}</UiBadge>
       </SceneHeader>
       <div className="flex min-h-0 flex-1 flex-col justify-center gap-1.5 p-3">
         {lines.map((line, index) => (
@@ -45,14 +47,14 @@ export function FundingHeroVisual() {
                   ready && line.ready ? "size-1.5 rounded-full bg-secondary" : "size-1.5 rounded-full bg-muted-foreground/35"
                 }
               />
-              <p className="truncate text-[12px] font-medium">{line.label}</p>
+              <p className="truncate text-[12px] font-medium">{tx(line.label)}</p>
             </div>
-            <p className="text-[12px] text-muted-foreground">{line.value}</p>
+            <p className="shrink-0 whitespace-nowrap text-[12px] text-muted-foreground">{tx(line.value)}</p>
           </motion.div>
         ))}
       </div>
       <div className="border-t border-border px-3 py-2">
-        <p className="text-[11px] text-muted-foreground">{ready ? "Alerts on for this company" : "Matching the company file"}</p>
+        <p className="text-[11px] text-muted-foreground">{tx(ready ? "Monitoring active for this company" : "Matching the company file")}</p>
       </div>
     </SceneFrame>
   );

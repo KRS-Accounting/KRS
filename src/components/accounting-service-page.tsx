@@ -10,12 +10,12 @@ import {
 } from "@/components/ui/accordion";
 import { Reveal, RevealFade } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
+import { ServiceBenefits } from "@/components/service-benefits";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { getI18n } from "@/i18n/request";
 import type { ServicePageData } from "@/lib/service-pages";
-import { cn } from "@/lib/utils";
 
 export function ServicePage({ page }: { page: ServicePageData }) {
   return (
@@ -23,8 +23,7 @@ export function ServicePage({ page }: { page: ServicePageData }) {
       <SiteHeader />
       <Hero page={page} />
       <Features page={page} />
-      <InlineCta page={page} />
-      <Benefits page={page} />
+      <ServiceBenefits page={page} />
       <SwitchProcess page={page} />
       <TestimonialsCarousel />
       <ServiceFaq page={page} />
@@ -100,81 +99,6 @@ async function Features({ page }: { page: ServicePageData }) {
               <span className="font-mono text-xs font-semibold text-secondary">0{index + 1}</span>
               <h3 className="mt-8 text-2xl font-semibold leading-tight">{tx(feature.title)}</h3>
               <p className="mt-4 max-w-sm text-sm leading-7 text-muted-foreground">{tx(feature.description)}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-async function InlineCta({ page }: { page: ServicePageData }) {
-  const { tx, href } = await getI18n();
-
-  return (
-    <section className="border-y border-primary/12 bg-secondary text-secondary-foreground">
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-7 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-12">
-        <div>
-          <h2 className="max-w-4xl text-balance text-3xl font-semibold leading-tight">
-            <Reveal>{tx(page.ctaTitle)}</Reveal>
-          </h2>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-secondary-foreground/78">
-            {tx(page.ctaDescription)}
-          </p>
-        </div>
-        <Button
-          asChild
-          className="h-12 shrink-0 rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90"
-        >
-          <Link href={href("/onboarding")}>
-            {tx("Book a free consultation")}
-            <ArrowRight className="size-4" strokeWidth={1.75} />
-          </Link>
-        </Button>
-      </div>
-    </section>
-  );
-}
-
-export async function Benefits({ page }: { page: ServicePageData }) {
-  const { tx } = await getI18n();
-
-  return (
-    <section className="bg-primary px-4 py-20 text-primary-foreground sm:px-6 sm:py-24 lg:px-12 lg:py-28">
-      <div className="mx-auto max-w-[1400px]">
-        <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-end lg:gap-20">
-          <div>
-            <h2 className="max-w-xl text-balance text-4xl font-normal leading-tight sm:text-5xl">
-              <Reveal>{tx(page.benefitsTitle)}</Reveal>
-            </h2>
-            <p className="mt-6 max-w-lg text-base leading-7 text-primary-foreground/66">
-              {tx(page.benefitsDescription)}
-            </p>
-          </div>
-          <div className="relative aspect-[16/9] overflow-hidden bg-[#fdf8f0]">
-            <Image
-              alt={tx(page.benefitsImageAlt)}
-              className={page.slug === "consulting" ? "object-cover object-[center_30%]" : "object-contain p-4 sm:p-8"}
-              fill
-              sizes="(min-width: 1024px) 55vw, 100vw"
-              src={page.benefitsImage}
-            />
-          </div>
-        </div>
-
-        <div className="mt-14 grid border-t border-primary-foreground/18 md:grid-cols-2">
-          {page.benefits.map((benefit, index) => (
-            <article
-              className={cn(
-                "border-b border-primary-foreground/16 py-8 md:px-8",
-                index % 2 === 0 && "md:border-r md:pl-0",
-                index % 2 === 1 && "md:pr-0"
-              )}
-              key={benefit.title}
-            >
-              <span className="font-mono text-xs font-semibold text-secondary">{benefit.index}</span>
-              <h3 className="mt-7 text-2xl font-semibold leading-tight">{tx(benefit.title)}</h3>
-              <p className="mt-4 max-w-xl text-sm leading-7 text-primary-foreground/62">{tx(benefit.description)}</p>
             </article>
           ))}
         </div>

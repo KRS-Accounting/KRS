@@ -6,6 +6,7 @@ import type { FeatureSceneProps } from "@/components/accounting-features/demo-fr
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge, UiCheckbox } from "@/components/services-bento/scene-ui";
 import { GlassScene } from "@/components/tax-features/glass";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const checks = [
@@ -17,13 +18,14 @@ const checks = [
 ];
 
 export function VatScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
   const watched = ready && focus >= 1;
   const filed = ready && focus >= 2;
 
   return (
     <GlassScene>
-      <SceneHeader subtitle="April VAT · AADE" title="ΦΠΑ return">
+      <SceneHeader subtitle="April VAT · AADE" title="VAT return">
         <UiBadge variant={filed ? "secondary" : ready ? "default" : "outline"}>
           {filed ? "Ready to file" : ready ? "In review" : "Queued"}
         </UiBadge>
@@ -49,14 +51,14 @@ export function VatScene({ active, reducedMotion, focus }: FeatureSceneProps) {
                 reducedMotion={reducedMotion}
               />
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[13px] font-medium leading-4">{item.title}</p>
-                <p className="mt-0.5 text-[11px] text-muted-foreground">{item.text}</p>
+                <p className="truncate text-[13px] font-medium leading-4">{tx(item.title)}</p>
+                <p className="mt-0.5 text-[11px] text-muted-foreground">{tx(item.text)}</p>
               </div>
               <UiBadge
                 className={cn(!watched && item.sure && "opacity-70")}
                 variant={item.sure && ready ? "secondary" : "outline"}
               >
-                {item.status}
+                {tx(item.status)}
               </UiBadge>
             </motion.div>
           );
@@ -64,7 +66,7 @@ export function VatScene({ active, reducedMotion, focus }: FeatureSceneProps) {
       </div>
       <div className="border-t border-border px-3 py-2">
         <p className="text-[11px] text-muted-foreground">
-          {filed ? "Due with AADE on the April cycle" : watched ? "Deadline on the calendar" : "Waiting for the last receipt"}
+          {tx(filed ? "Due with AADE on the April cycle" : watched ? "Deadline on the calendar" : "Waiting for the last receipt")}
         </p>
       </div>
     </GlassScene>

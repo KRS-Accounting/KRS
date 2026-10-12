@@ -6,18 +6,20 @@ import type { FeatureSceneProps } from "@/components/accounting-features/demo-fr
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge } from "@/components/services-bento/scene-ui";
 import { GlassScene } from "@/components/tax-features/glass";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const sources = [
   { name: "ESPA", detail: "Competitiveness and regional calls", tag: "Greece", group: 0 },
   { name: "Development Law", detail: "Investment aid for productive projects", tag: "Greece", group: 1 },
-  { name: "Greece 2.0", detail: "Recovery and Resilience funding", tag: "Greece", group: 1 },
+  { name: "Other national schemes", detail: "Current Greek grant and loan routes", tag: "Greece", group: 1 },
   { name: "Horizon Europe", detail: "Research and innovation calls", tag: "EU", group: 2 },
   { name: "EIC", detail: "Pathfinder, Transition, Accelerator", tag: "EU", group: 2 },
   { name: "Other EU programmes", detail: "Digital Europe, LIFE, Interreg", tag: "EU", group: 2 },
 ];
 
 export function FundingProgrammesScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
 
   return (
@@ -39,10 +41,10 @@ export function FundingProgrammesScene({ active, reducedMotion, focus }: Feature
             transition={sceneTransition(reducedMotion, 0.06 + index * 0.05, active)}
           >
             <div className="min-w-0">
-              <p className="truncate text-[13px] font-medium leading-4">{source.name}</p>
-              <p className="mt-0.5 truncate text-[11px] text-muted-foreground">{source.detail}</p>
+              <p className="truncate text-[13px] font-medium leading-4">{tx(source.name)}</p>
+              <p className="mt-0.5 truncate text-[11px] text-muted-foreground">{tx(source.detail)}</p>
             </div>
-            <UiBadge variant={source.tag === "EU" ? "outline" : "secondary"}>{source.tag}</UiBadge>
+            <UiBadge variant={source.tag === "EU" ? "outline" : "secondary"}>{tx(source.tag)}</UiBadge>
           </motion.div>
         ))}
       </div>

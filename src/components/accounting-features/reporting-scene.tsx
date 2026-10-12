@@ -14,6 +14,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const metrics = [
@@ -42,15 +43,20 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-function euro(value: number) {
-  return `€${Math.round(value).toLocaleString("en-IE")}`;
+function euro(value: number, locale: "en" | "el") {
+  return `€${Math.round(value).toLocaleString(locale === "el" ? "el-GR" : "en-IE")}`;
 }
 
 export function ReportingScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { locale, tx } = useI18n();
   const ready = reducedMotion || active;
   const reportsReady = ready && focus >= 1;
   const decide = ready && focus >= 2;
-  const chartTitle = decide ? "Net cash €1,480" : reportsReady ? "Gross margin 71%" : "Revenue €57,600";
+  const chartTitle = tx(decide ? "Net cash €1,480" : reportsReady ? "Gross margin 71%" : "Revenue €57,600");
+  const localizedChartConfig = {
+    costs: { ...chartConfig.costs, label: tx(chartConfig.costs.label) },
+    profit: { ...chartConfig.profit, label: tx(chartConfig.profit.label) },
+  } satisfies ChartConfig;
 
   return (
     <div className="pointer-events-none relative flex h-full overflow-hidden p-3 sm:p-4">
@@ -86,13 +92,13 @@ export function ReportingScene({ active, reducedMotion, focus }: FeatureScenePro
             key={metric.label}
           >
             <CardHeader className="px-3">
-              <CardDescription className="text-xs">{metric.label}</CardDescription>
+              <CardDescription className="text-xs">{tx(metric.label)}</CardDescription>
               <CardTitle className="font-sans! text-xl font-semibold leading-none tracking-tight tabular-nums">
-                {metric.value}
+                {tx(metric.value)}
               </CardTitle>
               <CardAction>
                 <Badge className="px-1.5 font-sans text-[10px]" variant="outline">
-                  {metric.hint}
+                  {tx(metric.hint)}
                 </Badge>
               </CardAction>
             </CardHeader>
@@ -109,13 +115,13 @@ export function ReportingScene({ active, reducedMotion, focus }: FeatureScenePro
               decide && "font-medium text-foreground",
             )}
           >
-            Apr cash +€1,480
+            {tx("Apr cash")} +€1,480
           </p>
         </div>
 
         <ChartContainer
           className="aspect-auto h-auto min-h-[220px] w-full flex-1 pointer-events-auto"
-          config={chartConfig}
+          config={localizedChartConfig}
         >
           <AreaChart
             accessibilityLayer
@@ -126,6 +132,7 @@ export function ReportingScene({ active, reducedMotion, focus }: FeatureScenePro
             <XAxis
               axisLine={false}
               dataKey="month"
+              tickFormatter={(value: string) => tx(value)}
               tickLine={false}
               tickMargin={8}
             />
@@ -142,10 +149,10 @@ export function ReportingScene({ active, reducedMotion, focus }: FeatureScenePro
                   formatter={(value, name) => (
                     <div className="flex w-full items-center justify-between gap-4">
                       <span className="text-muted-foreground">
-                        {chartConfig[name as keyof typeof chartConfig]?.label ?? name}
+                        {localizedChartConfig[name as keyof typeof localizedChartConfig]?.label ?? name}
                       </span>
                       <span className="font-mono font-medium text-foreground tabular-nums">
-                        {euro(Number(value))}
+                        {euro(Number(value), locale)}
                       </span>
                     </div>
                   )}
@@ -153,7 +160,7 @@ export function ReportingScene({ active, reducedMotion, focus }: FeatureScenePro
                   labelFormatter={(label, payload) => {
                     const row = payload?.[0]?.payload as { costs?: number; profit?: number } | undefined;
                     const revenue = (row?.costs ?? 0) + (row?.profit ?? 0);
-                    return `${label} · ${euro(revenue)} revenue`;
+                    return `${tx(String(label))} · ${euro(revenue, locale)} ${tx("revenue")}`;
                   }}
                 />
               }

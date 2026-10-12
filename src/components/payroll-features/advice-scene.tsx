@@ -7,8 +7,10 @@ import type { FeatureSceneProps } from "@/components/accounting-features/demo-fr
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge, UiButton } from "@/components/services-bento/scene-ui";
 import { GlassScene } from "@/components/tax-features/glass";
+import { useI18n } from "@/i18n/provider";
 
 export function PayrollAdviceScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
   const context = ready && focus >= 1;
   const scheduled = ready && focus >= 2;
@@ -26,9 +28,9 @@ export function PayrollAdviceScene({ active, reducedMotion, focus }: FeatureScen
           initial={false}
           transition={sceneTransition(reducedMotion, 0.05, active)}
         >
-          <p className="text-[10px] text-muted-foreground">You · 10:16</p>
+          <p className="text-[10px] text-muted-foreground">{tx("You")} · 10:16</p>
           <p className="mt-1 text-[13px] leading-5">
-            We are hiring a part-time designer from Monday. What do you need before she starts?
+            {tx("We are hiring a part-time designer from Monday. What do you need before she starts?")}
           </p>
         </motion.div>
         <motion.div
@@ -47,12 +49,12 @@ export function PayrollAdviceScene({ active, reducedMotion, focus }: FeatureScen
               width={48}
             />
             <div className="min-w-0">
-              <p className="text-[10px] text-muted-foreground">Elena · Payroll</p>
-              {context ? <p className="text-[10px] font-medium text-secondary">Part-time hire</p> : null}
+              <p className="text-[10px] text-muted-foreground">Elena · {tx("Payroll")}</p>
+              {context ? <p className="text-[10px] font-medium text-secondary">{tx("Part-time hire")}</p> : null}
             </div>
           </div>
           <p className="mt-1.5 text-[13px] leading-5">
-            Contract, AFM, AMKA and IBAN. I will file the ERGANI notice before her first shift and add her to the May payroll.
+            {tx("Please send the signed contract, her AFM, AMKA, IBAN and weekly schedule. I will file the ERGANI notice before her first day and add her to the May payroll.")}
           </p>
         </motion.div>
         {scheduled ? (
@@ -62,11 +64,11 @@ export function PayrollAdviceScene({ active, reducedMotion, focus }: FeatureScen
             initial={{ opacity: 0, y: 8 }}
             transition={sceneTransition(reducedMotion, 0.12, active)}
           >
-            <p className="text-[11px] leading-4 text-muted-foreground">ERGANI notice set for before Monday.</p>
+            <p className="text-[11px] leading-4 text-muted-foreground">{tx("ERGANI notice scheduled before her Monday start.")}</p>
           </motion.div>
         ) : null}
         <div className="flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5">
-          <span className="flex-1 text-[12px] text-muted-foreground">Reply to Elena</span>
+          <span className="flex-1 text-[12px] text-muted-foreground">{tx("Reply to Elena")}</span>
           <UiButton demoSpot={3} variant="secondary">
             Send
           </UiButton>

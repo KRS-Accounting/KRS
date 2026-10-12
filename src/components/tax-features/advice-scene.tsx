@@ -7,8 +7,10 @@ import type { FeatureSceneProps } from "@/components/accounting-features/demo-fr
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge, UiButton } from "@/components/services-bento/scene-ui";
 import { GlassScene } from "@/components/tax-features/glass";
+import { useI18n } from "@/i18n/provider";
 
 export function AdviceScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
   const industry = ready && focus >= 1;
   const planned = ready && focus >= 2;
@@ -26,9 +28,9 @@ export function AdviceScene({ active, reducedMotion, focus }: FeatureSceneProps)
           initial={false}
           transition={sceneTransition(reducedMotion, 0.05, active)}
         >
-          <p className="text-[10px] text-muted-foreground">You · 11:04</p>
+          <p className="text-[10px] text-muted-foreground">{tx("You")} · 11:04</p>
           <p className="mt-1 text-[13px] leading-5">
-            We start invoicing German companies next month. Do we charge Greek VAT?
+            {tx("We start invoicing German companies next month. Do we charge Greek VAT?")}
           </p>
         </motion.div>
         <motion.div
@@ -47,12 +49,12 @@ export function AdviceScene({ active, reducedMotion, focus }: FeatureSceneProps)
               width={48}
             />
             <div className="min-w-0">
-              <p className="text-[10px] text-muted-foreground">Alexis · Tax advisor</p>
-              {industry ? <p className="text-[10px] font-medium text-secondary">SaaS · EU B2B</p> : null}
+              <p className="text-[10px] text-muted-foreground">Alexis · {tx("Tax advisor")}</p>
+              {industry ? <p className="text-[10px] font-medium text-secondary">{tx("SaaS · EU B2B")}</p> : null}
             </div>
           </div>
           <p className="mt-1.5 text-[13px] leading-5">
-            With a valid EU VAT number this is reverse charge. I will add the intra-EU listing and keep the VAT evidence with the invoice.
+            {tx("If the VAT number and B2B treatment are confirmed, reverse charge may apply. I will verify the invoice and add any required intra-EU reporting.")}
           </p>
         </motion.div>
         {planned ? (
@@ -63,12 +65,12 @@ export function AdviceScene({ active, reducedMotion, focus }: FeatureSceneProps)
             transition={sceneTransition(reducedMotion, 0.12, active)}
           >
             <p className="text-[11px] leading-4 text-muted-foreground">
-              Listing deadline added to this quarter’s tax calendar.
+              {tx("Reporting deadline added to this quarter’s tax calendar.")}
             </p>
           </motion.div>
         ) : null}
         <div className="flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5">
-          <span className="flex-1 text-[12px] text-muted-foreground">Reply to Alexis</span>
+          <span className="flex-1 text-[12px] text-muted-foreground">{tx("Reply to Alexis")}</span>
           <UiButton demoSpot={3} variant="secondary">
             Send
           </UiButton>

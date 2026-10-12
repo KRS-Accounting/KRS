@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import type { FeatureSceneProps } from "@/components/accounting-features/demo-frame";
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge, UiButton, UiCheckbox } from "@/components/services-bento/scene-ui";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const rows = [
@@ -57,6 +58,7 @@ const rows = [
 ];
 
 export function AutomationScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
   const showVat = ready && focus >= 1;
   const auditReady = ready && focus >= 2;
@@ -81,7 +83,7 @@ export function AutomationScene({ active, reducedMotion, focus }: FeatureScenePr
       <div className="relative flex w-full max-w-[440px] flex-col overflow-hidden rounded-2xl border border-white/80 bg-card/80 shadow-[0_28px_60px_-32px_rgba(1,25,54,0.55)] backdrop-blur-md">
         <SceneHeader subtitle="Bank feed" title="April transactions">
           <UiBadge variant={auditReady ? "secondary" : ready ? "default" : "outline"}>
-            {auditReady ? "Audit-ready" : ready ? `${matched} matched` : "Syncing"}
+            {auditReady ? tx("Audit-ready") : ready ? `${matched} ${tx("matched")}` : tx("Syncing")}
           </UiBadge>
         </SceneHeader>
 
@@ -120,7 +122,7 @@ export function AutomationScene({ active, reducedMotion, focus }: FeatureScenePr
                 </span>
                 <div className="min-w-0">
                   <p className="truncate text-[13px] font-medium leading-4">{row.vendor}</p>
-                  <p className="mt-0.5 truncate text-[10px] text-muted-foreground">{row.detail}</p>
+                  <p className="mt-0.5 truncate text-[10px] text-muted-foreground">{tx(row.detail)}</p>
                 </div>
                 <div className="text-right">
                   <p className={cn("text-[13px] leading-4 tabular-nums", row.inbound && "text-secondary")}>
@@ -133,8 +135,8 @@ export function AutomationScene({ active, reducedMotion, focus }: FeatureScenePr
                       showVat && !row.sure && "text-secondary",
                     )}
                   >
-                    VAT {row.vat}
-                    <span className={cn("text-muted-foreground", !showVat && "opacity-0")}> · {row.mydata}</span>
+                    {tx("VAT")} {tx(row.vat)}
+                    <span className={cn("text-muted-foreground", !showVat && "opacity-0")}> · {tx(row.mydata)}</span>
                   </p>
                 </div>
               </motion.div>
@@ -144,7 +146,7 @@ export function AutomationScene({ active, reducedMotion, focus }: FeatureScenePr
 
         <div className="flex items-center justify-between gap-2 border-t border-border bg-muted/50 px-3 py-2">
           <span className="text-[11px] text-muted-foreground">
-            {auditReady ? "Source, VAT and myDATA filed together" : ready ? "1 line still needs a receipt" : "Waiting for the bank"}
+            {tx(auditReady ? "Source, VAT and myDATA filed together" : ready ? "1 line still needs a receipt" : "Waiting for the bank")}
           </span>
           <UiButton demoSpot={5} variant={ready ? "secondary" : "default"}>
             Approve

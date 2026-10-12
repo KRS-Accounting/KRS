@@ -5,10 +5,11 @@ import { ArrowRight, Clock3, MessageSquareText, PanelsTopLeft } from "lucide-rea
 import { AccountingFeatureShowcase } from "@/components/accounting-features";
 import { AccountingHeroVisual } from "@/components/accounting-hero-visual";
 import { AccountingProcessSection } from "@/components/accounting-process-section";
-import { Benefits, ServiceFaq, SwitchProcess } from "@/components/accounting-service-page";
+import { ServiceFaq, SwitchProcess } from "@/components/accounting-service-page";
 import { AccountingContactCta } from "@/components/accounting-contact-cta";
 import { FieldNotesSection } from "@/components/field-notes-section";
 import { Reveal, RevealFade } from "@/components/reveal";
+import { ServiceBenefits } from "@/components/service-benefits";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SlimCta } from "@/components/slim-cta";
@@ -36,11 +37,11 @@ export function AccountingPage() {
       <StatsSection />
       <AccountingProcessSection />
       <AccountingContactCta />
-      <Benefits page={accountingPage} />
+      <ServiceBenefits page={accountingPage} />
       <SwitchProcess page={accountingPage} />
       <TestimonialsCarousel />
       <ServiceFaq page={accountingPage} />
-      <SlimCta ctaLabel={ctaLabel} heading="Ready for books that stay current?" />
+      <SlimCta ctaLabel={ctaLabel} heading="Ready for a monthly close that stays on time?" />
       <FieldNotesSection showTopRule={false} />
       <SiteFooter />
     </main>

@@ -99,6 +99,8 @@ function ProofShell({
 }
 
 function IntakeProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Intake" title="Company details received">
       <div className="mt-5 grid gap-2">
@@ -108,8 +110,8 @@ function IntakeProof() {
           ["Open period", "March 2026"],
         ].map(([label, value]) => (
           <div className="flex items-center justify-between border border-primary/12 bg-background px-3 py-2" key={label}>
-            <span className="text-sm text-muted-foreground">{label}</span>
-            <span className="text-sm font-medium">{value}</span>
+            <span className="text-sm text-muted-foreground">{tx(label)}</span>
+            <span className="text-sm font-medium">{tx(value)}</span>
           </div>
         ))}
       </div>
@@ -118,11 +120,13 @@ function IntakeProof() {
 }
 
 function AccountantProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Match" title="Your accountant">
       <div className="mt-5 flex items-center gap-4">
         <Image
-          alt="Nikos, accounting advisor"
+          alt={tx("Nikos, accounting advisor")}
           className="size-16 shrink-0 rounded-full object-cover"
           height={128}
           src="/images/krs-expert-accounting-advisor.webp"
@@ -130,9 +134,9 @@ function AccountantProof() {
         />
         <div>
           <p className="text-lg font-semibold">Nikos</p>
-          <p className="text-sm text-muted-foreground">Accounting advisor</p>
+          <p className="text-sm text-muted-foreground">{tx("Accounting advisor")}</p>
           <Badge className="mt-2 rounded-full" variant="secondary">
-            Direct access
+            {tx("Direct access")}
           </Badge>
         </div>
       </div>
@@ -141,6 +145,8 @@ function AccountantProof() {
 }
 
 function HandoverProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Handover" title="Open periods closing">
       <div className="mt-5 grid gap-2">
@@ -150,9 +156,9 @@ function HandoverProof() {
           { title: "Active deadlines", status: "Protected" },
         ].map((item) => (
           <div className="flex items-center justify-between border border-primary/12 bg-background px-3 py-2" key={item.title}>
-            <span className="text-sm font-medium">{item.title}</span>
+            <span className="text-sm font-medium">{tx(item.title)}</span>
             <Badge className="rounded-full" variant={item.status === "Protected" ? "secondary" : "outline"}>
-              {item.status}
+              {tx(item.status)}
             </Badge>
           </div>
         ))}
@@ -162,6 +168,8 @@ function HandoverProof() {
 }
 
 function ToolsProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Connections" title="Bank and tools live">
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -174,7 +182,7 @@ function ToolsProof() {
           return (
             <div className="border border-primary/12 bg-background px-3 py-4 text-center" key={item.label}>
               <Icon className="mx-auto size-5 text-secondary" />
-              <p className="mt-2 text-sm font-medium">{item.label}</p>
+              <p className="mt-2 text-sm font-medium">{tx(item.label)}</p>
             </div>
           );
         })}
@@ -184,6 +192,8 @@ function ToolsProof() {
 }
 
 function LiveProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Live" title="April close in view">
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -194,8 +204,8 @@ function LiveProof() {
           ["Accountant", "One message away"],
         ].map(([label, value]) => (
           <div className="border border-primary/12 bg-background px-3 py-3" key={label}>
-            <p className="text-xs text-muted-foreground">{label}</p>
-            <p className="mt-1 text-sm font-semibold">{value}</p>
+            <p className="text-xs text-muted-foreground">{tx(label)}</p>
+            <p className="mt-1 text-sm font-semibold">{tx(value)}</p>
           </div>
         ))}
       </div>

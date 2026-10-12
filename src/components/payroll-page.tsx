@@ -3,12 +3,13 @@ import Link from "next/link";
 import { ArrowRight, CalendarClock, MessageSquareText, UsersRound } from "lucide-react";
 
 import { AccountingContactCta } from "@/components/accounting-contact-cta";
-import { Benefits, ServiceFaq, SwitchProcess } from "@/components/accounting-service-page";
+import { ServiceFaq, SwitchProcess } from "@/components/accounting-service-page";
 import { FieldNotesSection } from "@/components/field-notes-section";
 import { PayrollFeatureShowcase } from "@/components/payroll-features";
 import { PayrollHeroVisual } from "@/components/payroll-hero-visual";
 import { PayrollProcessSection } from "@/components/payroll-process-section";
 import { Reveal, RevealFade } from "@/components/reveal";
+import { ServiceBenefits } from "@/components/service-benefits";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SlimCta } from "@/components/slim-cta";
@@ -21,9 +22,9 @@ import { payrollPage } from "@/lib/service-pages";
 const ctaLabel = "Talk to KRS";
 
 const heroBullets = [
-  { icon: UsersRound, text: "Payslips prepared for the pay date, every month" },
-  { icon: CalendarClock, text: "EFKA, the APD and ERGANI kept on one calendar" },
-  { icon: MessageSquareText, text: "Direct access to your payroll advisor, with the team already on file" },
+  { icon: UsersRound, text: "Payslips prepared before every pay date" },
+  { icon: CalendarClock, text: "EFKA contributions, payroll tax and ERGANI notices on one calendar" },
+  { icon: MessageSquareText, text: "Direct access to your payroll advisor, with your team already on file" },
 ];
 
 export function PayrollPage() {
@@ -40,7 +41,7 @@ export function PayrollPage() {
         defaultServices={["Payroll"]}
         subheading="We take care of payroll. You take care of the team."
       />
-      <Benefits page={payrollPage} />
+      <ServiceBenefits page={payrollPage} />
       <SwitchProcess page={payrollPage} />
       <TestimonialsCarousel />
       <ServiceFaq page={payrollPage} />

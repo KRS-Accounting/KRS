@@ -1,9 +1,12 @@
+"use client";
+
 import { Check } from "lucide-react";
 import { motion } from "motion/react";
 
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 export function SceneFrame({
@@ -36,11 +39,13 @@ export function SceneHeader({
   subtitle?: string;
   children?: React.ReactNode;
 }) {
+  const { tx } = useI18n();
+
   return (
     <div className="flex items-center justify-between gap-3 border-b border-border px-3 py-2.5">
       <div className="min-w-0">
-        {subtitle ? <p className="text-[11px] leading-none text-muted-foreground">{subtitle}</p> : null}
-        <p className={cn("truncate text-sm font-medium", subtitle && "mt-1")}>{title}</p>
+        {subtitle ? <p className="text-[11px] leading-none text-muted-foreground">{tx(subtitle)}</p> : null}
+        <p className={cn("truncate text-sm font-medium", subtitle && "mt-1")}>{tx(title)}</p>
       </div>
       {children}
     </div>
@@ -58,9 +63,11 @@ export function UiBadge({
   className?: string;
   demoSpot?: number;
 }) {
+  const { tx } = useI18n();
+
   return (
     <Badge className={className} data-demo-spot={demoSpot} variant={variant}>
-      {children}
+      {typeof children === "string" ? tx(children) : children}
     </Badge>
   );
 }
@@ -76,9 +83,11 @@ export function UiButton({
   className?: string;
   demoSpot?: number;
 }) {
+  const { tx } = useI18n();
+
   return (
     <span className={cn(buttonVariants({ variant, size: "xs" }), className)} data-demo-spot={demoSpot}>
-      {children}
+      {typeof children === "string" ? tx(children) : children}
     </span>
   );
 }

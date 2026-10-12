@@ -6,6 +6,7 @@ import type { FeatureSceneProps } from "@/components/accounting-features/demo-fr
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge } from "@/components/services-bento/scene-ui";
 import { GlassScene } from "@/components/tax-features/glass";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const profile = [
@@ -15,12 +16,13 @@ const profile = [
 ];
 
 const matches = [
-  { name: "ESPA competitiveness", result: "Fit", keep: true },
-  { name: "EIC Accelerator", result: "Fit", keep: true },
-  { name: "Green facility call", result: "Pass", keep: false },
+  { name: "ESPA competitiveness", result: "Potential match", keep: true },
+  { name: "EIC Accelerator", result: "Potential match", keep: true },
+  { name: "Green facility call", result: "Not shortlisted", keep: false },
 ];
 
 export function FundingMatchScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
   const scored = ready && focus >= 1;
   const shortlisted = ready && focus >= 2;
@@ -29,7 +31,7 @@ export function FundingMatchScene({ active, reducedMotion, focus }: FeatureScene
     <GlassScene>
       <SceneHeader subtitle="Company file" title="Call match">
         <UiBadge variant={shortlisted ? "secondary" : ready ? "default" : "outline"}>
-          {shortlisted ? "2 to read" : scored ? "Scored" : "Profiling"}
+          {shortlisted ? "2 to review" : scored ? "Screened" : "Profiling"}
         </UiBadge>
       </SceneHeader>
       <div className="grid gap-2 p-3">
@@ -45,8 +47,8 @@ export function FundingMatchScene({ active, reducedMotion, focus }: FeatureScene
             key={label}
             transition={sceneTransition(reducedMotion, 0.05 + index * 0.05, active)}
           >
-            <p className="text-[12px] text-muted-foreground">{label}</p>
-            <p className="text-[13px] font-medium">{value}</p>
+            <p className="text-[12px] text-muted-foreground">{tx(label)}</p>
+            <p className="text-[13px] font-medium">{tx(value)}</p>
           </motion.div>
         ))}
       </div>
@@ -61,9 +63,9 @@ export function FundingMatchScene({ active, reducedMotion, focus }: FeatureScene
               key={item.name}
               transition={sceneTransition(reducedMotion, 0.2, active)}
             >
-              <p className="truncate text-[13px] font-medium">{item.name}</p>
+              <p className="truncate text-[13px] font-medium">{tx(item.name)}</p>
               <UiBadge variant={item.keep && scored ? "secondary" : "outline"}>
-                {scored ? item.result : "Open"}
+                {tx(scored ? item.result : "Open")}
               </UiBadge>
             </motion.div>
           );

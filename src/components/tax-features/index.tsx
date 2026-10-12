@@ -32,7 +32,7 @@ const blocks: FeatureBlock[] = [
     id: "vat",
     label: "VAT",
     title: "VAT returns, filed on your cycle",
-    body: "KRS prepares the ΦΠΑ return from the books and submits it to AADE. Monthly or quarterly follows the cycle that already applies to the company.",
+    body: "KRS prepares the VAT return from the books and submits it to AADE. Monthly or quarterly follows the cycle that already applies to the company.",
     items: [
       {
         id: "deadlines",
@@ -55,8 +55,8 @@ const blocks: FeatureBlock[] = [
   {
     id: "corporate",
     label: "Income tax",
-    title: "Annual income tax, without the June surprise",
-    body: "The income tax return and E3 are prepared from the closed accounts. Deductions, adjustments and advance tax are reviewed before anything is filed.",
+    title: "Annual income tax, without a last-minute scramble",
+    body: "The income tax return and E3 are prepared from the closed accounts. Deductions, tax adjustments and advance tax are reviewed before filing.",
     reversed: true,
     items: [
       {

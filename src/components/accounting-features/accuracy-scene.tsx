@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import type { FeatureSceneProps } from "@/components/accounting-features/demo-frame";
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge, UiCheckbox } from "@/components/services-bento/scene-ui";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const checks = [
@@ -16,6 +17,7 @@ const checks = [
 ];
 
 export function AccuracyScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
   const compliance = ready && focus >= 1;
   const closeReady = ready && focus >= 2;
@@ -67,14 +69,14 @@ export function AccuracyScene({ active, reducedMotion, focus }: FeatureSceneProp
                 reducedMotion={reducedMotion}
               />
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[13px] font-medium leading-4">{item.title}</p>
-                <p className="mt-0.5 text-[11px] text-muted-foreground">{item.text}</p>
+                <p className="truncate text-[13px] font-medium leading-4">{tx(item.title)}</p>
+                <p className="mt-0.5 text-[11px] text-muted-foreground">{tx(item.text)}</p>
               </div>
               <UiBadge
                 className={cn(!compliance && item.sure && "opacity-70")}
                 variant={item.sure && ready ? "secondary" : "outline"}
               >
-                {item.status}
+                {tx(item.status)}
               </UiBadge>
             </motion.div>
           );

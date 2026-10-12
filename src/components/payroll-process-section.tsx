@@ -13,31 +13,31 @@ const steps: ProcessStep[] = [
   {
     time: "Day 1",
     title: "Complete your intake",
-    text: "Share company details and the current headcount so we can see the next pay date and any open hires.",
+    text: "Share the company details and current headcount so KRS can confirm the next pay date and any pending hires.",
     cta: "Talk to KRS",
   },
   {
     time: "Same week",
     title: "We collect the payroll file",
-    text: "Contracts, AFM, AMKA, bank details and the prior payroll history come in before anything is calculated.",
+    text: "Contracts, AFM and AMKA numbers, bank details and payroll history are collected before anything is calculated.",
     cta: "Talk to KRS",
   },
   {
     time: "Before the first run",
-    title: "We migrate and set up payroll",
-    text: "Moving from another provider, the employee record comes across and the next ERGANI and APD dates are mapped.",
+    title: "We set up your payroll",
+    text: "If you are moving from another provider, the employee records come across and the next ERGANI and APD deadlines are mapped.",
     cta: "Talk to KRS",
   },
   {
-    time: "On the pay date",
-    title: "We process the first payroll",
-    text: "The run is reviewed, payslips are prepared, and EFKA and withholding are ready to file from the same numbers.",
+    time: "Before payday",
+    title: "We run the first payroll",
+    text: "The run is reviewed and payslips are prepared. EFKA contributions and payroll tax are ready to file from the same numbers.",
     cta: "Talk to KRS",
   },
   {
     time: "Every month",
-    title: "Payroll stays current",
-    text: "New hires, leavers and hour changes are handled through the month, and the same advisor is one message away.",
+    title: "Payroll stays on track",
+    text: "New hires, departures and changes in hours are handled during the month, and the same advisor is available when something changes.",
     cta: "Talk to KRS",
   },
 ];
@@ -66,7 +66,7 @@ export function PayrollProcessSection() {
             </h2>
           </div>
           <RevealFade className="max-w-xl text-lg leading-8 text-muted-foreground" delay={0.1}>
-            {tx("Five steps, one advisor. KRS takes the employee record so the next pay date is not left to a spreadsheet.")}
+            {tx("Five steps, one advisor. KRS sets up the employee records and protects the next pay date while payroll moves across.")}
           </RevealFade>
         </div>
         <ProcessTimeline proofs={proofs} steps={steps} />
@@ -88,6 +88,8 @@ function ProofShell({ label, title, children }: { label: string; title: string; 
 }
 
 function IntakeProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Intake" title="Team details received">
       <div className="mt-5 grid gap-2">
@@ -97,8 +99,8 @@ function IntakeProof() {
           ["Next payday", "30 April"],
         ].map(([label, value]) => (
           <div className="flex items-center justify-between border border-primary/12 bg-background px-3 py-2" key={label}>
-            <span className="text-sm text-muted-foreground">{label}</span>
-            <span className="text-sm font-medium">{value}</span>
+            <span className="text-sm text-muted-foreground">{tx(label)}</span>
+            <span className="text-sm font-medium">{tx(value)}</span>
           </div>
         ))}
       </div>
@@ -107,11 +109,13 @@ function IntakeProof() {
 }
 
 function CollectProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="File" title="Your payroll advisor">
       <div className="mt-5 flex items-center gap-4">
         <Image
-          alt="Elena, payroll advisor"
+          alt={tx("Elena, payroll advisor")}
           className="size-16 shrink-0 rounded-full object-cover"
           height={128}
           src="/images/krs-expert-payroll-advisor.webp"
@@ -119,9 +123,9 @@ function CollectProof() {
         />
         <div>
           <p className="text-lg font-semibold">Elena</p>
-          <p className="text-sm text-muted-foreground">Payroll advisor</p>
+          <p className="text-sm text-muted-foreground">{tx("Payroll advisor")}</p>
           <Badge className="mt-2 rounded-full" variant="secondary">
-            Direct access
+            {tx("Direct access")}
           </Badge>
         </div>
       </div>
@@ -130,6 +134,8 @@ function CollectProof() {
 }
 
 function MigrateProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Setup" title="Records coming across">
       <div className="mt-5 grid gap-2">
@@ -139,9 +145,9 @@ function MigrateProof() {
           { title: "Open hire", status: "1 person" },
         ].map((item) => (
           <div className="flex items-center justify-between border border-primary/12 bg-background px-3 py-2" key={item.title}>
-            <span className="text-sm font-medium">{item.title}</span>
+            <span className="text-sm font-medium">{tx(item.title)}</span>
             <Badge className="rounded-full" variant={item.status === "1 person" ? "outline" : "secondary"}>
-              {item.status}
+              {tx(item.status)}
             </Badge>
           </div>
         ))}
@@ -151,6 +157,8 @@ function MigrateProof() {
 }
 
 function RunProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="First run" title="April payroll prepared">
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -163,7 +171,7 @@ function RunProof() {
           return (
             <div className="border border-primary/12 bg-background px-3 py-4 text-center" key={item.label}>
               <Icon className="mx-auto size-5 text-secondary" />
-              <p className="mt-2 text-sm font-medium">{item.label}</p>
+              <p className="mt-2 text-sm font-medium">{tx(item.label)}</p>
             </div>
           );
         })}
@@ -173,6 +181,8 @@ function RunProof() {
 }
 
 function LiveProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Current" title="The month in view">
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -183,8 +193,8 @@ function LiveProof() {
           ["Advisor", "One message away"],
         ].map(([label, value]) => (
           <div className="border border-primary/12 bg-background px-3 py-3" key={label}>
-            <p className="text-xs text-muted-foreground">{label}</p>
-            <p className="mt-1 text-sm font-semibold">{value}</p>
+            <p className="text-xs text-muted-foreground">{tx(label)}</p>
+            <p className="mt-1 text-sm font-semibold">{tx(value)}</p>
           </div>
         ))}
       </div>

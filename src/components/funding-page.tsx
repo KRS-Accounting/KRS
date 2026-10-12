@@ -3,12 +3,13 @@ import Link from "next/link";
 import { ArrowRight, Bell, FilePenLine, ScanSearch } from "lucide-react";
 
 import { AccountingContactCta } from "@/components/accounting-contact-cta";
-import { Benefits, ServiceFaq, SwitchProcess } from "@/components/accounting-service-page";
+import { ServiceFaq, SwitchProcess } from "@/components/accounting-service-page";
 import { FieldNotesSection } from "@/components/field-notes-section";
 import { FundingFeatureShowcase } from "@/components/funding-features";
 import { FundingHeroVisual } from "@/components/funding-hero-visual";
 import { FundingProcessSection } from "@/components/funding-process-section";
 import { Reveal, RevealFade } from "@/components/reveal";
+import { ServiceBenefits } from "@/components/service-benefits";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SlimCta } from "@/components/slim-cta";
@@ -21,9 +22,9 @@ import { fundingGrantsPage } from "@/lib/service-pages";
 const ctaLabel = "Talk to KRS";
 
 const heroBullets = [
-  { icon: ScanSearch, text: "Greek and EU calls matched to the company, including ESPA, Horizon Europe and the EIC" },
-  { icon: Bell, text: "New opportunities and deadline changes sent to you automatically" },
-  { icon: FilePenLine, text: "The application prepared with you, then filed once you approve it" },
+  { icon: ScanSearch, text: "Current Greek and EU funding opportunities screened against your company and project" },
+  { icon: Bell, text: "Relevant openings and deadline changes brought to your attention" },
+  { icon: FilePenLine, text: "The application narrative, budget and forms prepared with you, then submitted after your approval" },
 ];
 
 export function FundingPage() {
@@ -38,13 +39,13 @@ export function FundingPage() {
       <AccountingContactCta
         body="Share a few details and we will match you with a KRS funding advisor for a free first call."
         defaultServices={["Funding and grants"]}
-        subheading="We watch the calls. You decide which ones to pursue."
+        subheading="We monitor the programmes. You decide which opportunities to pursue."
       />
-      <Benefits page={fundingGrantsPage} />
+      <ServiceBenefits page={fundingGrantsPage} />
       <SwitchProcess page={fundingGrantsPage} />
       <TestimonialsCarousel />
       <ServiceFaq page={fundingGrantsPage} />
-      <SlimCta ctaLabel={ctaLabel} heading="Ready for the next fitting call to reach you?" />
+      <SlimCta ctaLabel={ctaLabel} heading="Ready to know which funding opportunities are worth pursuing?" />
       <FieldNotesSection showTopRule={false} />
       <SiteFooter />
     </main>

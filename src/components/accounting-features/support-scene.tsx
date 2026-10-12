@@ -6,8 +6,10 @@ import { motion } from "motion/react";
 import type { FeatureSceneProps } from "@/components/accounting-features/demo-frame";
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge, UiButton } from "@/components/services-bento/scene-ui";
+import { useI18n } from "@/i18n/provider";
 
 export function SupportScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
   const industry = ready && focus >= 1;
   const extraHelp = ready && focus >= 2;
@@ -41,9 +43,9 @@ export function SupportScene({ active, reducedMotion, focus }: FeatureSceneProps
             initial={false}
             transition={sceneTransition(reducedMotion, 0.05, active)}
           >
-            <p className="text-[10px] text-muted-foreground">You · 09:42</p>
+            <p className="text-[10px] text-muted-foreground">{tx("You")} · 09:42</p>
             <p className="mt-1 text-[13px] leading-5">
-              Booked a €4,200 invoice from DesignWorks. Brand project. Move it to marketing?
+              {tx("Booked a €4,200 invoice from DesignWorks. Brand project. Move it to marketing?")}
             </p>
           </motion.div>
 
@@ -63,14 +65,14 @@ export function SupportScene({ active, reducedMotion, focus }: FeatureSceneProps
                 width={48}
               />
               <div className="min-w-0">
-                <p className="text-[10px] text-muted-foreground">Nikos · Accountant</p>
+                <p className="text-[10px] text-muted-foreground">Nikos · {tx("Accountant")}</p>
                 {industry ? (
-                  <p className="text-[10px] font-medium text-secondary">SaaS / agency close</p>
+                  <p className="text-[10px] font-medium text-secondary">{tx("SaaS / agency close")}</p>
                 ) : null}
               </div>
             </div>
             <p className="mt-1.5 text-[13px] leading-5">
-              Leave it on 73 Services, not marketing. I will keep myDATA 1.3 with the invoice.
+              {tx("Leave it on 73 Services, not marketing. I will keep myDATA 1.3 with the invoice.")}
             </p>
           </motion.div>
 
@@ -82,13 +84,13 @@ export function SupportScene({ active, reducedMotion, focus }: FeatureSceneProps
               transition={sceneTransition(reducedMotion, 0.12, active)}
             >
               <p className="text-[11px] leading-4 text-muted-foreground">
-                Cash-flow note added to this month’s report.
+                {tx("Cash-flow note added to this month’s report.")}
               </p>
             </motion.div>
           ) : null}
 
           <div className="flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5">
-            <span className="flex-1 text-[12px] text-muted-foreground">Reply to Nikos</span>
+            <span className="flex-1 text-[12px] text-muted-foreground">{tx("Reply to Nikos")}</span>
             <UiButton demoSpot={3} variant="secondary">
               Send
             </UiButton>

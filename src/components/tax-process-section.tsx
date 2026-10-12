@@ -14,31 +14,31 @@ const steps: ProcessStep[] = [
   {
     time: "Day 1",
     title: "Complete your intake",
-    text: "Share company details and give KRS access to the current books so we can see which returns are open.",
+    text: "Share the company details and provide access to the books so KRS can identify open returns and upcoming deadlines.",
     cta: "Talk to KRS",
   },
   {
     time: "Same week",
-    title: "We review your tax position",
-    text: "A tax advisor reads the filing history, open AADE dates and anything still outstanding.",
+    title: "We review the open filings",
+    text: "A tax advisor reviews the filing history, upcoming AADE deadlines and anything still outstanding.",
     cta: "Talk to KRS",
   },
   {
     time: "Before the next date",
-    title: "We prepare the filings",
-    text: "VAT, the income tax return and any EU listing are drafted from the books. We ask only for what is still missing.",
+    title: "We prepare the returns",
+    text: "VAT, income tax and any EU reporting are drafted from the books. We ask only for what is still missing.",
     cta: "Talk to KRS",
   },
   {
-    time: "On the deadline",
-    title: "We file with AADE",
-    text: "Once the return has been reviewed, KRS submits it. You see the status before it goes.",
+    time: "After review",
+    title: "We file after review",
+    text: "Once the return has been reviewed and approved, KRS submits it to AADE and records the filing status.",
     cta: "Talk to KRS",
   },
   {
     time: "Through the year",
-    title: "You stay current",
-    text: "The next dates stay on the calendar, and the same advisor is one message away when a decision will change the return.",
+    title: "You stay ahead",
+    text: "Future deadlines remain on the calendar, and the same advisor is available when a decision affects a return.",
     cta: "Talk to KRS",
   },
 ];
@@ -67,7 +67,7 @@ export function TaxProcessSection() {
             </h2>
           </div>
           <RevealFade className="max-w-xl text-lg leading-8 text-muted-foreground" delay={0.1}>
-            {tx("Five steps, one advisor. KRS takes the open filings so the next AADE date is not left to memory.")}
+            {tx("Five steps, one advisor. KRS reviews the open filings and protects the next AADE deadline while the tax file comes across.")}
           </RevealFade>
         </div>
         <ProcessTimeline proofs={proofs} steps={steps} />
@@ -97,6 +97,8 @@ function ProofShell({
 }
 
 function IntakeProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Intake" title="Company details received">
       <div className="mt-5 grid gap-2">
@@ -106,8 +108,8 @@ function IntakeProof() {
           ["Next return", "April VAT"],
         ].map(([label, value]) => (
           <div className="flex items-center justify-between border border-primary/12 bg-background px-3 py-2" key={label}>
-            <span className="text-sm text-muted-foreground">{label}</span>
-            <span className="text-sm font-medium">{value}</span>
+            <span className="text-sm text-muted-foreground">{tx(label)}</span>
+            <span className="text-sm font-medium">{tx(value)}</span>
           </div>
         ))}
       </div>
@@ -116,11 +118,13 @@ function IntakeProof() {
 }
 
 function ReviewProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Review" title="Your tax advisor">
       <div className="mt-5 flex items-center gap-4">
         <Image
-          alt="Alexis, tax advisor"
+          alt={tx("Alexis, tax advisor")}
           className="size-16 shrink-0 rounded-full object-cover"
           height={128}
           src="/images/krs-expert-tax-advisor.webp"
@@ -128,9 +132,9 @@ function ReviewProof() {
         />
         <div>
           <p className="text-lg font-semibold">Alexis</p>
-          <p className="text-sm text-muted-foreground">Tax advisor</p>
+          <p className="text-sm text-muted-foreground">{tx("Tax advisor")}</p>
           <Badge className="mt-2 rounded-full" variant="secondary">
-            Direct access
+            {tx("Direct access")}
           </Badge>
         </div>
       </div>
@@ -139,6 +143,8 @@ function ReviewProof() {
 }
 
 function PrepareProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Preparation" title="Returns in draft">
       <div className="mt-5 grid gap-2">
@@ -148,9 +154,9 @@ function PrepareProof() {
           { title: "Missing evidence", status: "1 item" },
         ].map((item) => (
           <div className="flex items-center justify-between border border-primary/12 bg-background px-3 py-2" key={item.title}>
-            <span className="text-sm font-medium">{item.title}</span>
+            <span className="text-sm font-medium">{tx(item.title)}</span>
             <Badge className="rounded-full" variant={item.status === "1 item" ? "outline" : "secondary"}>
-              {item.status}
+              {tx(item.status)}
             </Badge>
           </div>
         ))}
@@ -160,6 +166,8 @@ function PrepareProof() {
 }
 
 function FileProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Filing" title="Submitted to AADE">
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -172,7 +180,7 @@ function FileProof() {
           return (
             <div className="border border-primary/12 bg-background px-3 py-4 text-center" key={item.label}>
               <Icon className="mx-auto size-5 text-secondary" />
-              <p className="mt-2 text-sm font-medium">{item.label}</p>
+              <p className="mt-2 text-sm font-medium">{tx(item.label)}</p>
             </div>
           );
         })}
@@ -182,6 +190,8 @@ function FileProof() {
 }
 
 function CurrentProof() {
+  const { tx } = useI18n();
+
   return (
     <ProofShell label="Current" title="The year in view">
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -192,8 +202,8 @@ function CurrentProof() {
           ["Advisor", "One message away"],
         ].map(([label, value]) => (
           <div className={cn("border border-primary/12 bg-background px-3 py-3")} key={label}>
-            <p className="text-xs text-muted-foreground">{label}</p>
-            <p className="mt-1 text-sm font-semibold">{value}</p>
+            <p className="text-xs text-muted-foreground">{tx(label)}</p>
+            <p className="mt-1 text-sm font-semibold">{tx(value)}</p>
           </div>
         ))}
       </div>

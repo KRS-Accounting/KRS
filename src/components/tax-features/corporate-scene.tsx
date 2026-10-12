@@ -6,6 +6,7 @@ import type { FeatureSceneProps } from "@/components/accounting-features/demo-fr
 import { sceneTransition } from "@/components/services-bento/scene-motion";
 import { SceneHeader, UiBadge } from "@/components/services-bento/scene-ui";
 import { GlassScene } from "@/components/tax-features/glass";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const lines = [
@@ -16,6 +17,7 @@ const lines = [
 ];
 
 export function CorporateScene({ active, reducedMotion, focus }: FeatureSceneProps) {
+  const { tx } = useI18n();
   const ready = reducedMotion || active;
   const adjustments = ready && focus >= 1;
   const readyToFile = ready && focus >= 2;
@@ -43,17 +45,19 @@ export function CorporateScene({ active, reducedMotion, focus }: FeatureScenePro
               key={line.label}
               transition={sceneTransition(reducedMotion, 0.06 + index * 0.06, active)}
             >
-              <p className="text-[13px] font-medium">{line.label}</p>
+              <p className="text-[13px] font-medium">{tx(line.label)}</p>
               <p className="font-sans text-[13px] font-semibold tabular-nums">{line.value}</p>
             </motion.div>
           );
         })}
         <p className="px-1 pt-1 text-[11px] text-muted-foreground">
-          {readyToFile
-            ? "Return and E3 agree to the closed books"
-            : adjustments
-              ? "Deductions reviewed before filing"
-              : "Built from the year-end accounts"}
+          {tx(
+            readyToFile
+              ? "Return and E3 agree to the closed books"
+              : adjustments
+                ? "Deductions reviewed before filing"
+                : "Built from the year-end accounts",
+          )}
         </p>
       </div>
     </GlassScene>

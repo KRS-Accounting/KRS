@@ -2,9 +2,8 @@ export type ServicePageData = {
   slug: string; eyebrow: string; title: string; description: string; heroImage: string; heroImageAlt: string;
   heroKicker: string; exploreLabel: string; featuresTitle: string;
   features: readonly { title: string; description: string }[];
-  ctaTitle: string; ctaDescription: string; benefitsTitle: string; benefitsDescription: string;
-  benefitsImage: string; benefitsImageAlt: string;
-  benefits: readonly { index: string; title: string; description: string }[];
+  benefitsTitle: string; benefitsDescription: string;
+  benefits: readonly { index: string; title: string; description: string; image?: string; imageAlt?: string }[];
   processTitle: string; processDescription: string;
   process: readonly { title: string; description: string; image: string; imageAlt: string }[];
   advisorImage: string; advisorImageAlt: string; testimonialEyebrow: string; testimonialTitle: string;
@@ -29,13 +28,12 @@ export const accountingPage = {
     { title: "Expert support when you need it", description: "Talk to accountants who already know the business, not a ticket queue that starts from zero." },
     { title: "Always up to date", description: "Live books, monthly reporting and recurring checks keep a clear picture of performance." },
   ],
-  ctaTitle: "Your accounting should reduce uncertainty, not create another monthly chase.", ctaDescription: "Bring KRS the current setup, the open questions and the reporting you wish you had. We will map the right next step.",
-  benefitsTitle: "One accounting partner across the company lifecycle.", benefitsDescription: "Formation, day-to-day books, management reporting and closure stay connected in one accountable relationship.", benefitsImage: "/images/krs-tax-advisory-os-snapshot.webp", benefitsImageAlt: "KRS accounting and financial reporting interface",
+  benefitsTitle: "What stays in the accounting work, every month.", benefitsDescription: "The books, VAT and myDATA coding, and the monthly pack stay with one accountant, so the close is a review, not a chase.",
   benefits: [
-    { index: "01", title: "Company formation", description: "Choose a workable entity structure, coordinate the opening steps and establish the first accounting, invoicing and reporting routines." },
-    { index: "02", title: "Ongoing accounting", description: "Maintain accurate books, reconcile accounts, organise source documents and keep tax obligations visible throughout the year." },
-    { index: "03", title: "Financial services", description: "Use cash-flow monitoring, budgets and financial analysis to understand performance, pressure points and available options." },
-    { index: "04", title: "Company closure", description: "Review open periods and obligations, coordinate the required actions and finish with a clear, documented record." },
+    { index: "01", title: "Monthly books", description: "Income, costs and bank lines are recorded and reconciled through the month, then closed on a date.", image: "/images/krs-accounting-benefit-books.jpg", imageAlt: "A navy ledger with clipped receipts beside a checked calendar block" },
+    { index: "02", title: "VAT and myDATA", description: "VAT treatment and myDATA classification sit on the same lines as the books, so the return does not start from a separate pile.", image: "/images/krs-accounting-benefit-vat.jpg", imageAlt: "An invoice tagged and sealed as reviewed" },
+    { index: "03", title: "Management reporting", description: "P&L, balance sheet and cash flow are prepared with the close, in language the team can use.", image: "/images/krs-accounting-benefit-reporting.jpg", imageAlt: "A bar chart and a summary card from the monthly management pack" },
+    { index: "04", title: "A named accountant", description: "Questions go to the person on the file. They already have the period, the exceptions and the last answer.", image: "/images/krs-accounting-benefit-accountant.jpg", imageAlt: "A KRS accountant beside a message marked as answered" },
   ],
   processTitle: "Switch your accounting to KRS in three clear steps.", processDescription: "Changing accountants takes coordination. KRS manages the background work, protects active deadlines and prepares your first monthly close.",
   process: [
@@ -68,17 +66,16 @@ export const taxAdvisoryPage = {
   heroImage: "/images/krs-pricing-advisory-session.png", heroImageAlt: "KRS tax advisor reviewing a filing with a client", heroKicker: "VAT / income tax / OSS / advice", exploreLabel: "Explore tax advisory",
   featuresTitle: "Stay current. No deadline left to chance.",
   features: [
-    { title: "VAT on your filing cycle", description: "ΦΠΑ returns are prepared and submitted to AADE on the monthly or quarterly cycle that applies to your books." },
+    { title: "VAT on your filing cycle", description: "VAT returns are prepared and submitted to AADE on the monthly or quarterly cycle that applies to your books." },
     { title: "Income tax from the closed year", description: "The annual income tax return and E3 are prepared from the accounts, with deductions and advance tax reviewed before filing." },
-    { title: "Advice before the return is due", description: "Questions about VAT, cross-border sales and the tax position are answered through the year, with the file already in view." },
+    { title: "Advice while there is time to act", description: "Questions about VAT, deductibility and cross-border sales are answered during the year, before the treatment is locked into a return." },
   ],
-  ctaTitle: "Filings and advice should arrive before the deadline does.", ctaDescription: "Bring the current books, open returns and the next decision. We will map the tax work and the first call.",
-  benefitsTitle: "What stays in the tax work, year-round.", benefitsDescription: "VAT, income tax, cross-border filings and deadline watch stay with one advisor, so the position is visible before a return is due.", benefitsImage: "/images/krs-tax-advisory-os-snapshot.webp", benefitsImageAlt: "KRS tax workspace showing a VAT return ready for review",
+  benefitsTitle: "What stays with your tax advisor, year-round.", benefitsDescription: "VAT, income tax, EU filings and advice stay on one calendar, with one advisor owning the next deadline.",
   benefits: [
-    { index: "01", title: "VAT returns", description: "Periodic ΦΠΑ returns prepared from the books, checked for rate, reverse charge and myDATA, then filed with AADE." },
-    { index: "02", title: "Corporate income tax", description: "The annual income tax return and E3, including deductions, adjustments and advance tax already paid." },
-    { index: "03", title: "EU and cross-border VAT", description: "Domestic VAT, OSS and the intra-EU listing coordinated when sales leave Greece, with one person owning the deadlines." },
-    { index: "04", title: "Deadline watch and advice", description: "Upcoming AADE dates stay on a calendar, and tax questions are answered before they become a late return." },
+    { index: "01", title: "VAT returns", description: "Periodic VAT returns are prepared from the books, checked against myDATA and filed with AADE.", image: "/images/krs-tax-benefit-vat.jpg", imageAlt: "A VAT return being placed into a submission box" },
+    { index: "02", title: "Corporate income tax", description: "The annual income tax return and E3 are prepared from the closed accounts, including deductions, adjustments and advance tax.", image: "/images/krs-tax-benefit-income.jpg", imageAlt: "A balance scale weighing documents against coins" },
+    { index: "03", title: "EU VAT reporting", description: "OSS and intra-EU reporting are coordinated alongside domestic VAT when the company sells beyond Greece.", image: "/images/krs-tax-benefit-eu.jpg", imageAlt: "A globe ringed with stars and linked to filing cards" },
+    { index: "04", title: "Advice and deadline monitoring", description: "Upcoming AADE deadlines remain visible, and tax questions are answered before they affect a return.", image: "/images/krs-tax-benefit-deadlines.jpg", imageAlt: "A desk calendar with a marked date beside an hourglass" },
   ],
   processTitle: "Move tax filings to KRS in three clear steps.", processDescription: "Changing who files takes a review of open returns first. KRS protects the next deadline while the tax position comes across.",
   process: [
@@ -94,9 +91,9 @@ export const taxAdvisoryPage = {
   ],
   faqTitle: "Tax questions worth asking before a deadline.", faqDescription: "The first conversation is free and looks at open returns, how you trade, and the next AADE date.",
   faqs: [
-    { question: "Are VAT and income tax filings included?", answer: "Periodic VAT returns and the annual income tax filing, including the E3, are part of the tax work we agree. Specialist matters such as an AADE audit, a restructuring, or a one-off ruling are scoped separately and confirmed in writing before that work starts." },
-    { question: "What happens if a deadline is already close?", answer: "We start with the next AADE date. If KRS is taking over the filings, we map what can still be submitted on time and what needs a separate catch-up, so a late return is not discovered after the fact." },
-    { question: "Can KRS handle EU and cross-border VAT?", answer: "Yes. We coordinate Greek VAT, the OSS return where you sell to consumers in other EU countries, and the intra-EU listing for B2B sales. Obligations outside that scope are confirmed before work begins." },
+    { question: "Are VAT and income tax filings included?", answer: "Periodic VAT returns and the annual income tax filing, including the E3, are part of the agreed scope. Specialist matters such as an AADE audit, a restructuring, or a one-off ruling are scoped separately and confirmed in writing before that work starts." },
+    { question: "What happens if a deadline is already close?", answer: "We start with the next AADE date. If KRS is taking over the filings, we map what can still be submitted on time and what needs a separate catch-up plan, so a late return is not discovered after the fact." },
+    { question: "Can KRS handle EU and cross-border VAT?", answer: "Yes. We coordinate Greek VAT, the OSS return where you sell to consumers in other EU countries, and intra-EU reporting for B2B sales. Obligations outside that scope are confirmed before work begins." },
     { question: "Can I speak directly with a tax advisor?", answer: "Yes. You message the advisor responsible for the file. They already have the books, the open returns and the prior answers, so the conversation does not start from zero." },
     { question: "Do you only file returns, or also advise?", answer: "Both. Filings are prepared and submitted, and the same advisor flags VAT treatment, deductibility and cross-border questions during the year, before they are locked into a return." },
   ],
@@ -104,28 +101,27 @@ export const taxAdvisoryPage = {
 } as const satisfies ServicePageData;
 
 export const payrollPage = {
-  slug: "payroll", eyebrow: "Payroll", title: "Payroll, sorted. The team can grow.",
-  description: "From the employment contract to the payslip, KRS runs payroll so hiring does not turn into a monthly admin pile.",
+  slug: "payroll", eyebrow: "Payroll", title: "Payroll handled. Payday kept.",
+  description: "Payroll for Greek companies, from the employment contract to the payslip. KRS runs the monthly payroll, EFKA contributions and ERGANI notices, so growing the team does not grow the admin.",
   heroImage: "/images/krs-hero-payroll.jpg", heroImageAlt: "A payroll handover between a KRS advisor and a client", heroKicker: "Payslips / EFKA / ERGANI / hires", exploreLabel: "Explore payroll",
-  featuresTitle: "Everything the team needs. None of the payroll admin.",
+  featuresTitle: "Everything payroll needs. The admin stays with KRS.",
   features: [
-    { title: "Payroll from contract to payslip", description: "Contracts, the monthly run, payslips and the filings that follow stay in one workflow." },
-    { title: "New hires on the next run", description: "When the details are complete, a new employee is prepared for payroll within one business day, with ERGANI filed before the first shift." },
-    { title: "EFKA and ERGANI built in", description: "Contributions, the monthly APD and employment notices are handled with the payslip, not reconstructed after payday." },
+    { title: "Payroll from contract to payslip", description: "Employment contracts, the monthly run, payslips and the filings that follow stay in one workflow." },
+    { title: "New hires on the next run", description: "Once the details are complete, a new employee is set up for payroll within one business day, and the ERGANI hire notice is filed before their first day." },
+    { title: "EFKA and ERGANI handled with the payroll", description: "EFKA contributions, the monthly APD and ERGANI notices are prepared from the same payroll, not reconstructed after payday." },
   ],
-  ctaTitle: "Payroll should be finished before payday, not during it.", ctaDescription: "Bring the current headcount, the pay date and any open hires. We will map the first run.",
-  benefitsTitle: "What stays in the payroll work, every month.", benefitsDescription: "Onboarding, the pay run, EFKA and ERGANI, and the employee record stay with one advisor.", benefitsImage: "/images/krs-payroll-vignette.jpg", benefitsImageAlt: "A payroll run reviewed with employee information and deadlines",
+  benefitsTitle: "What stays with your payroll advisor, every month.", benefitsDescription: "Onboarding, the monthly run, EFKA, ERGANI and employee records stay with one advisor, on one calendar.",
   benefits: [
-    { index: "01", title: "Employee onboarding", description: "Contract, AFM, AMKA and bank details collected once, then the ERGANI notice and the first payslip." },
-    { index: "02", title: "Monthly payroll", description: "Gross, net, employer cost and payslips prepared before the pay date, with the changes for that month already in." },
-    { index: "03", title: "EFKA, APD and ERGANI", description: "Employee and employer contributions, the monthly APD and employment notices submitted on their own dates." },
-    { index: "04", title: "Employee records", description: "Contracts, payslips and changes kept with the person they belong to, so the next run does not start from an inbox." },
+    { index: "01", title: "Employee onboarding", description: "Contract, AFM, AMKA and bank details are collected once, followed by the ERGANI hire notice and the first payslip.", image: "/images/krs-payroll-benefit-onboarding.jpg", imageAlt: "An employee badge resting on an open onboarding folder" },
+    { index: "02", title: "Monthly payroll", description: "Gross pay, net pay, employer cost and payslips are prepared before the pay date, with that month’s changes already included.", image: "/images/krs-payroll-benefit-payroll.jpg", imageAlt: "A payslip in an envelope beside a stack of coins" },
+    { index: "03", title: "EFKA, payroll tax and ERGANI", description: "Employee and employer contributions, the monthly APD, payroll withholding and ERGANI notices are filed within their own deadlines.", image: "/images/krs-payroll-benefit-filings.jpg", imageAlt: "An official stamp beside a sealed filing form" },
+    { index: "04", title: "Employee records", description: "Contracts, payslips and changes are kept with each employee’s record, so the next run does not start from an inbox.", image: "/images/krs-payroll-benefit-records.jpg", imageAlt: "An open card-index box of employee records" },
   ],
-  processTitle: "Move payroll to KRS in three clear steps.", processDescription: "Changing who runs payroll starts with the people and the next pay date. KRS protects that date while the records come across.",
+  processTitle: "Move payroll to KRS in three clear steps.", processDescription: "Changing payroll providers starts with your team and the next pay date. KRS protects that date while the employee records move across.",
   process: [
-    { title: "Free initial consultation", description: "Tell us how the team is paid and which hires are open. We review the fit and send a clear, no-obligation proposal.", image: "/images/krs-switch-consultation.jpg", imageAlt: "A KRS payroll consultation shown on a modern smartphone" },
+    { title: "Free initial consultation", description: "Tell us how the team is paid and whether any hires are pending. We review the fit and send a clear, no-obligation proposal.", image: "/images/krs-switch-consultation.jpg", imageAlt: "A KRS payroll consultation shown on a modern smartphone" },
     { title: "A clear working plan", description: "Once you choose KRS, we confirm the pay date, ERGANI access and the employee details needed before the first run.", image: "/images/krs-switch-transfer.jpg", imageAlt: "Payroll records moving into the KRS file" },
-    { title: "Your first payroll rhythm", description: "Meet the advisor responsible for the file, and see the next payslip, APD and any open hire with a named owner.", image: "/images/krs-switch-first-close.jpg", imageAlt: "A KRS payroll calendar ready for the next run" },
+    { title: "Your first payroll run", description: "Meet the advisor responsible for your payroll, and see the next payslip, APD and any pending hire with a named owner.", image: "/images/krs-switch-first-close.jpg", imageAlt: "A KRS payroll calendar ready for the next run" },
   ],
   advisorImage: "/images/krs-expert-payroll-advisor.webp", advisorImageAlt: "KRS payroll specialist", testimonialEyebrow: "Payroll perspectives", testimonialTitle: "What a watched pay date changes first.",
   testimonials: [
@@ -145,20 +141,19 @@ export const payrollPage = {
 } as const satisfies ServicePageData;
 
 export const consultingPage = {
-  slug: "consulting", eyebrow: "Services / Consulting services", title: "Business advice that moves the plan into action.", description: "KRS helps founders and leadership teams turn financial context, operating questions and growth plans into a focused next step.",
+  slug: "consulting", eyebrow: "Services / Consulting services", title: "Business decisions, grounded in the numbers.", description: "KRS helps founders and leadership teams test the assumptions, financial implications and practical steps behind a growth plan, investment or operational decision.",
   heroImage: "/images/krs-consulting-advisor.png", heroImageAlt: "KRS business advisor discussing a growth plan with a founder in Athens", heroKicker: "Planning / growth / finance / decisions", exploreLabel: "Explore consulting",
-  featuresTitle: "A practical point of view for the decisions ahead.", features: [
-    { title: "Plans grounded in the numbers", description: "Use financial information, assumptions and operating constraints to make the business plan more useful to the people running it." },
-    { title: "A clearer next decision", description: "KRS helps separate the urgent question from the important one, then builds a realistic path around ownership and timing." },
-    { title: "Advice connected to delivery", description: "The recommendation stays close to the accounting, tax and operational work that will make it real." },
+  featuresTitle: "Clearer decisions. Practical plans to carry them out.", features: [
+    { title: "Plans built from current information", description: "Turn current performance, cash needs and key assumptions into a plan leadership can use." },
+    { title: "Scenarios before commitments", description: "Compare costs, revenue, cash and timing before committing to a hire, investment, new market or change in direction." },
+    { title: "A recommendation with owners and dates", description: "Convert the chosen direction into actions, responsibilities, milestones and measures of progress." },
   ],
-  ctaTitle: "A useful business plan needs a clear next action, not just a polished document.", ctaDescription: "Bring the plan, opportunity or operating question. We will help identify the work that needs to happen next.",
-  benefitsTitle: "A more usable view of the business you are building.", benefitsDescription: "KRS brings financial context and practical implementation into the conversations that shape your next stage of growth.", benefitsImage: "/images/krs-consulting-advisor.png", benefitsImageAlt: "KRS advisor reviewing a business plan with a founder",
+  benefitsTitle: "What stays in the advisory work, from question to action.", benefitsDescription: "The financial model, decision framework, implementation plan and review points stay together, so the recommendation remains connected to the work that follows.",
   benefits: [
-    { index: "01", title: "Business planning", description: "Translate the goals, assumptions and financial requirements behind a plan into an operating view your team can use." },
-    { index: "02", title: "Financial modelling", description: "Test costs, revenue drivers, cash needs and scenarios before a decision depends on an overly simple forecast." },
-    { index: "03", title: "Growth decisions", description: "Evaluate the financial and operational implications of a new market, hire, investment or change in direction." },
-    { index: "04", title: "Management support", description: "Create a more useful rhythm for reviewing performance, risks and choices that deserve leadership attention." },
+    { index: "01", title: "Business planning", description: "Turn goals, assumptions, revenue drivers, costs and funding requirements into a plan the leadership team can use.", image: "/images/krs-consulting-benefit-planning.jpg", imageAlt: "A compass resting on a business-plan booklet" },
+    { index: "02", title: "Financial modelling", description: "Test revenue, costs, cash flow and alternative scenarios before the business commits to a direction.", image: "/images/krs-consulting-benefit-modelling.jpg", imageAlt: "Stacked blocks comparing three scenarios" },
+    { index: "03", title: "Decision support", description: "Compare the financial and operational effects of a new hire, market, investment or change in strategy.", image: "/images/krs-consulting-benefit-decisions.jpg", imageAlt: "A signpost pointing in two directions" },
+    { index: "04", title: "Management review", description: "Establish a practical cadence for reviewing performance, risks, decisions and progress against the plan.", image: "/images/krs-consulting-benefit-review.jpg", imageAlt: "A performance dashboard beside a stack of review cards" },
   ],
   processTitle: "Start a business advisory project in three clear steps.", processDescription: "KRS begins with the decision in front of you, aligns the facts and people, then agrees the practical work plan.", process: onboardingProcess,
   advisorImage: "/images/krs-consulting-advisor.png", advisorImageAlt: "KRS consulting advisor in conversation with a founder", testimonialEyebrow: "Consulting perspectives", testimonialTitle: "What focused business advice creates.",
@@ -169,30 +164,31 @@ export const consultingPage = {
   ],
   faqTitle: "Consulting questions worth discussing early.", faqDescription: "The first conversation is about the decision, timing and business context, so KRS can suggest a focused scope rather than a generic engagement.",
   faqs: [
-    { question: "What kinds of consulting services does KRS offer?", answer: "KRS supports business planning, financial modelling, growth decisions, management reporting and operational finance questions. We shape the work around the decision your team needs to make." },
-    { question: "Can you help us prepare a business plan?", answer: "Yes. KRS can help structure the assumptions, financial story, operating plan and evidence that make a business plan useful for management, investors or funders." },
-    { question: "Will consulting connect to our accounting information?", answer: "Yes. Where useful, KRS connects the advisory work to your accounting and operating information, so recommendations are grounded in current business reality." },
-    { question: "How long does a consulting project take?", answer: "Timing depends on the decision, data available and people involved. We agree the milestones, owners and expected outputs before work begins." },
+    { question: "What kinds of consulting services does KRS offer?", answer: "KRS supports business planning, financial modelling, investment and growth decisions, management reporting and operational finance questions. The scope is built around a specific decision, output and timetable." },
+    { question: "Can you help us prepare a business plan?", answer: "Yes. KRS can develop the assumptions, financial model, operating plan and supporting evidence required for a business plan. The structure is adapted to its purpose, whether it is for management, investors or a funding application." },
+    { question: "Will consulting connect to our accounting information?", answer: "Yes. With your permission, the advisory work can use current accounting, management and operating information, so recommendations are based on the company’s actual position rather than a separate set of assumptions." },
+    { question: "How long does a consulting project take?", answer: "Timing depends on the decision, available information and people involved. KRS confirms the milestones, responsibilities, expected outputs and timetable before work begins." },
+    { question: "Do you help implement the recommendations?", answer: "The agreed scope can cover the recommendation alone or include implementation planning and ongoing review. The actions, owners and milestones are confirmed before the project begins." },
+    { question: "How are consulting fees structured?", answer: "Fees depend on the scope, outputs, timetable and whether support is project-based or ongoing. KRS confirms the fee and working plan in writing before the engagement begins." },
   ],
-  finalTitle: "Turn the next business decision into a workable plan.", finalDescription: "Bring KRS into the conversation with the financial context and practical support needed to move from intent to action.",
+  finalTitle: "Turn the next business decision into a workable plan.", finalDescription: "Bring the decision, available information and key assumptions. KRS will help turn them into a practical plan with clear actions, owners and milestones.",
 } as const satisfies ServicePageData;
 
 export const fundingGrantsPage = {
-  slug: "funding-grants", eyebrow: "Services / Funding and grants", title: "The right grant, matched and filed.",
-  description: "KRS watches Greek and EU funding, matches open calls to your company, and prepares the application with you.",
+  slug: "funding-grants", eyebrow: "Services / Funding and grants", title: "Funding matched. Applications prepared.",
+  description: "KRS monitors Greek and EU funding programmes, screens open opportunities against your company and project, and prepares selected applications with you.",
   heroImage: "/images/krs-funding-advisor.png", heroImageAlt: "KRS funding advisor and founder reviewing a grant application in Athens", heroKicker: "ESPA / Horizon / EIC / applications", exploreLabel: "Explore funding and grants",
-  featuresTitle: "From an open call to a filed application.", features: [
-    { title: "Greek and EU programmes in one watchlist", description: "ESPA, the Development Law, Greece 2.0, Horizon Europe, the EIC and other EU programmes are checked against the same company file." },
-    { title: "A match before anyone starts writing", description: "Activity, size, region and the project you want to fund are compared with the call. Weak fits stay off the list." },
-    { title: "An application prepared with you", description: "KRS drafts the case and the budget. You supply the company facts and sign off. Then it is filed." },
+  featuresTitle: "From a relevant opportunity to a submitted application.", features: [
+    { title: "Greek and EU programmes on one watchlist", description: "Current NSRF (ESPA), Development Law, Horizon Europe, EIC and other national and EU opportunities are monitored against the same company profile." },
+    { title: "An eligibility screen before anyone starts writing", description: "Legal form, activity, size, region, project costs and timing are checked against the published criteria before application work begins." },
+    { title: "An application prepared with you", description: "KRS prepares the business case, budget and forms. You provide the required documents and approve the final application before submission." },
   ],
-  ctaTitle: "A call is only useful when it fits the company and someone files it.", ctaDescription: "Share the company and the project you want to fund. We match the open routes and tell you what the application needs from you.",
-  benefitsTitle: "A watched list of grants, then a filed application.", benefitsDescription: "KRS connects the programme search, the match, the application and the reporting that follows around one company file.", benefitsImage: "/images/krs-hero-awards.jpg", benefitsImageAlt: "Business funding and recognition material prepared for review",
+  benefitsTitle: "What stays with your funding advisor, from search to submission.", benefitsDescription: "Programme monitoring, eligibility screening, application preparation and the obligations that follow stay on one project file.",
   benefits: [
-    { index: "01", title: "Programme watchlist", description: "Greek ESPA and national schemes sit next to Horizon Europe, the EIC and the wider EU funding map." },
-    { index: "02", title: "Automatic match", description: "Each call is compared with the company profile, the project and the deadline, so the short list is the one worth reading." },
-    { index: "03", title: "Application with you", description: "KRS prepares the forms, the narrative and the budget. You provide documents, decisions and approval before it is submitted." },
-    { index: "04", title: "Grant reporting", description: "After approval, spending, deliverables and reporting dates stay on the same project file." },
+    { index: "01", title: "Programme monitoring", description: "Current Greek and EU opportunities are monitored against the company and proposed project.", image: "/images/krs-funding-benefit-monitoring.jpg", imageAlt: "A magnifying glass over a fan of programme documents" },
+    { index: "02", title: "Eligibility screening", description: "Legal form, company size, region, project costs and timing are reviewed before application work begins.", image: "/images/krs-funding-benefit-screening.jpg", imageAlt: "A funnel narrowing several cards down to one" },
+    { index: "03", title: "Application preparation", description: "KRS prepares the business case, budget and forms with clear responsibilities for the documents and approvals you provide.", image: "/images/krs-funding-benefit-application.jpg", imageAlt: "An open portfolio of application pages with a fountain pen" },
+    { index: "04", title: "Award and reporting calendar", description: "If funding is awarded, spending conditions, deliverables and reporting dates remain visible on the project file.", image: "/images/krs-funding-benefit-reporting.jpg", imageAlt: "An award rosette beside a report booklet" },
   ],
   processTitle: "Start funding support in three clear steps.", processDescription: "KRS begins with the company and the project, confirms which calls fit, then agrees who prepares what before the deadline.", process: onboardingProcess,
   advisorImage: "/images/krs-funding-advisor.png", advisorImageAlt: "KRS funding advisor reviewing an application with a founder", testimonialEyebrow: "Funding perspectives", testimonialTitle: "What a watched funding calendar changes.",
@@ -203,10 +199,12 @@ export const fundingGrantsPage = {
   ],
   faqTitle: "Funding questions worth asking before you apply.", faqDescription: "The first conversation looks at the company, the project and which Greek or EU routes are actually open.",
   faqs: [
-    { question: "Which programmes do you cover?", answer: "Greek routes include ESPA (the Partnership Agreement programmes and regional calls), the Development Law, Greece 2.0 and other national grant and loan schemes. EU routes include Horizon Europe, the European Innovation Council (Pathfinder, Transition, Accelerator and related calls) and other Commission programmes such as Digital Europe, LIFE and Interreg. New calls are matched as they are published." },
-    { question: "Will we be notified when something opens?", answer: "Yes. When a call opens or a deadline moves, KRS checks it against your company and notifies you if it still fits. You do not have to watch the portals." },
-    { question: "Do you prepare and submit the application?", answer: "Yes, with your cooperation. KRS drafts the case, the budget and the forms. You provide the company facts, documents and approval. We file it once that pack is complete." },
-    { question: "What happens after a grant is approved?", answer: "Spending records, deliverables and reporting dates stay on the project file, so the obligations do not become a separate scramble after the award." },
+    { question: "Which programmes do you cover?", answer: "Greek routes include the NSRF (ESPA) programmes and regional calls, the Development Law and other current national grant and loan schemes. EU routes include Horizon Europe, the European Innovation Council (Pathfinder, Transition, Accelerator and related calls) and other EU programmes such as Digital Europe, LIFE and Interreg. New calls are screened as they are published." },
+    { question: "Will we be notified when something opens?", answer: "Yes. When KRS identifies a potentially relevant call, or a deadline moves, we check it against your company and project and notify you if it remains worth considering. You do not have to watch the portals." },
+    { question: "Can you guarantee that we are eligible or that funding will be awarded?", answer: "No. Initial screening identifies potential matches, but final eligibility depends on the complete call criteria and supporting evidence. Funding decisions are made by the programme authority, not KRS." },
+    { question: "Do you prepare and submit the application?", answer: "Yes, with your cooperation. KRS drafts the business case, the budget and the forms. You provide the company facts, documents and approval. We submit it once you approve the complete pack." },
+    { question: "How are funding and application fees structured?", answer: "Fees depend on the programme, the scope of the application and any support needed after an award. KRS confirms the fee structure in writing before application work begins." },
+    { question: "What happens if funding is awarded?", answer: "Spending conditions, deliverables and reporting dates stay on the project file, so the obligations do not become a separate scramble after the award. Whether KRS also prepares the progress and final reports is confirmed in the agreed scope." },
   ],
   finalTitle: "Let the next fitting call reach you before the deadline.", finalDescription: "One company profile, Greek and EU programmes on the same list, and an application prepared with you.",
 } as const satisfies ServicePageData;
